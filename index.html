@@ -369,6 +369,19 @@ body.facade-mode .stage{margin-top:12px}
 .pl-pow{position:relative;height:50px;border-radius:12px;background:#0008;border:1px solid var(--line);overflow:hidden;touch-action:none;cursor:ew-resize;user-select:none}
 .pl-pow i{position:absolute;left:0;top:0;bottom:0;width:0;background:linear-gradient(90deg,#9ef0b5,#f2d78c,#ff7a86);opacity:.6}
 .pl-pow span{position:absolute;inset:0;display:grid;place-items:center;text-align:center;padding:0 8px;font-size:12px;font-weight:700;pointer-events:none}
+.pl-stats{display:flex;justify-content:space-between;gap:6px;flex-wrap:wrap;margin-bottom:8px}
+.pl-wrap{position:relative}
+.pl-start{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;text-align:center;padding:16px;background:#000c;border-radius:12px}
+.pl-start b{font-family:var(--f-display);font-weight:400;font-size:28px;color:var(--gold-2)}
+.pl-start span{color:#e9dcc0;max-width:34ch;font-size:14px}
+.pl-start .chipbar{margin-top:0}
+.pl-ctl2{display:grid;grid-template-columns:auto 1fr auto;gap:8px;align-items:center;margin-top:10px}
+.pl-ctl2 .btn{min-width:52px;padding:12px;touch-action:none;user-select:none}
+.pl-ctl2.off{opacity:.35;pointer-events:none}
+.pl-range{display:flex;flex-direction:column;gap:2px;font-size:13px;color:var(--muted);text-align:center}
+.pl-range b{color:var(--gold-2)}
+.pl-range input{width:100%;height:30px;accent-color:#d9b45b}
+.pl-shoot{grid-column:1/-1;font-family:var(--f-display);font-size:24px;letter-spacing:.12em;padding:14px!important}
 .row-c{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
 @media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
 </style>
@@ -549,7 +562,7 @@ const GAMES=[
  {id:'poker',name:'Video Póker',desc:'Jotas o Mejor 9/6. Guarda cartas y busca la escalera real.',tag:'Estrategia',min:'Real 800:1',art:'♥♦',bg:'linear-gradient(135deg,#10204a,#1d3b7a)'},
  {id:'baccarat',name:'Baccarat Punto Banco',desc:'El juego de los grandes salones. Jugador, banca o empate.',tag:'Salón privado',min:'Empate 8:1',art:'9',bg:'linear-gradient(135deg,#2a1a35,#4a2a5e)'},
  {id:'dados',name:'Mesa de Dados',desc:'Pase, no pase, campo y probabilidades a pago real.',tag:'Emoción',min:'Craps 7:1',art:'⚄⚂',bg:'linear-gradient(135deg,#0e3a2c,#1c6b4f)'},
- {id:'billar',name:'Desafío de Billar',desc:'Física real de mesa. Taco, troneras y física real. Mete las 9 bolas en 8 tacadas.',tag:'Habilidad',min:'9 bolas 50:1',art:'<span style="display:inline-grid;place-items:center;width:70px;height:70px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff7 0 12%,transparent 30%),#f2c200;box-shadow:inset 0 0 0 0 #000"><span style="width:34px;height:34px;border-radius:50%;background:#fff;color:#111;font:800 20px Manrope,sans-serif;display:grid;place-items:center">9</span></span>',bg:'radial-gradient(circle,#1f7a5a,#0e4a35 70%,#3b2413 71%)'},
+ {id:'billar',name:'Desafío de Billar',desc:'Taco, troneras y física real. Mete las 9 bolas en 10 tacadas.',tag:'Habilidad',min:'9 bolas 10:1',art:'<span style="display:inline-grid;place-items:center;width:70px;height:70px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff7 0 12%,transparent 30%),#f2c200;box-shadow:inset 0 0 0 0 #000"><span style="width:34px;height:34px;border-radius:50%;background:#fff;color:#111;font:800 20px Manrope,sans-serif;display:grid;place-items:center">9</span></span>',bg:'radial-gradient(circle,#1f7a5a,#0e4a35 70%,#3b2413 71%)'},
  {id:'keno',name:'Keno',desc:'Elige hasta 10 números de 80 y mira caer las bolas.',tag:'Lotería',min:'Hasta 100.000:1',art:'80',bg:'linear-gradient(135deg,#3b2413,#7a4a1c)'},
 ];
 let jpTimer=0,lobbyRaf=0;
@@ -575,7 +588,7 @@ const ROOMS=[
   ['poker','Video Póker','Recibe 5 cartas, guarda las buenas y cambia el resto.','Media','Escalera real 800 a 1','felt-navy'],
   ['keno','Keno','Marca tus números de la suerte y mira salir 20 bolas.','Muy fácil','Hasta 100.000 a 1','felt-wood']]],
  ['Salón de billar','Un juego de habilidad: aquí manda tu puntería',[
-  ['billar','Desafío de Billar','Apunta el taco y mete las 9 bolas en solo 8 tacadas.','Habilidad','Mesa limpia paga 50 a 1','felt']]],
+  ['billar','Desafío de Billar','Toca una bola, elige la fuerza y mete las 9 bolas en 10 tacadas.','Habilidad','Mesa limpia paga 10 a 1','felt']]],
 ];
 function sizeFacade(){const f=$('.facade');if(!f)return;const top=f.getBoundingClientRect().top+scrollY;f.style.height=Math.max(380,innerHeight-top-14)+'px'}
 addEventListener('resize',sizeFacade);
@@ -1102,65 +1115,73 @@ function drawBW(rot){const cv=$('#bwC');if(!cv)return;const x=cv.getContext('2d'
   x.beginPath();x.arc(0,0,46,0,TAU);x.fillStyle='#d9b45b';x.fill();x.restore()}
 
 /* ---------- Billar ---------- */
-const PL={W:1000,H:500,L:44,T:44,R:956,B:456,r:12,pr:25,balls:[],shots:0,potted:0,bet:0,active:false,moving:false,raf:0,ang:0,pull:0,strike:null,
-  pays:{4:1,5:2,6:4,7:8,8:20,9:50},
+const PL={W:1000,H:500,L:44,T:44,R:956,B:456,r:12,pr:30,balls:[],shots:0,potted:0,bet:0,active:false,moving:false,raf:0,ang:0,pull:0,strike:null,
+  pays:{4:1,5:2,6:3,7:4,8:6,9:10},
   cols:['#f4ecd8','#f2c200','#1d4fc4','#c4141f','#5b2a90','#ee7a12','#14804a','#7a1424','#111','#f2c200']};
 PL.pockets=[[PL.L,PL.T],[500,PL.T-6],[PL.R,PL.T],[PL.L,PL.B],[500,PL.B+6],[PL.R,PL.B]];
 function plRack(){const b=[{n:0,x:250,y:250,vx:0,vy:0}],order=[1,2,3,9,4,5,6,7,8],rows=[1,2,3,2,1];let k=0,d=PL.r*2+.5;
   rows.forEach((cnt,ri)=>{for(let j=0;j<cnt;j++){b.push({n:order[k++],x:700+ri*d*.87,y:250+(j-(cnt-1)/2)*d,vx:0,vy:0})}});
   PL.balls=b;PL.ang=0}
 const plReady=()=>!PL.moving&&!PL.strike&&PL.balls[0];
+function plSize(){const cv=$('#plC');if(!cv)return;const wrap=cv.parentElement,ww=wrap.clientWidth;
+  PL.vert=innerWidth<700;
+  if(PL.vert){if(cv.width!==500){cv.width=500;cv.height=1000}const w=Math.max(220,Math.min(ww,(innerHeight-250)/2,440));cv.style.width=w+'px';cv.style.height=w*2+'px'}
+  else{if(cv.width!==1000){cv.width=1000;cv.height=500}cv.style.width='100%';cv.style.height='auto'}}
+addEventListener('resize',plSize);
+function plAimTap(p){const c=PL.balls[0],r=PL.r;PL.tp=null;
+  const o=PL.balls.find(o=>o!==c&&Math.hypot(p.x-o.x,p.y-o.y)<r*2.6);
+  if(!o){if(Math.hypot(p.x-c.x,p.y-c.y)>r)PL.ang=Math.atan2(p.y-c.y,p.x-c.x);return}
+  let best=null;
+  for(const[px,py]of PL.pockets){const dx=px-o.x,dy=py-o.y,d=Math.hypot(dx,dy),gx=o.x-dx/d*r*2,gy=o.y-dy/d*r*2,ax=gx-c.x,ay=gy-c.y,ad=Math.hypot(ax,ay);
+    const cos=(ax*dx+ay*dy)/(ad*d);if(cos<.25)continue;const sc=cos*1.2-d/1400-ad/3000;if(!best||sc>best.s)best={s:sc,ang:Math.atan2(ay,ax),tp:[px,py],dist:ad+d/Math.max(cos,.4)}}
+  if(best){PL.ang=best.ang;PL.tp=best.tp;const v=best.dist*1.5/267,pw=Math.max(.12,Math.min(1,(v-1)/9));const rg=$('#plRange');if(rg){rg.value=Math.round(pw*100);rg.dispatchEvent(new Event('input'))}}
+  else PL.ang=Math.atan2(o.y-c.y,o.x-c.x)}
 function billar(el){
-  el.innerHTML=head('Desafío de Billar','Mete las 9 bolas en 8 tacadas · Toca la mesa para apuntar el taco · Desliza la barra de fuerza y suelta para golpear')+`
-  <div class="table" style="padding:12px">
-    <div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:8px">
-      <span class="total num" id="plS">Tacadas: –</span><span class="total num" id="plP">Bolas metidas: 0 / 9</span><span class="total num" id="plB">Apuesta: –</span></div>
-    <canvas id="plC" width="1000" height="500" style="width:100%;height:auto;display:block;touch-action:none;border-radius:12px;cursor:crosshair"></canvas>
-    <div class="pl-ctl">
-      <button class="btn" id="plLeft" aria-label="Girar el taco a la izquierda">◀</button>
-      <div class="pl-pow" id="plTrack" role="slider" aria-label="Fuerza del golpe" tabindex="0"><i id="plPow"></i><span id="plHint">Desliza hacia la derecha para cargar el taco y suelta</span></div>
-      <button class="btn" id="plRight" aria-label="Girar el taco a la derecha">▶</button>
+  el.innerHTML=head('Desafío de Billar','Mete el máximo de bolas en 10 tacadas · Toca una bola y el taco apunta solo a la tronera · Elige la fuerza y pulsa TIRAR')+`
+  <div class="table pl-table">
+    <div class="pl-stats"><span class="total num" id="plS">Tacadas: –</span><span class="total num" id="plP">Bolas: 0 / 9</span><span class="total num" id="plB">Apuesta: –</span></div>
+    <div class="pl-wrap"><canvas id="plC" width="1000" height="500" style="touch-action:none;display:block;margin:auto;border-radius:12px;cursor:crosshair"></canvas>
+      <div class="pl-start" id="plStart"><b>Desafío de Billar</b><span id="plStartT">Elige cuánto apuestas y pulsa Empezar. Con 4 bolas recuperas tu apuesta; con las 9 cobras 10 veces.</span>${chipBar()}<button class="btn primary big" id="plGo">EMPEZAR</button></div>
     </div>
-    <div class="msg" id="plMsg">Elige ficha y pulsa Empezar desafío</div>
+    <div class="pl-ctl2" id="plCtl">
+      <button class="btn" id="plLeft" aria-label="Girar el taco a la izquierda">◀</button>
+      <label class="pl-range" for="plRange"><span>Fuerza del golpe: <b id="plPv">40%</b></span><input type="range" id="plRange" min="5" max="100" value="40"></label>
+      <button class="btn" id="plRight" aria-label="Girar el taco a la derecha">▶</button>
+      <button class="btn primary pl-shoot" id="plShoot">TIRAR</button>
+    </div>
+    <div class="msg" id="plMsg">Toca una bola de color: el taco apuntará solo a la mejor tronera</div>
     <div class="kp" style="display:flex;flex-wrap:wrap;justify-content:center;gap:6px">${Object.entries(PL.pays).map(([k,v])=>`<span class="total num">${k} bolas: ${v}×</span>`).join('')}</div>
-    <div id="plChips">${chipBar()}</div>
-    <div class="actions"><button class="btn primary" id="plGo">Empezar desafío</button></div>
   </div>`;
   if(!PL.active)plRack();
-  const cv=$('#plC');
-  const pos=e=>{const r=cv.getBoundingClientRect();return{x:(e.clientX-r.left)*PL.W/r.width,y:(e.clientY-r.top)*PL.H/r.height}};
-  const aimAt=e=>{if(!plReady())return;const p=pos(e),c=PL.balls[0];if(Math.hypot(p.x-c.x,p.y-c.y)>PL.r)PL.ang=Math.atan2(p.y-c.y,p.x-c.x)};
+  const cv=$('#plC');plSize();
+  const pos=e=>{const r=cv.getBoundingClientRect(),sx=(e.clientX-r.left)*cv.width/r.width,sy=(e.clientY-r.top)*cv.height/r.height;return PL.vert?{x:sy,y:500-sx}:{x:sx,y:sy}};
   let aiming=false;
-  cv.addEventListener('pointerdown',e=>{aiming=true;cv.setPointerCapture(e.pointerId);aimAt(e)});
-  cv.addEventListener('pointermove',e=>{if(aiming)aimAt(e)});
+  cv.addEventListener('pointerdown',e=>{if(!plReady()||!PL.active)return;aiming=true;cv.setPointerCapture(e.pointerId);plAimTap(pos(e));sfx('click')});
+  cv.addEventListener('pointermove',e=>{if(!aiming||!plReady())return;const p=pos(e),c=PL.balls[0];if(!PL.tp&&Math.hypot(p.x-c.x,p.y-c.y)>PL.r)PL.ang=Math.atan2(p.y-c.y,p.x-c.x)});
   cv.addEventListener('pointerup',()=>aiming=false);cv.addEventListener('pointercancel',()=>aiming=false);
-  let hold=0;const nudge=d=>{if(plReady())PL.ang+=d};
+  let hold=0;const nudge=d=>{if(plReady()){PL.ang+=d;PL.tp=null}};
   [['#plLeft',-1],['#plRight',1]].forEach(([id,dir])=>{const b=$(id);
     b.addEventListener('pointerdown',e=>{e.preventDefault();nudge(dir*.004);let sp=.004;clearInterval(hold);hold=setInterval(()=>{sp=Math.min(.03,sp*1.15);nudge(dir*sp)},50)});
     ['pointerup','pointerleave','pointercancel'].forEach(ev=>b.addEventListener(ev,()=>clearInterval(hold)))});
-  const tr=$('#plTrack');let sx=null;
-  const setPull=v=>{PL.pull=Math.max(0,Math.min(1,v));$('#plPow').style.width=PL.pull*100+'%'};
-  tr.addEventListener('pointerdown',e=>{if(!plReady())return;if(!PL.active){setMsg('#plMsg','Primero pulsa Empezar desafío');sfx('err');return}tr.setPointerCapture(e.pointerId);sx=e.clientX;setPull(0)});
-  tr.addEventListener('pointermove',e=>{if(sx===null)return;setPull((e.clientX-sx)/(tr.clientWidth*.8))});
-  const rel=()=>{if(sx===null)return;sx=null;const pw=PL.pull;if(pw<.03){setPull(0);return}PL.strike={t0:performance.now(),pw}};
-  tr.addEventListener('pointerup',rel);tr.addEventListener('pointercancel',()=>{sx=null;setPull(0)});
-  tr.addEventListener('keydown',e=>{if(!PL.active||!plReady())return;if(e.key==='ArrowRight'){setPull(PL.pull+.05);e.preventDefault()}else if(e.key==='ArrowLeft'){setPull(PL.pull-.05);e.preventDefault()}else if((e.key===' '||e.key==='Enter')&&PL.pull>.03){PL.strike={t0:performance.now(),pw:PL.pull};e.preventDefault()}});
-  $('#plGo').onclick=()=>{if(PL.active)return;if(!take(S.chip))return;PL.bet=S.chip;PL.shots=8;PL.potted=0;PL.active=true;plRack();sfx('chip');plUI();setMsg('#plMsg','Toca la mesa para apuntar y desliza la barra para golpear')};
+  const rg=$('#plRange');const upd=()=>{PL.pull=rg.value/100;$('#plPv').textContent=rg.value+'%'};rg.addEventListener('input',upd);upd();
+  $('#plShoot').onclick=()=>{if(!PL.active||!plReady())return;PL.strike={t0:performance.now(),pw:rg.value/100};PL.tp=null};
+  $('#plGo').onclick=()=>{if(PL.active)return;if(!take(S.chip))return;PL.bet=S.chip;PL.shots=10;PL.potted=0;PL.active=true;plRack();sfx('chip');plUI();
+    setMsg('#plMsg','Saque: apunta al triángulo de bolas, pon fuerza alta y pulsa TIRAR');const r=$('#plRange');r.value=85;upd()};
   plUI();cancelAnimationFrame(PL.raf);PL.raf=requestAnimationFrame(plLoop);
 }
-function plUI(){if(!$('#plS'))return;$('#plS').textContent='Tacadas: '+(PL.active?PL.shots:'–');$('#plP').textContent=`Bolas metidas: ${PL.potted} / 9`;
-  $('#plB').textContent='Apuesta: '+(PL.active?fmt(PL.bet):'–');$('#plGo').hidden=PL.active;$('#plChips').hidden=PL.active}
+function plUI(){if(!$('#plS'))return;$('#plS').textContent='Tacadas: '+(PL.active?PL.shots:'–');$('#plP').textContent=`Bolas: ${PL.potted} / 9`;
+  $('#plB').textContent='Apuesta: '+(PL.active?fmt(PL.bet):'–');$('#plStart').hidden=PL.active;$('#plCtl').classList.toggle('off',!PL.active)}
 function plStep(){
   const B=PL.balls,r=PL.r;
   for(const b of B){b.x+=b.vx;b.y+=b.vy;b.roll=(b.roll||0)+Math.hypot(b.vx,b.vy)/r;
     const nearP=PL.pockets.some(([px,py])=>Math.hypot(b.x-px,b.y-py)<PL.pr+14);
     if(!nearP){let hitC=0;if(b.x<PL.L+r){b.x=PL.L+r;b.vx=-b.vx*.82;hitC=Math.abs(b.vx)}if(b.x>PL.R-r){b.x=PL.R-r;b.vx=-b.vx*.82;hitC=Math.abs(b.vx)}
       if(b.y<PL.T+r){b.y=PL.T+r;b.vy=-b.vy*.82;hitC=Math.abs(b.vy)}if(b.y>PL.B-r){b.y=PL.B-r;b.vy=-b.vy*.82;hitC=Math.abs(b.vy)}
-      if(hitC>1.5)tone(110,.06,'sine',Math.min(.1,hitC/80))}
+      if(hitC>.6)tone(110,.06,'sine',Math.min(.1,hitC/80))}
     for(const[px,py]of PL.pockets)if(Math.hypot(b.x-px,b.y-py)<PL.pr-4){b.in=true}}
   for(let i=0;i<B.length;i++)for(let j=i+1;j<B.length;j++){const a=B[i],c=B[j],dx=c.x-a.x,dy=c.y-a.y,d=Math.hypot(dx,dy);
     if(d>0&&d<r*2){const nx=dx/d,ny=dy/d,ov=(r*2-d)/2;a.x-=nx*ov;a.y-=ny*ov;c.x+=nx*ov;c.y+=ny*ov;
-      const p=(a.vx-c.vx)*nx+(a.vy-c.vy)*ny;if(p>0){a.vx-=p*nx;a.vy-=p*ny;c.vx+=p*nx;c.vy+=p*ny;if(p>1.2)tone(2600,.03,'sine',Math.min(.12,p/60))}}}
+      const p=(a.vx-c.vx)*nx+(a.vy-c.vy)*ny;if(p>0){a.vx-=p*nx;a.vy-=p*ny;c.vx+=p*nx;c.vy+=p*ny;if(p>.5)tone(2600,.03,'sine',Math.min(.12,p/60))}}}
   for(let i=B.length-1;i>=0;i--){const b=B[i];if(!b.in)continue;tone(140,.15,'sine',.12);noise(.12,.03,300,.2);
     if(b.n===0){b.in=false;b.vx=b.vy=0;b.x=250;b.y=250;while(B.some(o=>o!==b&&Math.hypot(o.x-b.x,o.y-b.y)<r*2.2))b.y+=r*2.2;PL.scratch=true}
     else{B.splice(i,1);PL.potted++;PL.shotPot++;plUI()}}
@@ -1168,18 +1189,18 @@ function plStep(){
 function plLoop(now){
   const cv=$('#plC');if(!cv)return;
   if(PL.strike){const t=(now-PL.strike.t0)/110;
-    if(t>=1){const c=PL.balls[0],pw=PL.strike.pw,sp=3+pw*25;c.vx=Math.cos(PL.ang)*sp;c.vy=Math.sin(PL.ang)*sp;
-      PL.strike=null;PL.pull=0;const pp=$('#plPow');if(pp)pp.style.width='0';PL.moving=true;PL.shotPot=0;PL.scratch=false;
+    if(t>=1){const c=PL.balls[0],pw=PL.strike.pw,sp=1+pw*9;c.vx=Math.cos(PL.ang)*sp;c.vy=Math.sin(PL.ang)*sp;
+      PL.strike=null;const rgv=$('#plRange');PL.pull=rgv?rgv.value/100:.4;PL.moving=true;PL.shotPot=0;PL.scratch=false;
       noise(.04,0,2200,.35);tone(900,.05,'triangle',.08+pw*.06)}}
   if(PL.moving){for(let k=0;k<4;k++)plStep();let any=false;
     for(const b of PL.balls){b.vx*=.985;b.vy*=.985;if(Math.hypot(b.vx,b.vy)<.06){b.vx=b.vy=0}else any=true}
     if(!any){PL.moving=false;plShotEnd()}}
   plDraw(cv,now);PL.raf=requestAnimationFrame(plLoop)}
-function plShotEnd(){if(!PL.active)return;PL.shots--;
+function plShotEnd(){if(!PL.active)return;PL.shots--;PL.tp=null;
   const m=PL.scratch?'Bola blanca a la tronera. ':PL.shotPot?`¡${PL.shotPot===1?'Dentro':PL.shotPot+' bolas dentro'}! `:'';
   if(PL.potted>=9||PL.shots<=0){PL.active=false;const mult=PL.pays[Math.min(9,PL.potted)]||0,ret=PL.bet*mult;if(PL.potted>=9)ach('pool');
     setMsg('#plMsg',`${m}Fin del desafío: ${PL.potted} bolas. `+(ret?`Cobras ${fmt(ret)}`:'Necesitas al menos 4 bolas para cobrar'),ret>PL.bet?'win':ret?'':'lose');
-    settle('billar',PL.bet,ret);plUI();const b=$('#plGo');if(b)b.textContent='Nuevo desafío';return}
+    settle('billar',PL.bet,ret);plUI();const b=$('#plGo');if(b)b.textContent='JUGAR OTRA VEZ';const st=$('#plStartT');if(st)st.textContent=`Has metido ${PL.potted} bolas`+(ret?` y cobras ${fmt(ret)} fichas.`:'. Con 4 bolas recuperas tu apuesta.')+' ¿Otra partida?';return}
   setMsg('#plMsg',`${m}Te quedan ${PL.shots} tacada${PL.shots===1?'':'s'}`);plUI()}
 function plCue(x,c,ang,gap){
   const ux=Math.cos(ang),uy=Math.sin(ang),px=-uy,py=ux,len=470,tip0=PL.r+3+gap;
@@ -1195,7 +1216,7 @@ function plCue(x,c,ang,gap){
   seg(.985,1,'#111');
   x.beginPath();const h0=at(.04,0),h1=at(.98,0);x.moveTo(h0[0]+px*-1.5,h0[1]+py*-1.5);x.lineTo(h1[0]+px*-3.5,h1[1]+py*-3.5);x.strokeStyle='#ffffff40';x.lineWidth=1.5;x.stroke();
 }
-function plDraw(cv,now){const x=cv.getContext('2d'),{W,H,L,T,R,B,r}=PL;
+function plDraw(cv,now){const x=cv.getContext('2d'),{W,H,L,T,R,B,r}=PL;x.setTransform(1,0,0,1,0,0);x.clearRect(0,0,cv.width,cv.height);if(PL.vert&&cv.width===500)x.setTransform(0,1,-1,0,500,0);
   x.fillStyle='#2b170a';x.fillRect(0,0,W,H);const wg=x.createLinearGradient(0,0,0,H);wg.addColorStop(0,'#7a4a22');wg.addColorStop(.5,'#4a2a12');wg.addColorStop(1,'#6b3f1c');
   x.fillStyle=wg;x.beginPath();x.roundRect?x.roundRect(4,4,W-8,H-8,18):x.rect(4,4,W-8,H-8);x.fill();
   x.fillStyle='#0b4a33';x.fillRect(L-14,T-14,R-L+28,B-T+28);
@@ -1209,7 +1230,7 @@ function plDraw(cv,now){const x=cv.getContext('2d'),{W,H,L,T,R,B,r}=PL;
     x.save();x.beginPath();x.arc(b.x,b.y,r,0,TAU);x.clip();x.fillStyle=b.n===9?'#f4ecd8':PL.cols[b.n];x.fillRect(b.x-r,b.y-r,r*2,r*2);
     const off=b.n?Math.sin(b.roll||0)*r*.35:0;
     if(b.n===9){x.fillStyle=PL.cols[9];x.fillRect(b.x-r,b.y-r*.55+off*.5,r*2,r*1.1)}
-    if(b.n){x.beginPath();x.arc(b.x+off,b.y,r*.48,0,TAU);x.fillStyle='#fff';x.fill();x.fillStyle='#111';x.font='800 11px Manrope,sans-serif';x.textAlign='center';x.textBaseline='middle';x.fillText(b.n,b.x+off,b.y+.5)}
+    if(b.n){x.beginPath();x.arc(b.x+off,b.y,r*.48,0,TAU);x.fillStyle='#fff';x.fill();x.fillStyle='#111';x.font='800 11px Manrope,sans-serif';x.textAlign='center';x.textBaseline='middle';x.save();x.translate(b.x+off,b.y+.5);if(PL.vert)x.rotate(-Math.PI/2);x.fillText(b.n,0,0);x.restore()}
     const hg=x.createRadialGradient(b.x-r*.4,b.y-r*.4,1,b.x,b.y,r);hg.addColorStop(0,'#ffffffaa');hg.addColorStop(.4,'#ffffff00');hg.addColorStop(1,'#0000004d');x.fillStyle=hg;x.fillRect(b.x-r,b.y-r,r*2,r*2);x.restore()}
   const c=PL.balls[0];if(!c||PL.moving)return;
   const ux=Math.cos(PL.ang),uy=Math.sin(PL.ang);
@@ -1219,6 +1240,7 @@ function plDraw(cv,now){const x=cv.getContext('2d'),{W,H,L,T,R,B,r}=PL;
     const gx=c.x+ux*best,gy=c.y+uy*best;x.setLineDash([8,8]);x.strokeStyle='#ffffffaa';x.lineWidth=2;x.beginPath();x.moveTo(c.x+ux*r,c.y+uy*r);x.lineTo(gx,gy);x.stroke();x.setLineDash([]);
     x.beginPath();x.arc(gx,gy,r,0,TAU);x.strokeStyle='#ffffffcc';x.stroke();
     if(hit){const nx=hit.x-gx,ny=hit.y-gy,nd=Math.hypot(nx,ny)||1;x.strokeStyle='#f2d78ccc';x.beginPath();x.moveTo(hit.x,hit.y);x.lineTo(hit.x+nx/nd*90,hit.y+ny/nd*90);x.stroke()}}
+  if(PL.tp&&PL.active&&!PL.strike){const k=.5+.5*Math.sin(now/180);x.beginPath();x.arc(PL.tp[0],PL.tp[1],PL.pr+6,0,TAU);x.strokeStyle=`rgba(242,215,140,${.4+.6*k})`;x.lineWidth=4;x.stroke()}
   let gap=6+PL.pull*95;
   if(PL.strike){const t=Math.min(1,(now-PL.strike.t0)/110);gap=(6+PL.strike.pw*95)*(1-t*t)}
   plCue(x,c,PL.ang,gap);
