@@ -1,4 +1,4 @@
-<title>Gran Casino Medianoche</title>
+<title>Casino Sorríos</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Limelight&family=Manrope:wght@400;600;700;800&display=swap">
@@ -148,6 +148,58 @@ button:disabled{opacity:.4;cursor:not-allowed}
 .mini-cue::after{content:"";position:absolute;right:-30px;top:-8px;width:22px;height:22px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff 0 20%,#ddd 60%,#aaa)}
 .disc{margin-top:30px;color:#7d8c83;font-size:12px;text-align:center}
 
+
+/* Fachada */
+body.facade-mode{padding-bottom:0;overflow:hidden}
+body.facade-mode .stage{margin-top:12px}
+.facade{position:relative;overflow:hidden;border-radius:22px;border:1px solid #d9b45b55;
+  background:radial-gradient(1.2px 1.2px at 12% 18%,#fff,transparent),radial-gradient(1px 1px at 28% 8%,#fff,transparent),radial-gradient(1.4px 1.4px at 44% 22%,#fffbe0,transparent),radial-gradient(1px 1px at 63% 12%,#fff,transparent),radial-gradient(1.2px 1.2px at 78% 26%,#fff,transparent),radial-gradient(1px 1px at 90% 9%,#fff,transparent),radial-gradient(1px 1px at 6% 40%,#fff,transparent),radial-gradient(1px 1px at 95% 38%,#fff,transparent),radial-gradient(1.2px 1.2px at 35% 34%,#fff,transparent),radial-gradient(1px 1px at 55% 4%,#fff,transparent),
+  linear-gradient(#040714 0%,#0d0b26 45%,#2a1030 75%,#4a1a2a 100%)}
+.bld{position:absolute;inset:0;width:100%;height:100%;overflow:visible;transition:transform .8s cubic-bezier(.5,0,.8,.4),opacity .8s}
+.facade.zoom .bld{transform:scale(5);opacity:0}
+.facade.zoom::after{content:"";position:absolute;inset:0;background:#fff3d6;animation:fadein .8s .15s both}
+@keyframes fadein{from{opacity:0}}
+.moon{position:absolute;top:7%;right:9%;width:clamp(36px,6vw,64px);aspect-ratio:1;border-radius:50%;background:radial-gradient(circle at 35% 35%,#fffbe8,#e8dcb8);box-shadow:0 0 40px 10px #fff3c433}
+.beam{position:absolute;bottom:18%;width:90px;height:120%;transform-origin:50% 100%;background:linear-gradient(to top,#fff6d855,transparent 85%);clip-path:polygon(44% 100%,56% 100%,100% 0,0 0);filter:blur(2px);pointer-events:none}
+.beam.b1{left:22%;animation:sweep 7s ease-in-out infinite alternate}
+.beam.b2{right:22%;animation:sweep 8s ease-in-out -3s infinite alternate-reverse}
+@keyframes sweep{from{transform:rotate(-28deg)}to{transform:rotate(24deg)}}
+.sign-t{font-family:'Limelight',Georgia,serif;font-size:50px;fill:url(#gold)}
+.canopy-t{font-family:'Manrope',sans-serif;font-weight:800;font-size:17px;letter-spacing:.16em;fill:#fff3d6}
+.sb{fill:#fff3c4}.sb.a{animation:bulb 1s steps(1) infinite}.sb.b{animation:bulb 1s steps(1) -.5s infinite}
+@keyframes bulb{50%{fill:#7a5a17}}
+.win{fill:#2a2030}.win.lit{fill:#f2c46b;opacity:.85}.win.fl{animation:flick 4s infinite}
+@keyframes flick{0%,100%{opacity:.85}48%{opacity:.85}50%{opacity:.35}53%{opacity:.85}}
+.beacon{fill:#ff3b4e;animation:bulb 1.6s steps(1) infinite}
+.door{cursor:pointer;outline:none}
+.door-ring{animation:ring 1.6s ease-in-out infinite;filter:drop-shadow(0 0 6px #f2d78c)}
+@keyframes ring{50%{stroke-opacity:.2}}
+.door:hover .door-ring,.door:focus-visible .door-ring{stroke:#fff;stroke-width:5}
+.leafL,.leafR{transform-box:fill-box;transition:transform .6s cubic-bezier(.3,.7,.3,1)}
+.leafL{transform-origin:0 50%}.leafR{transform-origin:100% 50%}
+.door.open .leafL,.door.open .leafR{transform:scaleX(.08)}
+.hint{position:absolute;left:50%;bottom:max(10px,2%);transform:translateX(-50%);padding:8px 16px;border-radius:99px;background:#000b;border:1px solid var(--gold);color:var(--gold-2);font-weight:800;font-size:14px;white-space:nowrap;animation:hint 1.6s ease-in-out infinite;pointer-events:none}
+@keyframes hint{50%{transform:translate(-50%,-4px)}}
+@media (max-width:600px){.hint{bottom:auto;top:14px}}
+/* Salón */
+.salon-h{text-align:center;padding:10px 0 6px}
+.salon-h h2{font-family:var(--f-display);font-weight:400;font-size:clamp(34px,6vw,52px);margin:4px 0;color:var(--gold-2)}
+.salon-h p{color:var(--muted);margin:0 auto 14px;max-width:52ch}
+.strip{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;align-items:stretch}
+.s-jp,.s-mem{display:flex;flex-direction:column;justify-content:center;gap:2px;padding:8px 14px;border-radius:14px;background:#0b0204;border:1px solid var(--gold);text-align:center}
+.s-jp small,.s-mem small{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold)}
+.s-jp .led{font-size:24px;margin:0;padding:2px 10px}
+.s-mem{background:linear-gradient(135deg,#16120c,#050505);color:var(--ivory)}.s-mem span{font-size:13px}
+.room-list{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:18px}
+@media (max-width:900px){.room-list{grid-template-columns:1fr}}
+.rrow{display:grid;grid-template-columns:128px 1fr;grid-template-rows:auto auto;gap:10px 14px;align-items:center;padding:12px;border-radius:18px;background:#0c1613;border:1px solid var(--line)}
+.rrow:hover{box-shadow:0 0 0 1px var(--gold)}
+.thumb{grid-row:1/3;width:128px;height:112px;border-radius:12px;overflow:hidden;position:relative;box-shadow:inset 0 0 30px #000a;border:2px solid #3b2413}
+.thumb .in{position:absolute;left:50%;top:50%;width:230px;height:170px;margin:-85px 0 0 -115px;transform:scale(.6);display:grid;place-items:center}
+.rinfo{min-width:0}.rinfo h3{margin:0;font-size:18px}.rinfo p{margin:2px 0 4px;color:#c7d0c9;font-size:13.5px}
+.rinfo .meta{display:flex;flex-wrap:wrap;gap:4px 12px;font-size:12px;color:var(--muted)}.rinfo .meta span:last-child{color:var(--gold)}
+.enter{grid-column:2;letter-spacing:.08em;font-size:14px;padding:12px}
+@media (max-width:480px){.rrow{grid-template-columns:96px 1fr}.thumb{width:96px;height:96px;grid-row:1}.thumb .in{transform:scale(.45)}.enter{grid-column:1/-1}}
 /* Cabecera de juego */
 .gh{display:flex;align-items:center;gap:12px;margin-bottom:14px;flex-wrap:wrap}
 .back{padding:8px 14px;border-radius:999px;border:1px solid var(--line);font-weight:700;font-size:13px}
@@ -322,7 +374,7 @@ button:disabled{opacity:.4;cursor:not-allowed}
 </style>
 
 <header class="top"><div class="top-in">
-  <div class="logo" id="home" tabindex="0">Medianoche<small>Gran Casino</small></div>
+  <div class="logo" id="home" tabindex="0">Sorríos<small>Casino</small></div>
   <div class="spacer"></div>
   <div class="lvl" id="lvlBox" tabindex="0"><div class="t"><span>Nivel <b id="hLvl">1</b> · <span id="hTier">Bronce</span></span><span id="hXp" class="num"></span></div><div class="bar"><i id="hBar"></i></div></div>
   <button class="tb" id="bonusBtn">Regalo <span id="bonusT"></span></button>
@@ -480,7 +532,7 @@ $('#bwOk').onclick=closeBig;
 const CHIPS=[10,25,100,500,1000,5000,25000,100000];
 const chipBar=()=>`<div class="chipbar" role="group" aria-label="Valor de ficha">${CHIPS.map(v=>`<button class="chip v${v} ${S.chip===v?'sel':''}" data-chip="${v}" aria-label="Ficha de ${v}">${short(v)}</button>`).join('')}</div>`;
 document.addEventListener('click',e=>{ac();const b=e.target.closest('[data-chip]');if(b){S.chip=+b.dataset.chip;$$('[data-chip]').forEach(x=>x.classList.toggle('sel',+x.dataset.chip===S.chip));sfx('chip');save()}});
-const head=(t,sub)=>`<div class="gh"><button class="back" data-go="lobby">← Vestíbulo</button><h2>${t}</h2><p>${sub}</p></div>`;
+const head=(t,sub)=>`<div class="gh"><button class="back" data-go="salon">← Volver a las salas</button><h2>${t}</h2><p>${sub}</p></div>`;
 const RANKS=['A','2','3','4','5','6','7','8','9','10','J','Q','K'],SUITS=['♠','♥','♦','♣'];
 function makeShoe(decks){const a=[];for(let d=0;d<decks;d++)for(const s of SUITS)RANKS.forEach((r,i)=>a.push({r,s,i}));return shuffle(a)}
 function cardHTML(c,hidden){if(hidden)return `<div class="card back ${c.n?'':'deal'}"></div>`;
@@ -525,65 +577,81 @@ const ROOMS=[
  ['Salón de billar','Un juego de habilidad: aquí manda tu puntería',[
   ['billar','Desafío de Billar','Apunta el taco y mete las 9 bolas en solo 8 tacadas.','Habilidad','Mesa limpia paga 50 a 1','felt']]],
 ];
+function sizeFacade(){const f=$('.facade');if(!f)return;const top=f.getBoundingClientRect().top+scrollY;f.style.height=Math.max(380,innerHeight-top-14)+'px'}
+addEventListener('resize',sizeFacade);
 function lobby(){
-  const ART=ARTF(),t=tier(),left=S.lastBonus+BONUS_MS-Date.now(),toNext=need(S.level)-S.xp,nAch=Object.keys(S.ach).filter(k=>ACH[k]).length;
+  document.body.classList.add('facade-mode');
+  $('#stage').innerHTML=`<section class="facade"><div class="moon"></div><div class="beam b1"></div><div class="beam b2"></div><svg class="bld" viewBox="100 10 600 632" preserveAspectRatio="xMidYMax meet" role="img" aria-label="Fachada del Casino Sorríos">
+<defs>
+ <linearGradient id="stone" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2c2230"/><stop offset="1" stop-color="#17101a"/></linearGradient>
+ <linearGradient id="up" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#f2b45b" stop-opacity=".55"/><stop offset=".55" stop-color="#f2b45b" stop-opacity="0"/></linearGradient>
+ <linearGradient id="gold" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff2c4"/><stop offset=".5" stop-color="#f2d78c"/><stop offset="1" stop-color="#b8862b"/></linearGradient>
+ <linearGradient id="leaf" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5a3a14"/><stop offset="1" stop-color="#2b1a08"/></linearGradient>
+ <radialGradient id="inside" cx=".5" cy=".7" r=".7"><stop offset="0" stop-color="#fff6d8"/><stop offset=".45" stop-color="#f2b45b"/><stop offset="1" stop-color="#7a2a10"/></radialGradient>
+ <radialGradient id="lampg"><stop offset="0" stop-color="#fff3c4" stop-opacity=".9"/><stop offset="1" stop-color="#fff3c4" stop-opacity="0"/></radialGradient>
+ <filter id="glow" x="-20%" y="-50%" width="140%" height="200%"><feGaussianBlur stdDeviation="3.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+</defs>
+<rect x="-3000" y="600" width="7000" height="60" fill="#120d10"/><rect x="-3000" y="600" width="7000" height="3" fill="#3a2a2a"/>
+<line x1="400" y1="70" x2="400" y2="22" stroke="#d9b45b" stroke-width="3"/><circle cx="400" cy="20" r="5" class="beacon"/>
+<polygon points="290,600 290,120 312,120 312,96 352,96 352,72 448,72 448,96 488,96 488,120 510,120 510,600" fill="url(#stone)"/>
+<g stroke="#d9b45b" stroke-width="2" opacity=".8"><line x1="400" y1="96" x2="443.74859974957707" y2="81.78521825875242" /><line x1="400" y1="96" x2="437.2147817412476" y2="68.96187839454623" /><line x1="400" y1="96" x2="427.03812160545374" y2="58.785218258752415" /><line x1="400" y1="96" x2="414.2147817412476" y2="52.25140025042294" /><line x1="400" y1="96" x2="400.0" y2="50.0" /><line x1="400" y1="96" x2="385.7852182587524" y2="52.25140025042293" /><line x1="400" y1="96" x2="372.96187839454626" y2="58.785218258752415" /><line x1="400" y1="96" x2="362.7852182587524" y2="68.96187839454623" /><line x1="400" y1="96" x2="356.25140025042293" y2="81.78521825875242" /></g>
+<rect x="110" y="200" width="180" height="400" fill="url(#stone)"/><rect x="510" y="200" width="180" height="400" fill="url(#stone)"/>
+<rect x="104" y="194" width="192" height="8" fill="url(#gold)"/><rect x="504" y="194" width="192" height="8" fill="url(#gold)"/>
+<rect x="286" y="116" width="228" height="6" fill="url(#gold)"/>
+<rect x="110" y="120" width="580" height="480" fill="url(#up)" opacity=".9" style="mix-blend-mode:screen"/>
+<rect class="win lit" x="318" y="128" width="14" height="62" rx="7"/><rect class="win lit" x="353" y="128" width="14" height="62" rx="7"/><rect class="win lit" x="393" y="128" width="14" height="62" rx="7"/><rect class="win lit" x="433" y="128" width="14" height="62" rx="7"/><rect class="win lit" x="468" y="128" width="14" height="62" rx="7"/><path class="win lit fl" d="M130 374 V334 A18 18 0 0 1 166 334 V374 Z"/><path class="win" d="M180 374 V334 A18 18 0 0 1 216 334 V374 Z"/><path class="win lit fl" d="M230 374 V334 A18 18 0 0 1 266 334 V374 Z"/><path class="win" d="M534 374 V334 A18 18 0 0 1 570 334 V374 Z"/><path class="win lit" d="M584 374 V334 A18 18 0 0 1 620 334 V374 Z"/><path class="win lit" d="M634 374 V334 A18 18 0 0 1 670 334 V374 Z"/><path class="win lit" d="M130 454 V414 A18 18 0 0 1 166 414 V454 Z"/><path class="win lit" d="M180 454 V414 A18 18 0 0 1 216 414 V454 Z"/><path class="win" d="M230 454 V414 A18 18 0 0 1 266 414 V454 Z"/><path class="win lit fl" d="M534 454 V414 A18 18 0 0 1 570 414 V454 Z"/><path class="win" d="M584 454 V414 A18 18 0 0 1 620 414 V454 Z"/><path class="win lit fl" d="M634 454 V414 A18 18 0 0 1 670 414 V454 Z"/><path class="win" d="M130 534 V494 A18 18 0 0 1 166 494 V534 Z"/><path class="win lit" d="M180 534 V494 A18 18 0 0 1 216 494 V534 Z"/><path class="win lit" d="M230 534 V494 A18 18 0 0 1 266 494 V534 Z"/><path class="win lit" d="M534 534 V494 A18 18 0 0 1 570 494 V534 Z"/><path class="win lit" d="M584 534 V494 A18 18 0 0 1 620 494 V534 Z"/><path class="win" d="M634 534 V494 A18 18 0 0 1 670 494 V534 Z"/>
+<g class="sign"><line x1="200" y1="292" x2="200" y2="304" stroke="#d9b45b" stroke-width="4"/><line x1="600" y1="292" x2="600" y2="304" stroke="#d9b45b" stroke-width="4"/>
+<rect x="140" y="210" width="520" height="80" rx="10" fill="#14050a" stroke="url(#gold)" stroke-width="4"/><circle cx="150" cy="214" r="3.6" class="sb b"/><circle cx="150" cy="286" r="3.6" class="sb a"/><circle cx="170" cy="214" r="3.6" class="sb b"/><circle cx="170" cy="286" r="3.6" class="sb a"/><circle cx="190" cy="214" r="3.6" class="sb b"/><circle cx="190" cy="286" r="3.6" class="sb a"/><circle cx="210" cy="214" r="3.6" class="sb b"/><circle cx="210" cy="286" r="3.6" class="sb a"/><circle cx="230" cy="214" r="3.6" class="sb b"/><circle cx="230" cy="286" r="3.6" class="sb a"/><circle cx="250" cy="214" r="3.6" class="sb b"/><circle cx="250" cy="286" r="3.6" class="sb a"/><circle cx="270" cy="214" r="3.6" class="sb b"/><circle cx="270" cy="286" r="3.6" class="sb a"/><circle cx="290" cy="214" r="3.6" class="sb b"/><circle cx="290" cy="286" r="3.6" class="sb a"/><circle cx="310" cy="214" r="3.6" class="sb b"/><circle cx="310" cy="286" r="3.6" class="sb a"/><circle cx="330" cy="214" r="3.6" class="sb b"/><circle cx="330" cy="286" r="3.6" class="sb a"/><circle cx="350" cy="214" r="3.6" class="sb b"/><circle cx="350" cy="286" r="3.6" class="sb a"/><circle cx="370" cy="214" r="3.6" class="sb b"/><circle cx="370" cy="286" r="3.6" class="sb a"/><circle cx="390" cy="214" r="3.6" class="sb b"/><circle cx="390" cy="286" r="3.6" class="sb a"/><circle cx="410" cy="214" r="3.6" class="sb b"/><circle cx="410" cy="286" r="3.6" class="sb a"/><circle cx="430" cy="214" r="3.6" class="sb b"/><circle cx="430" cy="286" r="3.6" class="sb a"/><circle cx="450" cy="214" r="3.6" class="sb b"/><circle cx="450" cy="286" r="3.6" class="sb a"/><circle cx="470" cy="214" r="3.6" class="sb b"/><circle cx="470" cy="286" r="3.6" class="sb a"/><circle cx="490" cy="214" r="3.6" class="sb b"/><circle cx="490" cy="286" r="3.6" class="sb a"/><circle cx="510" cy="214" r="3.6" class="sb b"/><circle cx="510" cy="286" r="3.6" class="sb a"/><circle cx="530" cy="214" r="3.6" class="sb b"/><circle cx="530" cy="286" r="3.6" class="sb a"/><circle cx="550" cy="214" r="3.6" class="sb b"/><circle cx="550" cy="286" r="3.6" class="sb a"/><circle cx="570" cy="214" r="3.6" class="sb b"/><circle cx="570" cy="286" r="3.6" class="sb a"/><circle cx="590" cy="214" r="3.6" class="sb b"/><circle cx="590" cy="286" r="3.6" class="sb a"/><circle cx="610" cy="214" r="3.6" class="sb b"/><circle cx="610" cy="286" r="3.6" class="sb a"/><circle cx="630" cy="214" r="3.6" class="sb b"/><circle cx="630" cy="286" r="3.6" class="sb a"/><circle cx="650" cy="214" r="3.6" class="sb b"/><circle cx="650" cy="286" r="3.6" class="sb a"/><circle cx="144" cy="234" r="3.6" class="sb b"/><circle cx="656" cy="234" r="3.6" class="sb a"/><circle cx="144" cy="252" r="3.6" class="sb b"/><circle cx="656" cy="252" r="3.6" class="sb a"/><circle cx="144" cy="270" r="3.6" class="sb b"/><circle cx="656" cy="270" r="3.6" class="sb a"/>
+<text x="400" y="266" text-anchor="middle" class="sign-t" textLength="440" lengthAdjust="spacingAndGlyphs" filter="url(#glow)">CASINO SORRÍOS</text></g>
+<rect x="316" y="410" width="16" height="190" fill="#cdb07a"/><rect x="468" y="410" width="16" height="190" fill="#cdb07a"/>
+<g class="door" id="door" tabindex="0" role="button" aria-label="Entrar al casino">
+ <path d="M342 600 V486 A58 58 0 0 1 458 486 V600 Z" fill="url(#inside)"/>
+ <path class="leafL" d="M342 600 V486 A58 58 0 0 1 400 428 V600 Z" fill="url(#leaf)" stroke="#f2d78c" stroke-width="2.5"/>
+ <path class="leafR" d="M458 600 V486 A58 58 0 0 0 400 428 V600 Z" fill="url(#leaf)" stroke="#f2d78c" stroke-width="2.5"/>
+ <g class="leafL" fill="none" stroke="#f2d78c" stroke-width="1.5" opacity=".8"><path d="M352 590 V492 A48 48 0 0 1 394 440"/><circle cx="390" cy="530" r="4" fill="#f2d78c"/></g>
+ <g class="leafR" fill="none" stroke="#f2d78c" stroke-width="1.5" opacity=".8"><path d="M448 590 V492 A48 48 0 0 0 406 440"/><circle cx="410" cy="530" r="4" fill="#f2d78c"/></g>
+ <path class="door-ring" d="M342 600 V486 A58 58 0 0 1 458 486 V600" fill="none" stroke="#fff1c1" stroke-width="3"/>
+</g>
+<polygon points="288,404 512,404 528,432 272,432" fill="#7d1f2c" stroke="url(#gold)" stroke-width="2"/><circle cx="286" cy="428" r="3" class="sb b"/><circle cx="302" cy="428" r="3" class="sb a"/><circle cx="318" cy="428" r="3" class="sb b"/><circle cx="334" cy="428" r="3" class="sb a"/><circle cx="350" cy="428" r="3" class="sb b"/><circle cx="366" cy="428" r="3" class="sb a"/><circle cx="382" cy="428" r="3" class="sb b"/><circle cx="398" cy="428" r="3" class="sb a"/><circle cx="414" cy="428" r="3" class="sb b"/><circle cx="430" cy="428" r="3" class="sb a"/><circle cx="446" cy="428" r="3" class="sb b"/><circle cx="462" cy="428" r="3" class="sb a"/><circle cx="478" cy="428" r="3" class="sb b"/><circle cx="494" cy="428" r="3" class="sb a"/><circle cx="510" cy="428" r="3" class="sb b"/>
+<text x="400" y="425" text-anchor="middle" class="canopy-t">ENTRAR AL CASINO</text>
+<rect x="326" y="600" width="148" height="10" fill="#cfc3a8"/><rect x="314" y="610" width="172" height="10" fill="#b9ad93"/><rect x="302" y="620" width="196" height="10" fill="#a39880"/>
+<polygon points="356,600 444,600 470,642 330,642" fill="#9e1c27"/>
+<g><circle cx="230" cy="520" r="34" fill="url(#lampg)"/><rect x="228" y="524" width="4" height="76" fill="#1a1a1a"/><circle cx="230" cy="518" r="7" fill="#fff3c4"/>
+<circle cx="570" cy="520" r="34" fill="url(#lampg)"/><rect x="568" y="524" width="4" height="76" fill="#1a1a1a"/><circle cx="570" cy="518" r="7" fill="#fff3c4"/></g>
+</svg>
+    <div class="hint">Toca la puerta para entrar</div></section>`;
+  sizeFacade();window.scrollTo(0,0);
+  const d=$('#door');const enter=()=>{if(d.classList.contains('open'))return;d.classList.add('open');tone(196,.5,'sine',.08);[523,659,784,1047].forEach((f,i)=>tone(f,.4,'triangle',.08,.35+i*.09));
+    const fa=$('.facade'),r=d.getBoundingClientRect(),fr=fa.getBoundingClientRect();const svg=$('.bld');svg.style.transformOrigin=`${r.left-fr.left+r.width/2}px ${r.top-fr.top+r.height*.6}px`;
+    setTimeout(()=>fa.classList.add('zoom'),550);setTimeout(()=>go('salon'),1350)};
+  d.onclick=enter;d.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();enter()}};
+}
+function salon(){
+  const ART=ARTF(),t=tier(),left=S.lastBonus+BONUS_MS-Date.now(),toNext=need(S.level)-S.xp;
+  const all=ROOMS.flatMap(r=>r[2]);
   $('#stage').innerHTML=`
-  <section class="hall">
-    <div class="rays"></div><canvas class="bokeh" id="bokeh"></canvas><div class="bulbs-row top"></div><div class="bulbs-row bot"></div>
-    <div class="hall-in">
-      <div class="eyebrow">Bienvenido al</div>
-      <h1><span class="gc-small">Gran Casino</span><span class="gold-title">Medianoche</span></h1>
-      <p class="lead">Ocho juegos de casino con reglas reales. Empiezas con fichas de regalo, juegas, ganas premios y subes de nivel.</p>
-      <div class="purse"><span class="ico"></span><div><small>Tus fichas</small><b class="num">${fmt(S.chips)}</b></div></div>
-      <div class="row-c"><a class="btn primary big" href="#salas" id="enter">Entrar al casino</a><button class="btn wine big" id="lbBonus">${left<=0?'Recoger regalo gratis':'Próximo regalo en '+Math.floor(left/3600e3)+' h '+Math.ceil(left%3600e3/60e3)+' min'}</button></div>
+  <section class="salon-h">
+    <div class="eyebrow">Casino Sorríos · Salón principal</div>
+    <h2>Elige tu sala</h2>
+    <p>Estos son todos los juegos del casino. Pulsa «Entrar a la sala» en el que quieras jugar.</p>
+    <div class="strip">
+      <div class="s-jp"><small>Bote de la tragaperras</small><span class="led num" id="jpV">${fmt(S.jackpot)}</span></div>
+      <button class="s-mem" id="memberCard"><small>Socio ${t[1]} · Nivel ${S.level}</small><span>Te faltan ${fmt(toNext)} puntos para ganar ${fmt(1000*(S.level+1))} fichas</span></button>
+      <button class="btn wine" id="lbBonus">${left<=0?'Recoger regalo gratis':'Regalo en '+Math.floor(left/3600e3)+' h '+Math.ceil(left%3600e3/60e3)+' min'}</button>
     </div>
   </section>
-
-  <section class="how">
-    <div class="step"><span class="sn">1</span><div><b>Elige un juego</b><p>Pulsa cualquier mesa o máquina de las salas de abajo.</p></div></div>
-    <div class="step"><span class="sn">2</span><div><b>Apuesta tus fichas</b><p>Toca una ficha para elegir cuánto apuestas y colócala en la mesa.</p></div></div>
-    <div class="step"><span class="sn">3</span><div><b>Gana y sube de nivel</b><p>Cada apuesta te da puntos. Al subir de nivel te regalamos fichas.</p></div></div>
-  </section>
-
-  <section class="duo">
-    <div class="jp-panel">
-      <div class="eyebrow">Bote acumulado de la tragaperras</div>
-      <div class="led num" id="jpV">${fmt(S.jackpot)}</div>
-      <p>Crece con cada tirada. Se lo lleva quien saque cinco diamantes 💎 en una línea.</p>
-      <button class="btn primary" data-go="slots">Jugar por el bote</button>
-    </div>
-    <button class="member" id="memberCard">
-      <div class="m-top"><span>Medianoche · Club de socios</span><span class="m-chip"></span></div>
-      <div class="m-tier">Socio ${t[1]}</div>
-      <div class="m-lv">Nivel ${S.level}</div>
-      <div class="bar"><i style="width:${Math.min(100,S.xp/need(S.level)*100)}%"></i></div>
-      <div class="m-txt">Te faltan <b>${fmt(toNext)} puntos</b> para el nivel ${S.level+1} y su premio de <b>${fmt(1000*(S.level+1))} fichas</b>. Ganas 1 punto por cada 10 fichas apostadas.</div>
-      <div class="m-foot"><span>Logros: ${nAch} de ${Object.keys(ACH).length}</span><span>Ver logros →</span></div>
-    </button>
-  </section>
-
-  <div id="salas"></div>
-  ${ROOMS.map(([rt,rs,games])=>`
-  <div class="room-t"><h2>${rt}</h2><span>${rs}</span></div>
-  <div class="games">${games.map(([id,name,how,dif,pay,felt])=>`
-    <button class="gc" data-go="${id}">
-      <div class="art ${felt}">${ART[id]}<span class="tag">${S.played[id]?'Ya jugado':'Nuevo para ti'}</span></div>
-      <div class="bd"><h3>${name}</h3><p>${how}</p><div class="meta"><span>Dificultad: ${dif}</span><span>${pay}</span></div><span class="play">Jugar ahora</span></div>
-    </button>`).join('')}</div>`).join('')}
+  <div class="room-list">${all.map(([id,name,how,dif,pay,felt])=>`
+    <article class="rrow">
+      <div class="thumb ${felt}"><div class="in">${ART[id]}</div></div>
+      <div class="rinfo"><h3>${name}</h3><p>${how}</p><div class="meta"><span>Dificultad: ${dif}</span><span>${pay}</span></div></div>
+      <button class="btn primary enter" data-go="${id}">ENTRAR A LA SALA</button>
+    </article>`).join('')}</div>
+  <div class="row-c" style="margin-top:20px"><button class="btn" data-go="lobby">← Salir a la calle</button></div>
   <p class="disc">Juego de entretenimiento con fichas ficticias sin ningún valor real. No se puede comprar ni canjear nada. Tu progreso se guarda en este navegador.</p>`;
   $('#lbBonus').onclick=bonusWheel;$('#memberCard').onclick=profile;
-  $('#enter').onclick=e=>{e.preventDefault();$('#salas').scrollIntoView({behavior:'smooth'})};
   clearInterval(jpTimer);jpTimer=setInterval(()=>{S.jackpot+=rnd(60)+5;const e=$('#jpV');if(e)e.textContent=fmt(S.jackpot);else clearInterval(jpTimer)},1400);
-  // animaciones: ruleta en miniatura y luces flotantes
-  const wheels=$$('.mini-wheel'),bk=$('#bokeh'),bx=bk.getContext('2d');
-  const P=Array.from({length:46},()=>({x:Math.random(),y:Math.random(),r:1+Math.random()*3.5,v:.0004+Math.random()*.0012,p:Math.random()*TAU}));
-  let rot=0;cancelAnimationFrame(lobbyRaf);
-  const loop=now=>{if(!document.body.contains(bk))return;
-    rot+=.006;wheels.forEach(w=>drawWheel(rot,{a:-rot*1.7,r:.875},w));
-    const W=bk.clientWidth,H=bk.clientHeight;if(bk.width!==W)bk.width=W;if(bk.height!==H)bk.height=H;bx.clearRect(0,0,W,H);
-    for(const q of P){q.y-=q.v;if(q.y<-.05){q.y=1.05;q.x=Math.random()}const a=.25+.35*Math.sin(now/700+q.p);
-      const g=bx.createRadialGradient(q.x*W,q.y*H,0,q.x*W,q.y*H,q.r*4);g.addColorStop(0,`rgba(255,226,150,${a})`);g.addColorStop(1,'rgba(255,226,150,0)');bx.fillStyle=g;bx.beginPath();bx.arc(q.x*W,q.y*H,q.r*4,0,TAU);bx.fill()}
-    lobbyRaf=requestAnimationFrame(loop)};
+  const wheels=$$('.mini-wheel');let rot=0;cancelAnimationFrame(lobbyRaf);
+  const loop=()=>{if(!wheels.length||!document.body.contains(wheels[0]))return;rot+=.006;wheels.forEach(w=>drawWheel(rot,{a:-rot*1.7,r:.875},w));lobbyRaf=requestAnimationFrame(loop)};
   lobbyRaf=requestAnimationFrame(loop);
   checkBroke();
 }
@@ -1157,13 +1225,13 @@ function plDraw(cv,now){const x=cv.getContext('2d'),{W,H,L,T,R,B,r}=PL;
 }
 
 /* ---------- Navegación ---------- */
-const VIEWS={lobby,ruleta:roulette,blackjack,slots,poker,baccarat,dados,keno,billar};
-function go(v){if(!VIEWS[v])v='lobby';SL.auto=0;closeModal();const st=$('#stage');VIEWS[v](st);window.scrollTo({top:0});try{history.replaceState(null,'',v==='lobby'?location.pathname:'#'+v)}catch(e){}}
+const VIEWS={lobby,salon,ruleta:roulette,blackjack,slots,poker,baccarat,dados,keno,billar};
+function go(v){if(!VIEWS[v])v='lobby';SL.auto=0;closeModal();document.body.classList.remove('facade-mode');const st=$('#stage');VIEWS[v](st);window.scrollTo({top:0});try{history.replaceState(null,'',v==='lobby'?location.pathname:'#'+v)}catch(e){}}
 document.addEventListener('click',e=>{const g=e.target.closest('[data-go]');if(g){sfx('click');go(g.dataset.go)}});
 $('#home').onclick=()=>go('lobby');$('#home').onkeydown=e=>{if(e.key==='Enter')go('lobby')};
 $('#lvlBox').onclick=profile;$('#profBtn').onclick=profile;$('#bonusBtn').onclick=bonusWheel;
 $('#sndBtn').onclick=()=>{S.sound=!S.sound;save();hud();sfx('click')};
 addEventListener('hashchange',()=>go(location.hash.slice(1)||'lobby'));
 hud();go(location.hash.slice(1)||'lobby');
-if(!S.ach.welcome&&S.stats.rounds===0){S.ach.welcome=1;save();setTimeout(()=>modal(`<h3>Bienvenido a Medianoche</h3><p>Tienes 10.000 fichas de bienvenida. Juega a la ruleta, el blackjack, las tragaperras, el video póker, el baccarat, los dados y el keno y el billar. Cada ficha que apuestas te da experiencia: sube de nivel, desbloquea logros y alcanza el estatus VIP Diamante.</p><p>Las fichas son ficticias y no tienen ningún valor real.</p><div class="row-c"><button class="btn primary" data-close>Entrar al casino</button><button class="btn wine" id="wbw">Girar la rueda de bono</button></div>`,ov=>{$('#wbw',ov).onclick=bonusWheel}),400)}
+if(!S.ach.welcome&&S.stats.rounds===0){S.ach.welcome=1;save();setTimeout(()=>modal(`<h3>Bienvenido al Casino Sorríos</h3><p>Tienes 10.000 fichas de bienvenida. Juega a la ruleta, el blackjack, las tragaperras, el video póker, el baccarat, los dados y el keno y el billar. Cada ficha que apuestas te da experiencia: sube de nivel, desbloquea logros y alcanza el estatus VIP Diamante.</p><p>Las fichas son ficticias y no tienen ningún valor real.</p><div class="row-c"><button class="btn primary" data-close>Empezar</button><button class="btn wine" id="wbw">Girar la rueda de bono</button></div>`,ov=>{$('#wbw',ov).onclick=bonusWheel}),400)}
 </script>

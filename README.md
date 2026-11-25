@@ -1,4 +1,4 @@
-# Gran Casino Medianoche
+# Casino Sorríos
 
 Casino de entretenimiento en una sola página web: ruleta europea, blackjack, tragaperras con bote progresivo, video póker, baccarat, dados, keno y desafío de billar. Incluye niveles VIP, logros y rueda de bonificación.
 
