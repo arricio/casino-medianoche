@@ -52,39 +52,101 @@ button:disabled{opacity:.4;cursor:not-allowed}
 .stage{max-width:1100px;margin:22px auto 0}
 
 /* Vestíbulo */
-.hero{display:grid;grid-template-columns:1.3fr 1fr;gap:16px;margin-bottom:18px}
-@media (max-width:760px){.hero{grid-template-columns:1fr}}
-.marquee{border:1px solid var(--line);border-radius:18px;padding:22px;position:relative;overflow:hidden;
-  background:linear-gradient(135deg,#1a0c10,#2b0f17 55%,#12060a)}
-.marquee::after{content:"";position:absolute;inset:8px;border:1px dashed #d9b45b44;border-radius:12px;pointer-events:none}
-.marquee .k{font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold)}
-.marquee .jp{font-family:var(--f-display);font-size:clamp(34px,7vw,58px);line-height:1.05;color:var(--gold-2);text-shadow:0 0 24px #f2d78c55}
-.marquee p{color:var(--muted);margin:6px 0 0;max-width:42ch}
-.bulbs{position:absolute;left:0;right:0;top:0;height:6px;background:repeating-linear-gradient(90deg,var(--gold-2) 0 6px,transparent 6px 18px);animation:bulbs 1s steps(2) infinite;opacity:.7}
-@keyframes bulbs{50%{background-position:12px 0}}
-.vip{border:1px solid var(--line);border-radius:18px;padding:18px;background:linear-gradient(160deg,#10261f,#0a1915);display:flex;flex-direction:column;gap:10px}
-.vip .tier{font-family:var(--f-display);font-size:26px;color:var(--gold-2)}
-.vip .row{display:flex;justify-content:space-between;color:var(--muted);font-size:13px}
-.vip .row b{color:var(--ivory)}
-.btn{padding:11px 18px;border-radius:12px;font-weight:800;letter-spacing:.02em;background:#ffffff10;border:1px solid #ffffff1c;transition:transform .1s,background .2s}
+.btn{padding:11px 18px;border-radius:12px;font-weight:800;letter-spacing:.02em;background:#ffffff10;border:1px solid #ffffff1c;transition:transform .1s,background .2s;color:var(--ivory)}
 .btn:hover{background:#ffffff1a}
 .btn:active{transform:translateY(1px)}
 .btn.primary{background:linear-gradient(#f2d78c,#c99a37);color:#2a1a02;border-color:#f6e2a6;box-shadow:0 6px 18px #d9b45b33}
 .btn.primary:hover{filter:brightness(1.07)}
-.btn.wine{background:linear-gradient(#a12a3a,#6d1824);border-color:#c0475a}
-.sec-t{display:flex;align-items:baseline;justify-content:space-between;margin:22px 0 10px}
-.sec-t h2{font-family:var(--f-display);font-weight:400;font-size:24px;margin:0;color:var(--gold-2)}
-.sec-t span{color:var(--muted);font-size:13px}
-.games{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px}
-.gc{text-align:left;border-radius:16px;overflow:hidden;border:1px solid var(--line);background:var(--felt-2);display:flex;flex-direction:column;transition:transform .18s,box-shadow .18s}
-.gc:hover{transform:translateY(-3px);box-shadow:0 14px 30px #0008,0 0 0 1px var(--gold)}
-.gc .art{height:120px;display:grid;place-items:center;font-family:var(--f-display);font-size:46px;color:var(--gold-2);position:relative;text-shadow:0 4px 14px #0009}
-.gc .art .tag{position:absolute;top:10px;left:10px;font-family:var(--f-body);font-size:10px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;padding:4px 8px;border-radius:99px;background:#000a;color:var(--gold-2);text-shadow:none}
-.gc .bd{padding:12px 14px 14px}
-.gc h3{margin:0;font-size:17px}
-.gc p{margin:3px 0 0;color:var(--muted);font-size:13px}
-.gc .meta{display:flex;justify-content:space-between;margin-top:10px;font-size:12px;color:var(--gold)}
-.disc{margin-top:26px;color:#7d8c83;font-size:12px;text-align:center}
+.btn.wine{background:linear-gradient(#a12a3a,#6d1824);border-color:#c0475a;color:#fff}
+.hall{position:relative;overflow:hidden;border-radius:26px;text-align:center;border:1px solid #d9b45b66;
+  background:radial-gradient(ellipse 80% 70% at 50% 0%,#5a1a28 0,#2a0a12 45%,#0b0507 100%);box-shadow:0 30px 60px #000a,inset 0 0 80px #000}
+.rays{position:absolute;left:50%;top:-30%;width:1600px;height:1600px;margin-left:-800px;background:repeating-conic-gradient(#d9b45b12 0 5deg,transparent 5deg 10deg);
+  -webkit-mask:radial-gradient(circle,#000 0,transparent 60%);mask:radial-gradient(circle,#000 0,transparent 60%);animation:spin 160s linear infinite;pointer-events:none}
+@keyframes spin{to{transform:rotate(360deg)}}
+.bokeh{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.bulbs-row{position:absolute;left:14px;right:14px;height:12px;background:radial-gradient(circle,#fff3c4 0 3px,#f2d78c66 4px,transparent 6px) 0 50%/24px 12px repeat-x;animation:chase .9s steps(2) infinite;filter:drop-shadow(0 0 4px #f2d78c)}
+.bulbs-row.top{top:10px}.bulbs-row.bot{bottom:10px}
+@keyframes chase{to{background-position:12px 50%}}
+.hall-in{position:relative;padding:clamp(40px,8vw,84px) 12px clamp(40px,7vw,72px);max-width:980px;margin:auto}
+.eyebrow{font-size:11px;letter-spacing:.35em;text-transform:uppercase;color:var(--gold)}
+.hall h1{margin:6px 0 0;font-weight:400;line-height:.95}
+.gc-small{display:block;font-family:var(--f-display);font-size:clamp(18px,3.5vw,28px);letter-spacing:.3em;color:var(--ivory);text-transform:uppercase}
+.gold-title{display:block;font-family:var(--f-display);font-size:clamp(46px,11.5vw,116px);letter-spacing:.01em;padding:0 .08em;
+  background:linear-gradient(100deg,#9a6c22 0%,#f2d78c 25%,#fff7dc 38%,#d9b45b 50%,#9a6c22 70%,#f2d78c 85%,#fff7dc 100%);background-size:220% 100%;
+  -webkit-background-clip:text;background-clip:text;color:transparent;animation:shine 7s linear infinite;filter:drop-shadow(0 6px 18px #000)}
+@keyframes shine{to{background-position:-220% 0}}
+.lead{color:#e9dcc0;font-size:clamp(15px,2.2vw,18px);max-width:46ch;margin:18px auto 22px;text-wrap:balance}
+.purse{display:inline-flex;align-items:center;gap:12px;padding:10px 22px 10px 12px;border-radius:999px;background:#000a;border:1px solid var(--gold);margin-bottom:22px;text-align:left}
+.purse .ico{width:40px;height:40px;border-radius:50%;background:repeating-conic-gradient(var(--gold) 0 20deg,#7a5a17 20deg 40deg);box-shadow:inset 0 0 0 7px var(--gold),inset 0 0 0 8px #0005}
+.purse small{display:block;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
+.purse b{font-size:26px;color:var(--gold-2)}
+.btn.big{padding:15px 26px;font-size:16px;border-radius:14px;text-decoration:none;display:inline-block}
+.how{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:18px 0}
+@media (max-width:760px){.how{grid-template-columns:1fr}}
+.step{display:flex;gap:14px;align-items:flex-start;padding:16px;border-radius:16px;background:#0d1a16;border:1px solid #ffffff12}
+.sn{flex:none;width:38px;height:38px;border-radius:50%;display:grid;place-items:center;font-family:var(--f-display);font-size:20px;color:#2a1a02;background:linear-gradient(#f2d78c,#c99a37)}
+.step b{font-size:16px}.step p{margin:3px 0 0;color:var(--muted);font-size:13px}
+.duo{display:grid;grid-template-columns:1.2fr 1fr;gap:14px;margin-bottom:8px}
+@media (max-width:760px){.duo{grid-template-columns:1fr}}
+.jp-panel{border-radius:18px;padding:22px;text-align:center;background:linear-gradient(#1a0509,#0b0204);border:2px solid var(--gold);box-shadow:inset 0 0 40px #000,0 0 30px #d9b45b22}
+.jp-panel p{color:var(--muted);margin:8px auto 14px;max-width:40ch;font-size:14px}
+.led{font-family:'Courier New',monospace;font-weight:700;font-size:clamp(34px,7vw,56px);color:#ffcf5a;letter-spacing:.06em;margin-top:8px;padding:6px 14px;border-radius:10px;background:#000;display:inline-block;
+  text-shadow:0 0 8px #ffb300,0 0 22px #ff8a00;box-shadow:inset 0 0 0 1px #ffffff14}
+.member{text-align:left;border-radius:20px;padding:20px;color:var(--ivory);display:flex;flex-direction:column;gap:8px;position:relative;overflow:hidden;
+  background:linear-gradient(135deg,#16120c,#050505 60%,#1b150b);border:1px solid #d9b45b88;box-shadow:0 20px 40px #000a;transition:transform .2s}
+.member:hover{transform:translateY(-2px)}
+.member::before{content:"";position:absolute;inset:0;background:linear-gradient(115deg,transparent 30%,#ffffff12 45%,transparent 60%);pointer-events:none}
+.m-top{display:flex;justify-content:space-between;align-items:center;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold)}
+.m-chip{width:36px;height:26px;border-radius:5px;background:linear-gradient(135deg,#f2d78c,#a07a2c);box-shadow:inset 0 0 0 1px #0004}
+.m-tier{font-family:var(--f-display);font-size:30px;color:var(--gold-2);margin-top:6px}
+.m-lv{font-size:14px;color:var(--muted)}
+.m-txt{font-size:13px;color:#d9d0bc}.m-txt b{color:var(--gold-2)}
+.m-foot{display:flex;justify-content:space-between;font-size:12px;color:var(--gold);margin-top:4px}
+.room-t{display:flex;align-items:baseline;justify-content:space-between;gap:10px;flex-wrap:wrap;margin:30px 0 12px;padding-bottom:8px;border-bottom:1px solid var(--line)}
+.room-t h2{font-family:var(--f-display);font-weight:400;font-size:28px;margin:0;color:var(--gold-2)}
+.room-t span{color:var(--muted);font-size:13px}
+.games{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px}
+.gc{text-align:left;border-radius:18px;overflow:hidden;border:1px solid var(--line);background:#0c1613;display:flex;flex-direction:column;transition:transform .2s,box-shadow .2s}
+.gc:hover{transform:translateY(-4px);box-shadow:0 18px 34px #000a,0 0 0 1px var(--gold)}
+.gc .art{height:160px;position:relative;display:grid;place-items:center;overflow:hidden;border-bottom:3px solid #3b2413;box-shadow:inset 0 0 40px #0009}
+.felt{background:radial-gradient(ellipse at 50% 30%,#1f7a5a,#0d3f2d 75%)}
+.felt-red{background:radial-gradient(ellipse at 50% 30%,#3a1a10,#140806 75%)}
+.felt-blue{background:radial-gradient(ellipse at 50% 30%,#1f3f7a,#0c1a3a 75%)}
+.felt-wine{background:radial-gradient(ellipse at 50% 30%,#8a2333,#2b0810 75%)}
+.felt-navy{background:radial-gradient(ellipse at 50% 30%,#22306a,#0a0f2a 75%)}
+.felt-wood{background:radial-gradient(ellipse at 50% 30%,#7a4a1c,#2b170a 75%)}
+.gc .art .tag{position:absolute;top:10px;left:10px;font-size:10px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;padding:4px 8px;border-radius:99px;background:#000b;color:var(--gold-2)}
+.gc .bd{padding:14px 16px 16px;display:flex;flex-direction:column;gap:6px;flex:1}
+.gc h3{margin:0;font-size:18px}
+.gc p{margin:0;color:#c7d0c9;font-size:14px;flex:1}
+.gc .meta{display:flex;justify-content:space-between;gap:8px;font-size:12px;color:var(--muted)}
+.gc .meta span:last-child{color:var(--gold)}
+.gc .play{margin-top:6px;text-align:center;padding:9px;border-radius:10px;font-weight:800;font-size:14px;background:linear-gradient(#f2d78c,#c99a37);color:#2a1a02}
+.mini-wheel{width:150px;height:150px;filter:drop-shadow(0 8px 12px #000c)}
+.fan{display:flex;font-size:11px}
+.fan .card{transform-origin:50% 120%}
+.fan .card:nth-child(1){transform:rotate(-10deg)}.fan .card:nth-child(2){transform:rotate(8deg) translateY(-4px);margin-left:-1.4em}
+.fan.wide{font-size:9.5px}.fan.wide .card{margin-left:-2.2em!important}
+.fan.wide .card:nth-child(1){transform:rotate(-20deg);margin-left:0!important}.fan.wide .card:nth-child(2){transform:rotate(-10deg) translateY(-5px)}.fan.wide .card:nth-child(3){transform:translateY(-7px)}.fan.wide .card:nth-child(4){transform:rotate(10deg) translateY(-5px)}.fan.wide .card:nth-child(5){transform:rotate(20deg)}
+.stack{position:absolute;right:28px;bottom:22px;display:flex;flex-direction:column-reverse}
+.stack b{width:38px;height:10px;border-radius:50%;background:var(--c);box-shadow:0 2px 0 #0008,inset 0 0 0 2px #fff6;margin-top:-4px}
+.badge9{position:absolute;bottom:14px;right:14px;font-family:var(--f-display);color:var(--gold-2);font-size:18px}
+.mini-dice{display:flex;gap:14px}.mini-dice .die{width:58px;height:58px;padding:8px}.mini-dice .die i{width:10px;height:10px;visibility:hidden}
+.mini-dice .die:first-child{transform:rotate(-14deg)}.mini-dice .die:last-child{transform:rotate(11deg) translateY(8px)}
+.mini-reels{display:flex;gap:6px;padding:8px;border-radius:12px;background:#0b0306;border:2px solid var(--gold);box-shadow:0 0 24px #f2d78c55}
+.mini-reels span{width:52px;height:68px;display:grid;place-items:center;font-size:48px;border-radius:6px;background:linear-gradient(#e9e2cf,#fffdf5 40%,#d9d0b8);animation:glow7 1.4s ease-in-out infinite alternate}
+@keyframes glow7{to{box-shadow:inset 0 0 0 3px #f2d78c,0 0 12px #f2d78c}}
+.mini-keno{display:grid;grid-template-columns:repeat(8,22px);gap:4px}
+.mini-keno i{width:22px;height:22px;border-radius:50%;display:grid;place-items:center;font-style:normal;font-size:9px;font-weight:800;background:#f4ecd8;color:#222}
+.mini-keno i.on{background:#b3202c;color:#fff;box-shadow:0 0 8px #ff5a6a}
+.mini-rack{display:flex;align-items:center;gap:0;margin-left:110px}
+.mini-rack div{display:flex;flex-direction:column;margin-left:-3px}
+.mini-rack i{width:24px;height:24px;border-radius:50%;margin:0;display:grid;place-items:center;font-style:normal;font-size:9px;font-weight:800;color:#111;
+  background:radial-gradient(circle at 35% 30%,#fff9 0 10%,transparent 30%),radial-gradient(circle,#fff 0 30%,var(--b) 32%);box-shadow:0 3px 4px #0008}
+.mini-rack i.st{background:radial-gradient(circle at 35% 30%,#fff9 0 10%,transparent 30%),radial-gradient(circle,#fff 0 30%,transparent 32%),linear-gradient(#f4ecd8 0 22%,var(--b) 22% 78%,#f4ecd8 78%)}
+.mini-cue{position:absolute;left:-10px;top:50%;width:36%;height:7px;border-radius:4px;transform:rotate(-4deg);background:linear-gradient(90deg,#2b1208 0 35%,#1a1a1a 35% 48%,#d9b47a 48% 96%,#f4ecd8 96% 98%,#3d7fd6 98%);box-shadow:4px 8px 6px #0006}
+.mini-cue::after{content:"";position:absolute;right:-30px;top:-8px;width:22px;height:22px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff 0 20%,#ddd 60%,#aaa)}
+.disc{margin-top:30px;color:#7d8c83;font-size:12px;text-align:center}
 
 /* Cabecera de juego */
 .gh{display:flex;align-items:center;gap:12px;margin-bottom:14px;flex-wrap:wrap}
@@ -263,10 +325,10 @@ button:disabled{opacity:.4;cursor:not-allowed}
   <div class="logo" id="home" tabindex="0">Medianoche<small>Gran Casino</small></div>
   <div class="spacer"></div>
   <div class="lvl" id="lvlBox" tabindex="0"><div class="t"><span>Nivel <b id="hLvl">1</b> · <span id="hTier">Bronce</span></span><span id="hXp" class="num"></span></div><div class="bar"><i id="hBar"></i></div></div>
-  <button class="tb" id="bonusBtn">Bono <span id="bonusT"></span></button>
+  <button class="tb" id="bonusBtn">Regalo <span id="bonusT"></span></button>
   <button class="tb" id="profBtn">Logros</button>
   <button class="tb" id="sndBtn" aria-label="Sonido">Sonido: sí</button>
-  <div class="bal"><span class="ico"></span><b id="hChips" class="num">0</b></div>
+  <div class="bal" title="Tus fichas"><span class="ico"></span><span style="font-size:11px;color:var(--muted);letter-spacing:.1em;text-transform:uppercase">Fichas</span><b id="hChips" class="num">0</b></div>
 </div></header>
 
 <main class="stage" id="stage"></main>
@@ -319,7 +381,7 @@ function hud(){
   const el=$('#hChips'),from=shown,to=S.chips,t0=performance.now();shown=to;
   const step=now=>{const t=Math.min(1,(now-t0)/450);el.textContent=fmt(from+(to-from)*(1-Math.pow(1-t,3)));if(t<1)requestAnimationFrame(step)};requestAnimationFrame(step);
   $('#hLvl').textContent=S.level;$('#hTier').textContent=tier()[1];
-  $('#hXp').textContent=fmt(S.xp)+' / '+fmt(need(S.level))+' XP';
+  $('#hXp').textContent=fmt(S.xp)+' / '+fmt(need(S.level))+' puntos';
   $('#hBar').style.width=Math.min(100,S.xp/need(S.level)*100)+'%';
   $('#sndBtn').textContent='Sonido: '+(S.sound?'sí':'no');
   bonusTimer();
@@ -438,32 +500,91 @@ const GAMES=[
  {id:'billar',name:'Desafío de Billar',desc:'Física real de mesa. Taco, troneras y física real. Mete las 9 bolas en 8 tacadas.',tag:'Habilidad',min:'9 bolas 50:1',art:'<span style="display:inline-grid;place-items:center;width:70px;height:70px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff7 0 12%,transparent 30%),#f2c200;box-shadow:inset 0 0 0 0 #000"><span style="width:34px;height:34px;border-radius:50%;background:#fff;color:#111;font:800 20px Manrope,sans-serif;display:grid;place-items:center">9</span></span>',bg:'radial-gradient(circle,#1f7a5a,#0e4a35 70%,#3b2413 71%)'},
  {id:'keno',name:'Keno',desc:'Elige hasta 10 números de 80 y mira caer las bolas.',tag:'Lotería',min:'Hasta 100.000:1',art:'80',bg:'linear-gradient(135deg,#3b2413,#7a4a1c)'},
 ];
-let jpTimer=0;
+let jpTimer=0,lobbyRaf=0;
+const card=(r,s)=>cardHTML({r,s,n:1});
+const ARTF=()=>({
+ ruleta:`<canvas class="mini-wheel" width="320" height="320"></canvas>`,
+ blackjack:`<div class="fan">${card('A','♠')}${card('K','♥')}</div><div class="stack"><b class="v1000"></b><b class="v1000"></b><b class="v500"></b></div>`,
+ baccarat:`<div class="fan">${card('4','♣')}${card('5','♦')}</div><span class="badge9">Natural 9</span>`,
+ dados:`<div class="mini-dice">${dieHTML(5)}${dieHTML(2)}</div>`,
+ slots:`<div class="mini-reels"><span class="sym-seven">7</span><span class="sym-seven">7</span><span class="sym-seven">7</span></div>`,
+ poker:`<div class="fan wide">${['10','J','Q','K','A'].map(r=>card(r,'♥')).join('')}</div>`,
+ keno:`<div class="mini-keno">${Array.from({length:24},(_,i)=>`<i class="${[2,5,9,11,16,20,22].includes(i)?'on':''}">${i*3+1}</i>`).join('')}</div>`,
+ billar:`<div class="mini-rack">${[[1],[2,3],[9,4,5],[6,7],[8]].map(r=>`<div>${r.map(n=>`<i style="--b:${PL.cols[n]}" class="${n===9?'st':''}">${n}</i>`).join('')}</div>`).join('')}</div><i class="mini-cue"></i>`,
+});
+const ROOMS=[
+ ['Mesas de juego','Las mesas clásicas, con crupier y reglas oficiales',[
+  ['ruleta','Ruleta Europea','Apuesta al número o color donde caerá la bola.','Fácil','Paga hasta 35 a 1','felt-red'],
+  ['blackjack','Blackjack','Suma 21 o acércate más que el crupier sin pasarte.','Media','Blackjack paga 3 a 2','felt'],
+  ['baccarat','Baccarat','Elige quién sacará la mano más cercana a 9: Jugador o Banca.','Fácil','Empate paga 8 a 1','felt-blue'],
+  ['dados','Mesa de Dados','Lanza dos dados: el 7 o el 11 en la salida ganan.','Media','Craps paga 7 a 1','felt']]],
+ ['Máquinas','Juega a tu ritmo, sin crupier',[
+  ['slots','Tragaperras Fortuna 7','Gira los rodillos y alinea símbolos iguales. Cinco 💎 se llevan el bote.','Muy fácil','Bote progresivo','felt-wine'],
+  ['poker','Video Póker','Recibe 5 cartas, guarda las buenas y cambia el resto.','Media','Escalera real 800 a 1','felt-navy'],
+  ['keno','Keno','Marca tus números de la suerte y mira salir 20 bolas.','Muy fácil','Hasta 100.000 a 1','felt-wood']]],
+ ['Salón de billar','Un juego de habilidad: aquí manda tu puntería',[
+  ['billar','Desafío de Billar','Apunta el taco y mete las 9 bolas en solo 8 tacadas.','Habilidad','Mesa limpia paga 50 a 1','felt']]],
+];
 function lobby(){
-  const t=tier(),left=S.lastBonus+BONUS_MS-Date.now();
+  const ART=ARTF(),t=tier(),left=S.lastBonus+BONUS_MS-Date.now(),toNext=need(S.level)-S.xp,nAch=Object.keys(S.ach).filter(k=>ACH[k]).length;
   $('#stage').innerHTML=`
-  <section class="hero">
-    <div class="marquee"><div class="bulbs"></div>
-      <div class="k">Bote progresivo · Fortuna 7</div>
-      <div class="jp num" id="jpV">${fmt(S.jackpot)}</div>
-      <p>Cinco diamantes en una línea se llevan el bote entero. Cada giro de la tragaperras lo hace crecer.</p>
-      <div class="row-c" style="justify-content:flex-start;margin-top:14px"><button class="btn primary" data-go="slots">Jugar por el bote</button><button class="btn wine" id="lbBonus">${left<=0?'Girar la rueda de bono':'Rueda de bono en '+Math.ceil(left/60e3)+' min'}</button></div>
-    </div>
-    <div class="vip">
-      <div class="k" style="font-size:11px;letter-spacing:.3em;color:var(--gold);text-transform:uppercase">Club de jugadores</div>
-      <div class="tier">VIP ${t[1]}</div>
-      <div class="bar"><i style="width:${Math.min(100,S.xp/need(S.level)*100)}%"></i></div>
-      <div class="row"><span>Nivel</span><b class="num">${S.level}</b></div>
-      <div class="row"><span>Premio al subir de nivel</span><b class="num">${fmt(1000*(S.level+1))}</b></div>
-      <div class="row"><span>Multiplicador de bono</span><b class="num">×${t[2]}</b></div>
-      <div class="row"><span>Logros</span><b class="num">${Object.keys(S.ach).length} / ${Object.keys(ACH).length}</b></div>
+  <section class="hall">
+    <div class="rays"></div><canvas class="bokeh" id="bokeh"></canvas><div class="bulbs-row top"></div><div class="bulbs-row bot"></div>
+    <div class="hall-in">
+      <div class="eyebrow">Bienvenido al</div>
+      <h1><span class="gc-small">Gran Casino</span><span class="gold-title">Medianoche</span></h1>
+      <p class="lead">Ocho juegos de casino con reglas reales. Empiezas con fichas de regalo, juegas, ganas premios y subes de nivel.</p>
+      <div class="purse"><span class="ico"></span><div><small>Tus fichas</small><b class="num">${fmt(S.chips)}</b></div></div>
+      <div class="row-c"><a class="btn primary big" href="#salas" id="enter">Entrar al casino</a><button class="btn wine big" id="lbBonus">${left<=0?'Recoger regalo gratis':'Próximo regalo en '+Math.floor(left/3600e3)+' h '+Math.ceil(left%3600e3/60e3)+' min'}</button></div>
     </div>
   </section>
-  <div class="sec-t"><h2>Salón de juegos</h2><span>Cada ficha apostada suma experiencia</span></div>
-  <div class="games">${GAMES.map(g=>`<button class="gc" data-go="${g.id}"><div class="art" style="background:${g.bg}"><span class="tag">${g.tag}</span>${g.art}</div><div class="bd"><h3>${g.name}</h3><p>${g.desc}</p><div class="meta"><span>${g.min}</span><span>${S.played[g.id]?'Jugado':'Nuevo'}</span></div></div></button>`).join('')}</div>
+
+  <section class="how">
+    <div class="step"><span class="sn">1</span><div><b>Elige un juego</b><p>Pulsa cualquier mesa o máquina de las salas de abajo.</p></div></div>
+    <div class="step"><span class="sn">2</span><div><b>Apuesta tus fichas</b><p>Toca una ficha para elegir cuánto apuestas y colócala en la mesa.</p></div></div>
+    <div class="step"><span class="sn">3</span><div><b>Gana y sube de nivel</b><p>Cada apuesta te da puntos. Al subir de nivel te regalamos fichas.</p></div></div>
+  </section>
+
+  <section class="duo">
+    <div class="jp-panel">
+      <div class="eyebrow">Bote acumulado de la tragaperras</div>
+      <div class="led num" id="jpV">${fmt(S.jackpot)}</div>
+      <p>Crece con cada tirada. Se lo lleva quien saque cinco diamantes 💎 en una línea.</p>
+      <button class="btn primary" data-go="slots">Jugar por el bote</button>
+    </div>
+    <button class="member" id="memberCard">
+      <div class="m-top"><span>Medianoche · Club de socios</span><span class="m-chip"></span></div>
+      <div class="m-tier">Socio ${t[1]}</div>
+      <div class="m-lv">Nivel ${S.level}</div>
+      <div class="bar"><i style="width:${Math.min(100,S.xp/need(S.level)*100)}%"></i></div>
+      <div class="m-txt">Te faltan <b>${fmt(toNext)} puntos</b> para el nivel ${S.level+1} y su premio de <b>${fmt(1000*(S.level+1))} fichas</b>. Ganas 1 punto por cada 10 fichas apostadas.</div>
+      <div class="m-foot"><span>Logros: ${nAch} de ${Object.keys(ACH).length}</span><span>Ver logros →</span></div>
+    </button>
+  </section>
+
+  <div id="salas"></div>
+  ${ROOMS.map(([rt,rs,games])=>`
+  <div class="room-t"><h2>${rt}</h2><span>${rs}</span></div>
+  <div class="games">${games.map(([id,name,how,dif,pay,felt])=>`
+    <button class="gc" data-go="${id}">
+      <div class="art ${felt}">${ART[id]}<span class="tag">${S.played[id]?'Ya jugado':'Nuevo para ti'}</span></div>
+      <div class="bd"><h3>${name}</h3><p>${how}</p><div class="meta"><span>Dificultad: ${dif}</span><span>${pay}</span></div><span class="play">Jugar ahora</span></div>
+    </button>`).join('')}</div>`).join('')}
   <p class="disc">Juego de entretenimiento con fichas ficticias sin ningún valor real. No se puede comprar ni canjear nada. Tu progreso se guarda en este navegador.</p>`;
-  $('#lbBonus').onclick=bonusWheel;
+  $('#lbBonus').onclick=bonusWheel;$('#memberCard').onclick=profile;
+  $('#enter').onclick=e=>{e.preventDefault();$('#salas').scrollIntoView({behavior:'smooth'})};
   clearInterval(jpTimer);jpTimer=setInterval(()=>{S.jackpot+=rnd(60)+5;const e=$('#jpV');if(e)e.textContent=fmt(S.jackpot);else clearInterval(jpTimer)},1400);
+  // animaciones: ruleta en miniatura y luces flotantes
+  const wheels=$$('.mini-wheel'),bk=$('#bokeh'),bx=bk.getContext('2d');
+  const P=Array.from({length:46},()=>({x:Math.random(),y:Math.random(),r:1+Math.random()*3.5,v:.0004+Math.random()*.0012,p:Math.random()*TAU}));
+  let rot=0;cancelAnimationFrame(lobbyRaf);
+  const loop=now=>{if(!document.body.contains(bk))return;
+    rot+=.006;wheels.forEach(w=>drawWheel(rot,{a:-rot*1.7,r:.875},w));
+    const W=bk.clientWidth,H=bk.clientHeight;if(bk.width!==W)bk.width=W;if(bk.height!==H)bk.height=H;bx.clearRect(0,0,W,H);
+    for(const q of P){q.y-=q.v;if(q.y<-.05){q.y=1.05;q.x=Math.random()}const a=.25+.35*Math.sin(now/700+q.p);
+      const g=bx.createRadialGradient(q.x*W,q.y*H,0,q.x*W,q.y*H,q.r*4);g.addColorStop(0,`rgba(255,226,150,${a})`);g.addColorStop(1,'rgba(255,226,150,0)');bx.fillStyle=g;bx.beginPath();bx.arc(q.x*W,q.y*H,q.r*4,0,TAU);bx.fill()}
+    lobbyRaf=requestAnimationFrame(loop)};
+  lobbyRaf=requestAnimationFrame(loop);
   checkBroke();
 }
 
@@ -506,8 +627,8 @@ function roPay(k,n){if(k[0]==='n')return +k.slice(1)===n?36:0;if(n===0)return 0;
   switch(k){case'red':return RO.red.has(n)?2:0;case'black':return RO.red.has(n)?0:2;case'even':return n%2===0?2:0;case'odd':return n%2?2:0;
   case'low':return n<=18?2:0;case'high':return n>=19?2:0;case'd1':return n<=12?3:0;case'd2':return n>12&&n<=24?3:0;case'd3':return n>24?3:0;
   case'c1':return n%3===1?3:0;case'c2':return n%3===2?3:0;case'c3':return n%3===0?3:0}return 0}
-function drawWheel(rot,ball){
-  const cv=$('#roC');if(!cv)return;const x=cv.getContext('2d'),W=cv.width,R=W/2,seg=TAU/37,off=-Math.PI/2;
+function drawWheel(rot,ball,cv){
+  cv=cv||$('#roC');if(!cv)return;const x=cv.getContext('2d'),W=cv.width,R=W/2,seg=TAU/37,off=-Math.PI/2;
   x.clearRect(0,0,W,W);x.save();x.translate(R,R);
   let g=x.createRadialGradient(0,0,R*.8,0,0,R);g.addColorStop(0,'#5a3418');g.addColorStop(.6,'#3b2413');g.addColorStop(1,'#1c0f06');
   x.beginPath();x.arc(0,0,R*.99,0,TAU);x.fillStyle=g;x.fill();
