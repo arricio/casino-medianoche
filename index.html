@@ -1292,7 +1292,7 @@ function plShotEnd(){if(!PL.active)return;
   else{next=op;notes.unshift(yo?'No entra ninguna.':`${NPC} falla.`)}
   {const me=yo?'p':'c',ot=yo?'c':'p';
    if(foul){talk(me,pick(DLG[me+'_foul']));later(ot,DLG[ot+'_on_'+me+'_foul'],1500,.8)}
-   else if(good){talk(me,pick(DLG[me+'_pot']));later(ot,DLG[ot+'_react_'+me+'_pot'],1600,.5)}
+   else if(good){const g3=PL.groups[sh],last=g3&&plCount(g3)===0;talk(me,pick(last?DLG[me+'_last']:others.length>1?DLG[me+'_multi']:DLG[me+'_pot']));later(ot,last?DLG[ot+'_react_'+me+'_last']:DLG[ot+'_react_'+me+'_pot'],1600,last?.9:.55)}
    else{talk(me,pick(DLG[me+'_miss']));later(ot,DLG[ot+'_react_'+me+'_miss'],1600,.6)}}
   PL.turn=next;notes.push(next==='p'?'Te toca a ti.':`Le toca a ${NPC}.`);
   setMsg('#plMsg',notes.join(' '),next==='p'?'win':'');plUI();
@@ -1346,25 +1346,34 @@ function plDraw(cv,now){const x=cv.getContext('2d'),{W,H,L,T,R,B,r}=PL;x.setTran
 
 /* ---------- Billar 3D y diálogos ---------- */
 const DLG={
- start:['¿Una partidita? Saca tú, chaval.','Bienvenido a mi mesa. Saca tú, que yo soy un caballero.','A ver qué sabes hacer. Tuyo el saque.'],
- c_break:['Vamos a romper este triángulo.'],
- c_think:['Mmm… la {n} a la {p}.','Vamos a ver… la {n} a la {p}.','Esta es fácil: la {n} a la {p}.','La {n}. Mírala bien, que va para dentro.'],
- c_safe:['Esto está complicado… jugaré seguro.','Mmm… no hay nada claro.'],
- p_pot:['¡Toma ya!','¡Dentro! Como la seda.','¿Has visto eso, Paco?','¡Para casa!','Esto se me da bien.','¡Limpia!'],
- c_react_p_pot:['Suerte de principiante…','Vale, vale, no está mal.','No te emociones, chaval.','Hasta un reloj parado acierta dos veces al día.','Hmm… ¿quién te ha enseñado eso?'],
- c_pot:['¡Para dentro!','Así se juega, chaval.','Esto lo hago con los ojos cerrados.','Toma nota, que esto no se enseña.','Limpia y elegante, como siempre.'],
- p_react_c_pot:['Bah, ha tenido suerte.','Vaya, este hombre sabe…','Aún no has ganado, Paco.','Tranquilo, que me toca pronto.'],
- p_miss:['¡Uf! Por poco.','Mala suerte…','Esa tenía que entrar.','La mesa está torcida, seguro.','¡Ay! Casi.'],
- c_react_p_miss:['Te has quedado corto, ¿eh?','Mi turno. Mira y aprende.','Le pasa a todo el mundo… menos a mí.','Gracias por dejármela a tiro.'],
- c_miss:['¡Vaya hombre!','¿Quién ha movido la mesa?','Te la he dejado a propósito.','Se me ha resbalado el taco.','Esa la tenía hecha…'],
- p_react_c_miss:['¡Ja! ¿Y eso, Paco?','Mi turno. Atento.','¿Necesitas gafas, Paco?','El maestro también falla, ¿eh?'],
- p_foul:['¡No! La blanca no…','Eso no ha pasado.','Ups…'],
- c_on_p_foul:['¡Falta! Gracias por el regalo.','Esa blanca tenía prisa.','Falta, falta. Me toca.'],
- c_foul:['Ups… eso no contaba.','Lo he hecho para darte ventaja, de verdad.','Ni una palabra de esto a nadie.'],
- p_on_c_foul:['¡Falta, Paco! ¡Falta!','Ja, la blanca para dentro.','¿Esa era la estrategia, Paco?'],
- p_win:['¡Gané! ¡La negra dentro!','¡Partida! ¿Otra, Paco?'],c_lose:['Bien jugado… La próxima no tendrás tanta suerte.','Me has ganado. Te invito a algo en la barra.'],
- c_win:['¡Y la negra! Otra vez será, chaval.','Partida. Vuelve cuando practiques un poco.'],p_lose:['Me la has jugado, Paco…','Quiero la revancha.']};
-const pick=a=>a[rnd(a.length)];
+ start:['¿Una partidita? Saca tú, chaval.','Bienvenido a mi mesa. Saca tú, que yo soy un caballero.','A ver qué sabes hacer. Tuyo el saque.','Llevo cuarenta años en esta mesa. Tú primero.','Rompe tú el triángulo, que a mí me da pena.','Venga, sorpréndeme con ese saque.','Aquí se viene a jugar, no a mirar. Saca.','Que gane el mejor… o sea, yo. Saca tú.','Tranquilo, respira hondo y saca.','Te dejo el saque, que luego no quiero excusas.','Mi mesa, mis reglas: saca el invitado.','Hoy me siento generoso. Saque para ti.'],
+ c_break:['Vamos a romper este triángulo.','¡Allá va el cañonazo!','Mira y aprende cómo se saca.','Fuerza y elegancia, como siempre.','Este saque lo practico desde 1985.','Agárrate, que esto suena fuerte.'],
+ c_think:['Mmm… la {n} a la {p}.','Vamos a ver… la {n} a la {p}.','Esta es fácil: la {n} a la {p}.','La {n}. Mírala bien, que va para dentro.','La {n} a la {p}, con un toque suave.','Ángulo perfecto para la {n}.','La {n} me está llamando desde la {p}.','Sin prisa… la {n} a la {p}.','La {n}, como quien no quiere la cosa.','Apunta y verás: la {n} a la {p}.','Esa {n} tiene nombre y apellidos.','Calculando… la {n} entra seguro.','A la {p} con la {n}. Fácil, fácil.','Cuidado, que voy a por la {n}.'],
+ c_safe:['Esto está complicado… jugaré seguro.','Mmm… no hay nada claro.','Me lo has puesto difícil, ¿eh?','Vamos a dejarte un regalito envenenado.','Jugada defensiva, la de los maestros.','Aquí toca pensar más que tirar.'],
+ p_pot:['¡Toma ya!','¡Dentro! Como la seda.','¿Has visto eso, Paco?','¡Para casa!','Esto se me da bien.','¡Limpia!','¡Ni ha tocado los bordes!','¡Qué bonita ha entrado!','Así, sin despeinarme.','Apúntala en la pizarra, Paco.','¡Directa al bolsillo!','¡Esa la hacía con los ojos cerrados!','Uno menos, Paco.','¿Te gusta cómo juego?','¡Clac! Qué gusto da ese sonido.','Pura geometría.','Ni lo he pensado.','¡Y sigo tirando!','Hoy estoy inspirado.','¡Al fondo de la red! Bueno, de la tronera.','Esto es talento natural.','Suave, suave… ¡y dentro!'],
+ p_multi:['¡Dos de golpe! ¿Has visto eso?','¡Doblete! Esto es nivel profesional.','¡Combinación de lujo!','¡Dos por el precio de una!','¡Toma carambola!','¡Eso no te lo enseñan en ningún sitio, Paco!','¡Fiesta en las troneras!'],
+ p_last:['¡Solo me queda la negra!','La 8 y es mía, Paco.','Ve preparando la cartera.','Mesa limpia. Ahora a por la negra.','Ya huele a victoria.','Cuidado, Paco, que voy a por la 8.'],
+ c_react_p_pot:['Suerte de principiante…','Vale, vale, no está mal.','No te emociones, chaval.','Hasta un reloj parado acierta dos veces al día.','Hmm… ¿quién te ha enseñado eso?','Bah, esa la mete mi abuela.','Ya fallarás, ya.','Disfrútalo mientras dure.','Mira tú el niño…','No está mal… para ser tú.','¿Has estado practicando a escondidas?','Vale, una. Ahora mete otra si eres tan bueno.','Eso ha sido más suerte que otra cosa.','Interesante… muy interesante.','Ni me inmuto.','Sigue, sigue, que me estoy aburriendo.'],
+ c_react_p_last:['¿Solo te queda la negra? No cantes victoria.','La 8 es la más difícil, ya verás.','Uy… se me está poniendo cara de perder.','Que no te tiemble el pulso, chaval.','Mucha mesa para tan poca bola.'],
+ c_pot:['¡Para dentro!','Así se juega, chaval.','Esto lo hago con los ojos cerrados.','Toma nota, que esto no se enseña.','Limpia y elegante, como siempre.','Cuarenta años de experiencia, chaval.','Ni la he mirado y ha entrado.','¿Ves? Así de fácil.','Otra para la colección.','La mesa me conoce.','¡Clac! Música para mis oídos.','Apunta esa jugada en tu libreta.','Esto no es suerte, es oficio.','Sigo yo, ponte cómodo.','Despacito y con buena letra.','Si quieres te doy clases, eh.','Esta mesa es mi casa.','Ni sudo, chaval.','Cuando yo apunto, la bola obedece.','Directa, sin rodeos.'],
+ c_multi:['¡Dos de una tacada! Y sin despeinarme.','¡Doblete! Eso es arte.','¿Has visto, chaval? Dos de golpe.','Así se juega en las grandes ligas.','Para eso hace falta clase.'],
+ c_last:['Solo me queda la negra. Ve despidiéndote.','La 8 y nos vamos a casa.','Esto ya está, chaval.','Mesa casi limpia. Te va a doler.','Prepárate para la revancha.'],
+ p_react_c_pot:['Bah, ha tenido suerte.','Vaya, este hombre sabe…','Aún no has ganado, Paco.','Tranquilo, que me toca pronto.','No me impresionas, Paco.','Bueno, hasta ahí bien…','¿Seguro que no hay trampa?','Ya fallarás, ya.','Uf… este Paco es un hueso.','Vale, vale. Tú sigue.','Eso lo hago yo también.','Te estás luciendo, ¿eh?','¿Cuántos años dices que llevas jugando?','Disfruta, que dura poco.','¡Venga ya!'],
+ p_react_c_last:['¡No, no, no! Que no meta la negra…','Aún falta la más difícil, Paco.','Que falle, que falle…','Esto no ha terminado.','La negra es traicionera, ya verás.'],
+ p_miss:['¡Uf! Por poco.','Mala suerte…','Esa tenía que entrar.','La mesa está torcida, seguro.','¡Ay! Casi.','¿Pero cómo no ha entrado eso?','Le he dado demasiado flojo.','Me ha temblado el pulso.','La próxima no se escapa.','¡Por un pelo!','Esa la tenía hecha…','Ha sido el taco, que está torcido.','Me he despistado un segundo.','¡Qué rabia!','Bueno, le dejo una a Paco para que no se aburra.','¿Quién ha movido la tronera?','Ni yo me lo creo.','Necesito un café.'],
+ c_react_p_miss:['Te has quedado corto, ¿eh?','Mi turno. Mira y aprende.','Le pasa a todo el mundo… menos a mí.','Gracias por dejármela a tiro.','¿Necesitas que te explique cómo va esto?','Tranquilo, esto es cuestión de práctica. De mucha práctica.','Je, je… ahora me toca a mí.','¿Has visto? La bola tiene miedo.','Ese tiro lo enmarcaría… como ejemplo de lo que no hay que hacer.','Ánimo, que se te ve con ganas.','Uy, uy, uy… por ahí no era.','Me has hecho un favor, gracias.','Las troneras son esos agujeros de las esquinas, por si acaso.','Paciencia, chaval, paciencia.'],
+ c_miss:['¡Vaya hombre!','¿Quién ha movido la mesa?','Te la he dejado a propósito.','Se me ha resbalado el taco.','Esa la tenía hecha…','Esto no estaba en mis planes.','Hoy la tiza no agarra.','La bola tenía vida propia.','Eso ha sido para que te confíes.','Me ha deslumbrado la lámpara.','Ni una palabra de esto a nadie.','La edad no perdona…','Pues nada, todo tuyo.','¡Mecachis!','Era una jugada de estrategia, aunque no lo parezca.','Esto me pasa por hablar tanto.'],
+ p_react_c_miss:['¡Ja! ¿Y eso, Paco?','Mi turno. Atento.','¿Necesitas gafas, Paco?','El maestro también falla, ¿eh?','¿Cuarenta años para esto?','Gracias por el regalo, Paco.','Esa la metía hasta mi abuela.','¿Te ayudo a apuntar la próxima?','Ahora verás lo que es jugar.','Uy, Paco, que se te nota nervioso.','¡Toma ya! Me toca.','Así me gusta, Paco: generoso.','¿La mesa está torcida, Paco?','Tranquilo, le pasa a todo el mundo… ¿no era eso?'],
+ p_foul:['¡No! La blanca no…','Eso no ha pasado.','Ups…','¡Pero qué he hecho!','Esto no se lo cuentes a nadie, Paco.','La blanca tenía vida propia.','Me he venido arriba…','Error de novato.','¡Ay, la blanca!','No volverá a pasar. Creo.'],
+ c_on_p_foul:['¡Falta! Gracias por el regalo.','Esa blanca tenía prisa.','Falta, falta. Me toca.','Eso no se hace, chaval.','Te has emocionado demasiado.','Bola en mano para mí, ¡qué detalle!','¿Seguro que sabes jugar a esto?','Ese tipo de regalos me encantan.','Ja, ja… la blanca se quería ir a casa.','Primera lección: la blanca no se mete.'],
+ c_foul:['Ups… eso no contaba.','Lo he hecho para darte ventaja, de verdad.','Ni una palabra de esto a nadie.','Eso ha sido… un error de cálculo.','¿Has visto algo? Yo no.','La edad, que no perdona.','Hasta los maestros tienen días malos.','Era para comprobar si estabas atento.'],
+ p_on_c_foul:['¡Falta, Paco! ¡Falta!','Ja, la blanca para dentro.','¿Esa era la estrategia, Paco?','¡Te he visto, Paco!','Cuarenta años y todavía metes la blanca…','Gracias por el regalo, Paco.','¿Lo anotamos en la pizarra?','Eso es falta y lo sabes.'],
+ p_win:['¡Gané! ¡La negra dentro!','¡Partida! ¿Otra, Paco?','¡Campeón! ¡Campeón!','¿Quién es ahora el maestro, Paco?','¡Mesa limpia y a cobrar!','¡Esto hay que celebrarlo!','Apúntalo en la pizarra: gané yo.'],
+ c_lose:['Bien jugado… La próxima no tendrás tanta suerte.','Me has ganado. Te invito a algo en la barra.','Hoy no era mi día…','Has tenido suerte, pero te lo reconozco.','Quiero la revancha. Ahora mismo.','Vaya… el alumno supera al maestro.','No se lo digas a nadie, ¿vale?'],
+ c_win:['¡Y la negra! Otra vez será, chaval.','Partida. Vuelve cuando practiques un poco.','Cuarenta años no se improvisan.','Así se termina una partida, chaval.','Gracias por las fichas. ¿Otra?','La mesa siempre gana… y yo con ella.','No te desanimes, que contra mí pierde todo el mundo.'],
+ p_lose:['Me la has jugado, Paco…','Quiero la revancha.','Esto no se queda así.','La próxima es mía, Paco.','Me has pillado en un mal día.','¡La revancha! ¡Ya!','Vale, hoy has ganado tú…']};
+const DLG_RECENT=[];
+const pick=a=>{let c=a.filter(x=>!DLG_RECENT.includes(x));if(!c.length)c=a;const v=c[rnd(c.length)];DLG_RECENT.push(v);if(DLG_RECENT.length>60)DLG_RECENT.shift();return v};
 const talkT={};
 function talk(who,text){const b=$(who==='p'?'#bubP':'#bubC');if(!b||!text)return;b.querySelector('span').textContent=text;b.classList.remove('show');void b.offsetWidth;b.classList.add('show');
   const pp=$(who==='p'?'#ppP':'#ppC');if(pp)pp.classList.add('talk');
