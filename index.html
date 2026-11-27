@@ -378,6 +378,13 @@ body.facade-mode .stage{margin-top:12px}
 .bub.p::after{left:18px}.bub.c::after{right:18px}
 .pp.talk .av{animation:talkp .35s ease-in-out infinite alternate}
 @keyframes talkp{to{transform:scale(1.12);box-shadow:0 0 0 3px #fff6}}
+@media (max-width:699px){
+ .pl-wrap .pl-ctl2{position:absolute;left:8px;right:8px;bottom:8px;margin:0;z-index:2;grid-template-columns:auto 1fr auto auto;gap:6px;padding:8px;border-radius:16px;background:#000000b8;backdrop-filter:blur(6px);border:1px solid #d9b45b55}
+ .pl-wrap .pl-ctl2 .btn{min-width:42px;padding:10px 8px}
+ .pl-wrap .pl-shoot{grid-column:auto;font-size:17px;padding:12px 16px!important;letter-spacing:.08em}
+ .pl-wrap .pl-range{font-size:11px}.pl-wrap .pl-range input{height:26px}
+ .pl-wrap .bub{top:8px;font-size:12px}
+}
 .pl-players{display:grid;grid-template-columns:1fr auto 1fr;gap:8px;align-items:center;margin-bottom:10px}
 .pp{display:flex;gap:8px;align-items:center;padding:8px;border-radius:12px;background:#0008;border:2px solid transparent;transition:border-color .3s,box-shadow .3s;min-width:0}
 .pp.on{border-color:var(--gold-2);box-shadow:0 0 16px #f2d78c55}
@@ -1160,7 +1167,7 @@ function plRack(){
 const plReady=()=>!PL.moving&&!PL.strike&&!PL.ai&&PL.balls[0]&&!PL.balls[0].gone;
 const plMyTurn=()=>PL.active&&PL.turn==='p'&&plReady();
 function plSize(){const cv=$('#plC');if(!cv)return;const ww=cv.parentElement.clientWidth;
-  if(P3.ok){PL.vert=false;const portrait=innerWidth<700;const h=Math.round(portrait?Math.max(320,Math.min(innerHeight-330,600)):Math.max(360,Math.min(ww*.56,innerHeight-250)));
+  if(P3.ok){PL.vert=false;const portrait=innerWidth<700;const hd=$('.top'),pp=$('.pl-players');const avail=innerHeight-(hd?hd.offsetHeight:0)-(pp?pp.offsetHeight:60)-34;const h=Math.round(portrait?Math.max(300,Math.min(avail,760)):Math.max(300,Math.min(ww*.56,avail-((($('#plCtl')||{}).offsetHeight)||130)-12)));
     cv.style.width='100%';cv.style.height=h+'px';P3.ren.setSize(ww,h,false);P3.cam.aspect=ww/h;P3.cam.updateProjectionMatrix();return}
   PL.vert=innerWidth<700;
   if(PL.vert){if(cv.width!==500){cv.width=500;cv.height=1000}const w=Math.max(220,Math.min(ww,(innerHeight-360)/2,440));cv.style.width=w+'px';cv.style.height=w*2+'px'}
@@ -1200,15 +1207,15 @@ function billar(el){
     </div>
     <div class="pl-wrap"><canvas id="plC" width="1000" height="500" style="touch-action:none;display:block;margin:auto;border-radius:12px;cursor:crosshair"></canvas>
       <div class="bub p" id="bubP"><b>Tú</b><span></span></div><div class="bub c" id="bubC"><b>${NPC}</b><span></span></div>
+    <div class="pl-ctl2" id="plCtl">
+      <button class="btn" id="plLeft" aria-label="Girar el taco a la izquierda">◀</button>
+      <label class="pl-range" for="plRange"><span>Fuerza: <b id="plPv">40%</b></span><input type="range" id="plRange" min="5" max="100" value="40"></label>
+      <button class="btn" id="plRight" aria-label="Girar el taco a la derecha">▶</button>
+      <button class="btn primary pl-shoot" id="plShoot">TIRAR</button>
+    </div>
       <div class="pl-start" id="plStart"><b>Bola 8</b><span id="plStartT">Juegas contra ${NPC}. Mete todas tus bolas, lisas o rayadas, y después la negra. Elige la dificultad y tu apuesta.</span>
         <div class="row-c" id="plDiff">${PL_DIFF.map((d,i)=>`<button class="btn ${i===PL.diff?'primary':''}" data-diff="${i}">${d.n} · cobras ×${String(d.mult).replace('.',',')}</button>`).join('')}</div>
         ${chipBar()}<button class="btn primary big" id="plGo">EMPEZAR PARTIDA</button></div>
-    </div>
-    <div class="pl-ctl2" id="plCtl">
-      <button class="btn" id="plLeft" aria-label="Girar el taco a la izquierda">◀</button>
-      <label class="pl-range" for="plRange"><span>Fuerza del golpe: <b id="plPv">40%</b></span><input type="range" id="plRange" min="5" max="100" value="40"></label>
-      <button class="btn" id="plRight" aria-label="Girar el taco a la derecha">▶</button>
-      <button class="btn primary pl-shoot" id="plShoot">TIRAR</button>
     </div>
     <div class="row-c" style="margin-top:8px"><button class="btn" id="plView">Vista aérea</button><button class="btn" id="plVoice">Voces: ${S.voices===false?'no':'sí'}</button></div>
     <div class="msg" id="plMsg">Toca una bola: el taco apuntará solo a la mejor tronera. Arrastra el dedo a los lados para afinar.</div>
@@ -1235,10 +1242,12 @@ function billar(el){
   $('#plShoot').onclick=()=>{if(!plMyTurn())return;PL.strike={t0:performance.now(),pw:rg.value/100};PL.tp=null};
   $('#plDiff').onclick=e=>{const b=e.target.closest('[data-diff]');if(!b)return;PL.diff=+b.dataset.diff;$$('#plDiff [data-diff]').forEach(x=>x.classList.toggle('primary',+x.dataset.diff===PL.diff));sfx('click')};
   $('#plGo').onclick=()=>{if(PL.active)return;if(!take(S.chip))return;PL.bet=S.chip;plRack();PL.active=true;sfx('chip');rg.value=90;upd();plUI();
-    setMsg('#plMsg','Sacas tú: apunta al triángulo y pulsa TIRAR con fuerza');talk('c',pick(DLG.start));const tb=$('.pl-table'),hd=$('.top');if(tb)window.scrollTo({top:tb.getBoundingClientRect().top+scrollY-(hd?hd.offsetHeight:0)-6,behavior:'smooth'})};
+    setMsg('#plMsg','Sacas tú: apunta al triángulo y pulsa TIRAR con fuerza');talk('c',pick(DLG.start));plFocus()};
   plUI();cancelAnimationFrame(PL.raf);PL.raf=requestAnimationFrame(plLoop);
   if(PL.active&&PL.turn==='c'&&!PL.moving&&!PL.strike){PL.ai=null;setTimeout(aiTurn,700)}
+  setTimeout(plSize,60);setTimeout(()=>{plSize();plFocus()},350);try{document.fonts.ready.then(()=>plSize())}catch(e){}
 }
+function plFocus(){const t=$('.pl-players'),hd=$('.top');if(t)window.scrollTo({top:t.getBoundingClientRect().top+scrollY-(hd?hd.offsetHeight:0)-8,behavior:'smooth'})}
 function plUI(){if(!$('#ppP'))return;
   const side=(k,g)=>{$('#g'+k).textContent=grpName(g);$('#mb'+k).innerHTML=g?PL.balls.filter(b=>!b.gone&&inGroup(b.n,g)).sort((a,b)=>a.n-b.n).map(b=>`<i class="${isStripe(b.n)?'st':''}" style="--b:${ballCol(b.n)}">${b.n}</i>`).join('')||'<i style="--b:#111">8</i>':''};
   side('P',PL.groups.p);side('C',PL.groups.c);
