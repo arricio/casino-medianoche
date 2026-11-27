@@ -200,6 +200,45 @@ body.facade-mode .stage{margin-top:12px}
 .rinfo .meta{display:flex;flex-wrap:wrap;gap:4px 12px;font-size:12px;color:var(--muted)}.rinfo .meta span:last-child{color:var(--gold)}
 .enter{grid-column:2;letter-spacing:.08em;font-size:14px;padding:12px}
 @media (max-width:480px){.rrow{grid-template-columns:96px 1fr}.thumb{width:96px;height:96px;grid-row:1}.thumb .in{transform:scale(.45)}.enter{grid-column:1/-1}}
+
+/* Personajes 3D */
+.stage3d{position:relative;margin:0 0 12px;border-radius:14px;overflow:hidden;background:#0b0a0c;border:1px solid #d9b45b44}
+.stage3d canvas{display:block;width:100%}
+.stg-labels{position:absolute;inset:0;pointer-events:none}
+.stl{position:absolute;transform:translate(-50%,0);background:#000c;border:1px solid #d9b45b55;border-radius:8px;padding:2px 8px 3px;text-align:center;font-size:11px;white-space:nowrap;transition:border-color .2s,box-shadow .2s}
+.stl b{display:block;color:var(--gold-2);font-size:12px}
+.stl.me b{color:#9ec5ff}
+.stl.talk{border-color:var(--gold-2);box-shadow:0 0 12px #f2d78c99}
+.stl em{display:block;font-style:normal;color:#e9dcc0;font-size:11px}
+.stl .mc{display:block}
+.stl .mc i{display:inline-block;width:20px;height:28px;border-radius:3px;background:#fff;color:#111;font-size:9px;font-weight:800;margin:2px 1px 0;line-height:28px;font-style:normal}
+.stl .mc i.r{color:#b3202c}
+.stl .mc i.b{background:repeating-linear-gradient(45deg,#7d1f2c 0 3px,#5e1620 3px 6px);border:1px solid #f4ecd8}
+.dbtn{display:inline-grid;place-items:center;width:15px;height:15px;border-radius:50%;background:#fff;color:#111;font-size:9px;font-style:normal;font-weight:900}
+.stg-edit{position:absolute;right:8px;top:8px;padding:6px 10px!important;font-size:12px!important;background:#000a!important}
+.chgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:8px}
+.chc{display:flex;flex-direction:column;align-items:center;gap:3px;padding:8px 4px;border-radius:12px;border:1px solid #ffffff1a;background:#0005;text-align:center}
+.chc.on{border-color:var(--gold-2);background:#d9b45b26;box-shadow:0 0 0 2px #d9b45b55}
+.chf{width:62px;height:62px;border-radius:50%;background-size:cover;background-position:center;border:2px solid #d9b45b99;display:inline-block;flex:none;vertical-align:middle}
+.chf.sm{width:30px;height:30px;border-width:1px}
+.avs .chf.sm+.chf.sm{margin-left:-10px}
+.chc b{font-size:13px}.chc small{font-size:10px;color:var(--muted)}
+.avs{display:flex;flex:none}
+.spinb{width:44px;height:44px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff,#e4e0d6 60%,#a9a59c);position:relative;flex:none;box-shadow:0 0 0 2px #d9b45b66}
+.spinb i{position:absolute;width:10px;height:10px;border-radius:50%;background:#c4141f;transform:translate(-50%,-50%);left:50%;top:50%;pointer-events:none}
+.pl-ctl2{grid-template-columns:auto 1fr auto auto}
+.bj-mates{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin:10px 0}
+.bjm{font-size:12px;background:#0005;border-radius:10px;padding:6px 8px;min-width:90px}
+.bjm .cards{font-size:8px;min-height:0}.bjm b{display:block;color:var(--gold-2)}.bjm em{display:block;font-style:normal;font-weight:800}
+.mm{position:absolute;top:2px;width:16px;height:16px;border-radius:50%;background:var(--mc);color:#fff;font-size:9px;font-style:normal;font-weight:800;display:grid;place-items:center;border:1px solid #fff;z-index:3;pointer-events:none}
+.he-felt{display:flex;flex-direction:column;align-items:center;gap:8px;padding:14px;border-radius:120px;background:radial-gradient(ellipse,#1d7254,#0d3f2d 70%);border:6px solid #3b2413;box-shadow:inset 0 0 30px #0008}
+.he-pot{font-weight:800;color:var(--gold-2);min-height:20px}
+.he-stage{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#f4ecd8aa;min-height:14px}
+.he-board .card+.card{margin-left:.35em!important}
+.card.slot{background:#0003;box-shadow:inset 0 0 0 2px #ffffff22}
+.he-me{display:flex;align-items:center;justify-content:center;gap:14px;margin-top:14px;flex-wrap:wrap}
+.he-mi{display:flex;flex-direction:column;gap:2px;font-size:13px}.he-mi b{color:#9ec5ff}
+@media (max-width:699px){.pl-wrap .pl-ctl2{grid-template-columns:auto 1fr auto auto auto}.spinb{width:38px;height:38px}}
 /* Cabecera de juego */
 .gh{display:flex;align-items:center;gap:12px;margin-bottom:14px;flex-wrap:wrap}
 .back{padding:8px 14px;border-radius:999px;border:1px solid var(--line);font-weight:700;font-size:13px}
@@ -506,6 +545,8 @@ function settle(game,bet,ret,ref){
   if(net>=50000)ach('big50');if(S.stats.wagered>=100000)ach('high');if(S.stats.wagered>=1000000)ach('whale');
   if(Object.keys(S.played).length>=7)ach('all');
   if(net>0&&((net>=ref*10&&net>=1000)||net>=25000))bigWin(net,ref);else if(net>0)sfx('win');else if(ret===0&&bet>0)sfx('lose');
+  if(STG.game===game&&['slots','keno','poker','dados'].includes(game)){const r=net>=Math.max(1000,ref*10)?'big':net>0?'win':(bet>0&&ret<bet)?'lose':null;
+    if(r&&Math.random()<(game==='slots'?(r==='big'?1:.35):.8)){if(Math.random()<.45)say(S.me,r==='lose'?'mal':'bien');matesReact(game,r)}}
   hud();save();setTimeout(checkBroke,1200);
 }
 function checkBroke(){if(S.chips<10&&!$('#modalRoot').innerHTML&&$('#bigwin').hidden){
@@ -597,6 +638,7 @@ const GAMES=[
 let jpTimer=0,lobbyRaf=0;
 const card=(r,s)=>cardHTML({r,s,n:1});
 const ARTF=()=>({
+ holdem:`<div class="fan">${card('A','♠')}${card('A','♥')}</div><div class="stack"><b class="v5000"></b><b class="v1000"></b><b class="v1000"></b><b class="v500"></b></div>`,
  ruleta:`<canvas class="mini-wheel" width="320" height="320"></canvas>`,
  blackjack:`<div class="fan">${card('A','♠')}${card('K','♥')}</div><div class="stack"><b class="v1000"></b><b class="v1000"></b><b class="v500"></b></div>`,
  baccarat:`<div class="fan">${card('4','♣')}${card('5','♦')}</div><span class="badge9">Natural 9</span>`,
@@ -608,6 +650,7 @@ const ARTF=()=>({
 });
 const ROOMS=[
  ['Mesas de juego','Las mesas clásicas, con crupier y reglas oficiales',[
+  ['holdem',"Texas Hold'em",'Póker de verdad contra tus amigos: apuesta, farolea y llévate el bote.','Media','Contra 1 a 5 rivales','felt'],
   ['ruleta','Ruleta Europea','Apuesta al número o color donde caerá la bola.','Fácil','Paga hasta 35 a 1','felt-red'],
   ['blackjack','Blackjack','Suma 21 o acércate más que el crupier sin pasarte.','Media','Blackjack paga 3 a 2','felt'],
   ['baccarat','Baccarat','Elige quién sacará la mano más cercana a 9: Jugador o Banca.','Fácil','Empate paga 8 a 1','felt-blue'],
@@ -678,6 +721,7 @@ function salon(){
     <p>Estos son todos los juegos del casino. Pulsa «Entrar a la sala» en el que quieras jugar.</p>
     <div class="strip">
       <div class="s-jp"><small>Bote de la tragaperras</small><span class="led num" id="jpV">${fmt(S.jackpot)}</span></div>
+      <button class="s-mem" id="meBtn"><small>Juegas como</small><span><span class="chf sm" data-tid="${S.me}" style="background-image:url(${thumbOf(S.me)})"></span> ${chFull(S.me)} · Cambiar</span></button>
       <button class="s-mem" id="memberCard"><small>Socio ${t[1]} · Nivel ${S.level}</small><span>Te faltan ${fmt(toNext)} puntos para ganar ${fmt(1000*(S.level+1))} fichas</span></button>
       <button class="btn wine" id="lbBonus">${left<=0?'Recoger regalo gratis':'Regalo en '+Math.floor(left/3600e3)+' h '+Math.ceil(left%3600e3/60e3)+' min'}</button>
     </div>
@@ -690,13 +734,352 @@ function salon(){
     </article>`).join('')}</div>
   <div class="row-c" style="margin-top:20px"><button class="btn" data-go="lobby">← Salir a la calle</button></div>
   <p class="disc">Juego de entretenimiento con fichas ficticias sin ningún valor real. No se puede comprar ni canjear nada. Tu progreso se guarda en este navegador.</p>`;
-  $('#lbBonus').onclick=bonusWheel;$('#memberCard').onclick=profile;
+  $('#lbBonus').onclick=bonusWheel;$('#memberCard').onclick=profile;$('#meBtn').onclick=()=>pickMe(()=>{S.mePicked=1;save();const b=$('#meBtn span');if(b)b.innerHTML=`<span class="chf sm" style="background-image:url(${thumbOf(S.me)})"></span> ${chFull(S.me)} · Cambiar`});
+  if(!S.mePicked){let tries=0;const ask=()=>{if(S.mePicked||!$('#meBtn')||tries++>120)return;if($('#modalRoot').innerHTML)return setTimeout(ask,800);pickMe(()=>{S.mePicked=1;save();const b=$('#meBtn span');if(b)b.innerHTML=`<span class="chf sm" style="background-image:url(${thumbOf(S.me)})"></span> ${chFull(S.me)} · Cambiar`})};setTimeout(ask,700)}
   clearInterval(jpTimer);jpTimer=setInterval(()=>{S.jackpot+=rnd(60)+5;const e=$('#jpV');if(e)e.textContent=fmt(S.jackpot);else clearInterval(jpTimer)},1400);
   const wheels=$$('.mini-wheel');let rot=0;cancelAnimationFrame(lobbyRaf);
   const loop=()=>{if(!wheels.length||!document.body.contains(wheels[0]))return;rot+=.006;wheels.forEach(w=>drawWheel(rot,{a:-rot*1.7,r:.875},w));lobbyRaf=requestAnimationFrame(loop)};
   lobbyRaf=requestAnimationFrame(loop);
   checkBroke();
 }
+
+/* ---------- Personajes 3D, voces y palco ---------- */
+const CHARS=[
+ {id:'nazario',name:'Nazario',mote:'El Mujeriego',g:'m',skin:'#e7b08f',hair:'#7a7a7a',hairT:'back',hat:'beret',hatC:'#151515',top:'#f2efe8',sleeve:'long',design:'suspenders',acc:'#9a6a3a',pants:'#3b3e44',shoes:'#6e3c1c',belly:1.3,h:.95,idle:'pockets',fav:'point'},
+ {id:'tijeras',name:'Tijeras',mote:'El Borrachín',g:'m',skin:'#e9ad8c',hair:'#8a8580',hairT:'back',hat:'flatcap',hatC:'#77736b',top:'#26365f',sleeve:'long',design:'cardigan',acc:'#a99c86',pants:'#5a3d29',shoes:'#3b2a1f',belly:1.1,h:.9,idle:'drinkidle',fav:'drink',prop:'wine'},
+ {id:'nachon',name:'Nachón',mote:'El Taxis',g:'m',skin:'#eab496',hair:'#c9c3ba',hairT:'bald',top:'#2b2b2e',sleeve:'long',design:'puffer',acc:'#c9ad84',pants:'#2f4b7c',shoes:'#7b5230',belly:1.25,h:1,idle:'pockets',fav:'thumbs'},
+ {id:'chonona',name:'Chonona',mote:'La Mata Pollos',g:'f',skin:'#efc0a3',hair:'#ecebe6',hairT:'volume',top:'#c8161d',sleeve:'short',design:'polo',acc:'#ffffff',pants:'#2b2b30',shoes:'#222',belly:1.2,h:.9,idle:'crossed',fav:'clap'},
+ {id:'alvarino',name:'Alvariño',mote:'El Frutas',g:'m',skin:'#e2a982',hair:'#2a1b12',hairT:'short',top:'#1e2c50',sleeve:'long',design:'jacket',acc:'#f4f4f4',pants:'#2f4b7c',shoes:'#5a3a22',belly:1,h:1.03,idle:'idle',fav:'thumbs',prop:'orange'},
+ {id:'arricio',name:'Arricio',mote:'El Calores',g:'m',skin:'#e3a580',hair:'#4b4642',hairT:'thin',top:'#141414',sleeve:'short',design:'torrente',acc:'#f2f2f2',pants:'#2f4b7c',shoes:'#3a2a20',belly:1.3,h:.98,idle:'crossed',fav:'fan'},
+ {id:'antonino',name:'Antonino',mote:'El Gominolo',g:'m',skin:'#e6ac85',hair:'#bdb6aa',hairT:'short',top:'#1f2d58',sleeve:'long',design:'puffer',acc:'#d8dde3',pants:'#3a3b42',shoes:'#3a2a20',belly:1.05,h:.98,idle:'crossed',fav:'thumbs'},
+ {id:'josep',name:'Josep',mote:'El Montañas',g:'m',skin:'#e7a47c',hair:'#6b4a2b',hairT:'short',top:'#a9c9ee',sleeve:'short',design:'polo',acc:'#dfeaf7',pants:'#c8b48a',shoes:'#6e4a2a',belly:1.12,h:1,idle:'crossed',fav:'point'},
+ {id:'alfonsin',name:'Alfonsín',mote:'El Letradín',g:'m',skin:'#dfa47f',hair:'#2a2a2c',hairT:'short',top:'#121214',sleeve:'long',design:'robe',acc:'#f4f4f4',pants:'#18181a',shoes:'#111',belly:1,h:1.02,idle:'crossed',fav:'point'},
+ {id:'andresin',name:'Andresín',mote:'El Pizarras',g:'m',skin:'#d39a72',hair:'#2c2622',hairT:'short',top:'#71b4e8',sleeve:'short',design:'polo2',acc:'#e9f3fb',pants:'#1f2b45',shoes:'#222',belly:1.02,h:1,idle:'crossed',fav:'think'},
+];
+const CH=Object.fromEntries(CHARS.map(c=>[c.id,c]));
+const chFull=id=>`${CH[id].name} «${CH[id].mote}»`;
+if(!S.me||!CH[S.me])S.me='arricio';
+S.mates=Object.assign({billar:{mode:'1v1',rivals:['nazario'],partner:'josep'},holdem:['tijeras','chonona','nachon'],blackjack:['alvarino','antonino'],ruleta:['josep','alfonsin'],baccarat:['alfonsin','chonona'],dados:['andresin','nachon'],slots:['tijeras'],poker:['antonino'],keno:['chonona']},S.mates||{});
+const others=()=>CHARS.filter(c=>c.id!==S.me).map(c=>c.id);
+function matesOf(game){let m=S.mates[game];if(!Array.isArray(m))return m;return m.filter(id=>CH[id]&&id!==S.me)}
+
+/* --- Voces: un archivo de audio por personaje con todas sus frases --- */
+const VOX={meta:null,buf:{},loading:{},q:[],busy:false,recent:{},cur:null};
+async function voxMeta(){if(VOX.meta)return VOX.meta;try{const r=await fetch('voces.json');VOX.meta=await r.json()}catch(e){VOX.meta={}}return VOX.meta}
+function voxBuf(id){if(VOX.buf[id])return Promise.resolve(VOX.buf[id]);if(VOX.loading[id])return VOX.loading[id];const a=ac();if(!a)return Promise.resolve(null);
+  VOX.loading[id]=fetch('v_'+id+'.mp3').then(r=>{if(!r.ok)throw 0;return r.arrayBuffer()}).then(b=>new Promise((res,rej)=>a.decodeAudioData(b,res,rej))).then(b=>VOX.buf[id]=b).catch(()=>{VOX.loading[id]=null;return null});return VOX.loading[id]}
+function voxPreload(ids){voxMeta();ids.forEach(id=>voxBuf(id))}
+function say(id,cat,delay=0){if(!id||!S.sound||S.voices===false)return;const go=()=>{VOX.q.push({id,cat});if(VOX.q.length>3)VOX.q.splice(0,VOX.q.length-3);voxNext()};delay?setTimeout(go,delay):go()}
+async function voxNext(){if(VOX.busy||!VOX.q.length)return;VOX.busy=true;const it=VOX.q.shift();
+  try{const meta=(await voxMeta())[it.id],segs=meta&&meta[it.cat],buf=await voxBuf(it.id);if(!segs||!buf||!S.sound){VOX.busy=false;return voxNext()}
+    const key=it.id+it.cat;let idx=rnd(segs.length);if(segs.length>1&&idx===VOX.recent[key])idx=(idx+1)%segs.length;VOX.recent[key]=idx;
+    const [st,du]=segs[idx],a=ac(),src=a.createBufferSource(),an=a.createAnalyser();an.fftSize=512;src.buffer=buf;src.connect(an);an.connect(a.destination);
+    VOX.cur={id:it.id,an,data:new Uint8Array(an.fftSize)};charAct(it.id,'talk',du*1000);
+    src.onended=()=>{VOX.cur=null;VOX.busy=false;setTimeout(voxNext,160)};src.start(0,st,du)}catch(e){VOX.cur=null;VOX.busy=false}}
+function voxLevel(id){const c=VOX.cur;if(!c||c.id!==id)return 0;c.an.getByteTimeDomainData(c.data);let s=0;for(const v of c.data){const d=(v-128)/128;s+=d*d}return Math.min(1,Math.sqrt(s/c.data.length)*5)}
+
+/* --- Construcción 3D de cada personaje --- */
+const FACE={};
+function faceTex(c){if(FACE[c.id])return FACE[c.id];const cv=document.createElement('canvas');cv.width=cv.height=256;const x=cv.getContext('2d');x.fillStyle=c.skin;x.fillRect(0,0,256,256);
+  const list=[];const mk=()=>{const t=new THREE.CanvasTexture(cv);t.encoding=THREE.sRGBEncoding;list.push(t);return t};
+  const img=new Image();img.onload=()=>{const m=document.createElement('canvas');m.width=m.height=256;const y=m.getContext('2d');y.drawImage(img,0,0,256,256);y.globalCompositeOperation='destination-in';
+    y.save();y.translate(128,136);y.scale(1,1.22);const g=y.createRadialGradient(0,0,40,0,0,104);g.addColorStop(0,'#000');g.addColorStop(.8,'#000');g.addColorStop(1,'rgba(0,0,0,0)');y.fillStyle=g;y.beginPath();y.arc(0,0,104,0,TAU);y.fill();y.restore();
+    x.drawImage(m,0,0);list.forEach(t=>t.needsUpdate=true)};img.src='f_'+c.id+'.jpg';
+  return FACE[c.id]={mk}}
+function torsoTex(c){const cv=document.createElement('canvas');cv.width=512;cv.height=256;const x=cv.getContext('2d');x.fillStyle=c.top;x.fillRect(0,0,512,256);
+  const F=256;// centro delantero en u=0.5
+  const vline=(col,w,x0,x1,y0=0,y1=256)=>{x.strokeStyle=col;x.lineWidth=w;x.beginPath();x.moveTo(x0,y0);x.lineTo(x1,y1);x.stroke()};
+  switch(c.design){
+    case'suspenders':for(let i=0;i<6;i++){x.fillStyle='#d9d4c8';x.beginPath();x.arc(F,40+i*34,4,0,TAU);x.fill()}x.fillStyle=c.acc;x.fillRect(F-58,0,16,256);x.fillRect(F+42,0,16,256);x.fillRect(F+170,0,16,256);x.fillRect(F-186,0,16,256);x.fillStyle='#2a2a2a';x.fillRect(0,238,512,18);break;
+    case'cardigan':x.fillStyle=c.acc;x.beginPath();x.moveTo(F-46,0);x.lineTo(F+46,0);x.lineTo(F+40,256);x.lineTo(F-40,256);x.fill();x.fillStyle='#efe6d2';x.beginPath();x.moveTo(F-28,0);x.lineTo(F,58);x.lineTo(F+28,0);x.fill();x.fillStyle=c.acc;x.beginPath();x.moveTo(F-20,0);x.lineTo(F,40);x.lineTo(F+20,0);x.fill();vline('#1a2440',3,F-46,F-40);vline('#1a2440',3,F+46,F+40);break;
+    case'puffer':for(let y=18;y<256;y+=30)vline('rgba(0,0,0,.45)',3,0,512,y,y);for(let y=20;y<256;y+=30)vline('rgba(255,255,255,.12)',2,0,512,y,y);x.fillStyle=c.acc;x.fillRect(F-20,0,40,256);vline('#888',3,F-20,F-20);vline('#888',3,F+20,F+20);break;
+    case'jacket':x.fillStyle=c.acc;x.beginPath();x.moveTo(F-40,0);x.lineTo(F+40,0);x.lineTo(F+30,256);x.lineTo(F-30,256);x.fill();for(let i=0;i<5;i++){x.fillStyle='#bbb';x.beginPath();x.arc(F,30+i*44,3.5,0,TAU);x.fill()}vline('#0f1830',4,F-40,F-30);vline('#0f1830',4,F+40,F+30);break;
+    case'polo':case'polo2':x.fillStyle='rgba(255,255,255,.18)';x.fillRect(F-9,0,18,70);for(let i=0;i<3;i++){x.fillStyle='#eee';x.beginPath();x.arc(F,14+i*20,3.5,0,TAU);x.fill()}
+      if(c.id==='chonona'){x.fillStyle='#fff';x.beginPath();x.arc(F+46,58,17,0,TAU);x.fill();x.fillStyle='#c8161d';x.beginPath();x.arc(F+46,58,11,0,TAU);x.fill();for(let i=0;i<5;i++){x.fillStyle='#fff';x.fillRect(F+150+i*8,20+i*40,22,8);x.fillRect(F-172-i*8,20+i*40,22,8)}}
+      if(c.design==='polo2'){x.fillStyle='#e8f2fb';x.font='bold 13px Arial';x.fillText('R.',F-70,62);x.fillStyle='#d23';x.beginPath();x.arc(F+50,58,12,0,TAU);x.fill();x.fillStyle='#1d4fc4';x.beginPath();x.arc(F+50,58,7,0,TAU);x.fill()}break;
+    case'torrente':x.fillStyle='#f2f2f2';x.textAlign='center';x.font='900 40px Impact,Arial Black,sans-serif';x.fillText('TORRENTE',F,95);x.font='900 30px Impact,Arial Black,sans-serif';x.fillText('PRESIDENTE',F,132);break;
+    case'robe':x.fillStyle='#f4f4f4';x.beginPath();x.moveTo(F-40,0);x.lineTo(F+40,0);x.lineTo(F,96);x.fill();x.fillStyle='#0b0b0d';x.beginPath();x.moveTo(F-8,6);x.lineTo(F+8,6);x.lineTo(F+10,90);x.lineTo(F,104);x.lineTo(F-10,90);x.fill();for(let i=-3;i<=3;i++)vline('rgba(255,255,255,.05)',6,F+i*60,F+i*66);break;}
+  const t=new THREE.CanvasTexture(cv);t.encoding=THREE.sRGBEncoding;return t}
+const MATC={};
+function mat(col,r=.75,extra){const k=col+r+(extra?'x':'');if(!extra&&MATC[k])return MATC[k];const m=new THREE.MeshStandardMaterial(Object.assign({color:col,roughness:r},extra||{}));if(!extra)MATC[k]=m;return m}
+const GEO={};
+function geo(k,f){return GEO[k]||(GEO[k]=f())}
+function limb(len,r0,r1,col){const g=new THREE.Group();const m=new THREE.Mesh(new THREE.CylinderGeometry(r1,r0,len,14),mat(col));m.position.y=-len/2;m.castShadow=true;g.add(m);
+  const j=new THREE.Mesh(geo('j'+r0,()=>new THREE.SphereGeometry(1,14,10)),mat(col));j.scale.setScalar(r0*1.02);j.castShadow=true;g.add(j);return g}
+function buildChar(id){const T=THREE,c=CH[id],root=new T.Group(),J={};const skin=c.skin,b=c.belly;
+  const hips=new T.Group();hips.position.y=.86;root.add(hips);J.hips=hips;
+  // piernas
+  [['l',1],['r',-1]].forEach(([s,sx])=>{const hip=new T.Group();hip.position.set(.095*sx,0,0);hips.add(hip);const th=limb(.42,.085,.07,c.pants);hip.add(th);
+    const kn=new T.Group();kn.position.y=-.42;hip.add(kn);const sh=limb(.4,.068,.055,c.pants);kn.add(sh);
+    const shoe=new T.Mesh(geo('shoe',()=>new T.SphereGeometry(1,16,10)),mat(c.shoes,.45));shoe.scale.set(.065,.05,.13);shoe.position.set(0,-.42,.04);shoe.castShadow=true;kn.add(shoe);
+    J[s+'Hip']=hip;J[s+'Kn']=kn});
+  // tronco (perfil torneado, costura detrás)
+  const spine=new T.Group();spine.position.y=.02;hips.add(spine);J.spine=spine;
+  const prof=[[.001,-.02],[.17,-.01],[.19*b,.08],[.205*b,.2],[.19*Math.max(1,b*.95),.34],[.185,.44],[.15,.52],[.06,.56],[.001,.565]].map(p=>new T.Vector2(p[0],p[1]));
+  const torso=new T.Mesh(new T.LatheGeometry(prof,28,Math.PI,TAU),new T.MeshStandardMaterial({map:torsoTex(c),roughness:c.design==='puffer'?.45:.8}));torso.scale.z=.78;torso.castShadow=true;spine.add(torso);
+  if(c.design==='robe'){const sk=new T.Mesh(new T.LatheGeometry([[.21,0],[.25,-.25],[.28,-.5],[.3,-.58]].map(p=>new T.Vector2(p[0],p[1])),24),mat('#121214',.7,{side:T.DoubleSide}));sk.scale.z=.8;sk.position.y=.05;sk.castShadow=true;spine.add(sk)}
+  if(c.design==='puffer'||c.design==='jacket'||c.design==='cardigan'){const col=new T.Mesh(new T.TorusGeometry(.075,.022,8,20),mat(c.top));col.rotation.x=Math.PI/2;col.position.y=.545;spine.add(col)}
+  const neck=new T.Group();neck.position.y=.56;spine.add(neck);J.neck=neck;const nm=new T.Mesh(new T.CylinderGeometry(.052,.058,.08,12),mat(skin));nm.position.y=.03;neck.add(nm);
+  // cabeza con cara y mandíbula
+  const head=new T.Group();head.position.y=.2;neck.add(head);J.head=head;const R=.165,f=faceTex(c);
+  const PH=2.15,TH0=.28,TH1=2.5,TM=TH0+(TH1-TH0)*.74;
+  const sk=mat(skin,.7);
+  const back=new T.Mesh(new T.SphereGeometry(R,28,20,Math.PI/2+PH/2,TAU-PH),sk);head.add(back);
+  const topc=new T.Mesh(new T.SphereGeometry(R,28,6,0,TAU,0,TH0+.01),sk);head.add(topc);
+  const botc=new T.Mesh(new T.SphereGeometry(R,28,6,0,TAU,TH1-.01,Math.PI-TH1+.01),sk);
+  const inner=new T.Mesh(new T.SphereGeometry(R*.9,16,12),mat('#3a0d0d',.9));head.add(inner);
+  const tU=f.mk(),tL=f.mk();const mf=(TM-TH0)/(TH1-TH0);tU.repeat.set(1,mf);tU.offset.set(0,1-mf);tL.repeat.set(1,1-mf);tL.offset.set(0,0);
+  const fu=new T.Mesh(new T.SphereGeometry(R*1.002,30,16,Math.PI/2-PH/2,PH,TH0,TM-TH0),new T.MeshStandardMaterial({map:tU,roughness:.65}));head.add(fu);
+  const jaw=new T.Group();head.add(jaw);J.jaw=jaw;
+  const fl=new T.Mesh(new T.SphereGeometry(R*1.002,30,8,Math.PI/2-PH/2,PH,TM,TH1-TM),new T.MeshStandardMaterial({map:tL,roughness:.65}));jaw.add(fl);jaw.add(botc);
+  head.scale.set(1,1.12,.98);
+  [1,-1].forEach(sx=>{const e=new T.Mesh(geo('ear',()=>new T.SphereGeometry(1,10,8)),sk);e.scale.set(.025,.045,.035);e.position.set(R*.97*sx,-.01,-.01);head.add(e)});
+  // pelo y sombreros
+  const hm=mat(c.hair,.85);
+  if(c.hairT==='short'||c.hairT==='thin'){const h=new T.Mesh(new T.SphereGeometry(R*1.035,26,14,Math.PI/2+PH/2-.25,TAU-PH+.5,0,c.hairT==='thin'?1.55:1.75),hm);head.add(h);
+    if(c.hairT==='short'){const t=new T.Mesh(new T.SphereGeometry(R*1.04,26,10,0,TAU,0,.62),hm);t.position.y=.005;head.add(t)}}
+  if(c.hairT==='back'){const h=new T.Mesh(new T.SphereGeometry(R*1.03,26,14,Math.PI/2+PH/2-.1,TAU-PH+.2,.9,.9),hm);head.add(h)}
+  if(c.hairT==='bald'){const h=new T.Mesh(new T.SphereGeometry(R*1.025,26,10,Math.PI/2+PH/2-.05,TAU-PH+.1,1.15,.55),hm);head.add(h)}
+  if(c.hairT==='volume'){[[0,.12,-.02,.12],[.1,.08,-.04,.09],[-.1,.08,-.04,.09],[0,.07,-.1,.12],[.13,.0,-.05,.075],[-.13,.0,-.05,.075],[.07,.13,.05,.08],[-.07,.13,.05,.08],[0,.02,-.13,.1]].forEach(([x,y,z,r])=>{const s=new T.Mesh(geo('hv',()=>new T.SphereGeometry(1,14,10)),hm);s.scale.setScalar(r);s.position.set(x,y,z);head.add(s)})}
+  if(c.hat==='beret'){const h=new T.Mesh(new T.SphereGeometry(.2,24,12),mat(c.hatC,.9));h.scale.set(1.05,.32,1);h.position.set(.02,.135,-.01);h.rotation.z=-.15;head.add(h);const nub=new T.Mesh(new T.CylinderGeometry(.008,.012,.03,6),mat(c.hatC));nub.position.set(.02,.2,0);head.add(nub)}
+  if(c.hat==='flatcap'){const h=new T.Mesh(new T.SphereGeometry(.185,24,12,0,TAU,0,1.4),mat(c.hatC,.95));h.scale.set(1,.55,1.05);h.position.set(0,.085,-.01);head.add(h);const br=new T.Mesh(new T.CylinderGeometry(.11,.12,.015,20,1,false,-1,2),mat(c.hatC,.95));br.position.set(0,.09,.13);br.rotation.x=.12;head.add(br)}
+  // brazos
+  [['l',1],['r',-1]].forEach(([s,sx])=>{const shd=new T.Group();shd.position.set(.2*sx*Math.max(1,b*.92),.47,0);shd.rotation.order='ZXY';spine.add(shd);
+    const up=limb(.29,.068,.058,c.top);shd.add(up);const el=new T.Group();el.position.y=-.29;shd.add(el);
+    const fcol=c.sleeve==='long'?c.top:skin;const fo=limb(.26,.055,.045,fcol);el.add(fo);
+    if(c.sleeve==='short'){const cuff=new T.Mesh(new T.CylinderGeometry(.072,.074,.1,14),mat(c.top));cuff.position.y=-.06;up.add(cuff);up.children[0].material=mat(skin);up.children[1].material=mat(c.top)}
+    const hand=new T.Group();hand.position.y=-.27;el.add(hand);const hm2=new T.Mesh(geo('hand',()=>new T.SphereGeometry(1,12,10)),sk);hm2.scale.set(.045,.06,.035);hm2.position.y=-.03;hm2.castShadow=true;hand.add(hm2);
+    J[s+'Sh']=shd;J[s+'El']=el;J[s+'Hand']=hand});
+  if(c.prop==='wine'){const g=new T.Group();const gl=mat('#e8f3ff',.05,{transparent:true,opacity:.45});const st=new T.Mesh(new T.CylinderGeometry(.005,.005,.07,8),gl);st.position.y=-.035;g.add(st);
+    const bw=new T.Mesh(new T.CylinderGeometry(.035,.018,.07,14,1,true),gl);bw.position.y=.03;g.add(bw);const wn=new T.Mesh(new T.CylinderGeometry(.03,.017,.045,14),mat('#6e0d1c',.3));wn.position.y=.018;g.add(wn);
+    g.position.set(0,-.08,.05);g.rotation.x=-1.4;J.rHand.add(g)}
+  if(c.prop==='orange'){const o=new T.Mesh(new T.SphereGeometry(.045,14,10),mat('#f08a12',.6));o.position.set(0,-.08,.04);J.lHand.add(o)}
+  root.scale.setScalar(c.h);
+  const ch={id,root,J,cur:{},act:null,base:c.idle,t:Math.random()*10,look:[0,0],lookT:0,lookTo:[0,0],jump:0};
+  root.traverse(o=>{if(o.isMesh)o.castShadow=true});
+  return ch}
+/* --- Posturas (rotaciones en radianes) --- */
+const P0={hips:[0,0,0],spine:[0,0,0],neck:[0,0,0],head:[0,0,0],lSh:[.05,0,.12],rSh:[.05,0,-.12],lEl:[-.25,0,0],rEl:[-.25,0,0],lHip:[0,0,0],rHip:[0,0,0],lKn:[0,0,0],rKn:[0,0,0]};
+const POSE={
+ idle:{},
+ pockets:{lSh:[.25,-.2,.18],rSh:[.25,.2,-.18],lEl:[-.55,0,0],rEl:[-.55,0,0]},
+ crossed:{lSh:[-.42,-1.3,.12],rSh:[-.5,1.3,-.12],lEl:[-1.72,0,0],rEl:[-1.62,0,0]},
+ drinkidle:{rSh:[-.35,.4,-.15],rEl:[-1.55,0,0],lSh:[.25,-.2,.15],lEl:[-.5,0,0]},
+ point:{rSh:[-1.35,.2,-.05],rEl:[-.12,0,0],lSh:[.25,-.2,.18],lEl:[-.55,0,0],head:[-.05,0,.05]},
+ talk:{rSh:[-.55,.35,-.28],rEl:[-1.25,0,0],lSh:[-.2,-.2,.2],lEl:[-.7,0,0]},
+ talk2:{lSh:[-.5,-.4,.32],lEl:[-1.15,0,0],rSh:[-.5,.4,-.32],rEl:[-1.15,0,0]},
+ celebrate:{lSh:[-.1,0,2.65],rSh:[-.1,0,-2.65],lEl:[-.25,0,0],rEl:[-.25,0,0],head:[-.25,0,0],spine:[-.08,0,0]},
+ fist:{rSh:[-.35,.3,-.55],rEl:[-2.25,0,0],lSh:[.1,0,.2],lEl:[-.4,0,0],head:[-.1,0,0]},
+ thumbs:{rSh:[-.9,.25,-.15],rEl:[-1.3,0,0],lSh:[.1,0,.15],lEl:[-.35,0,0]},
+ lament:{lSh:[-.55,0,2.1],rSh:[-.55,0,-2.1],lEl:[-1.95,0,0],rEl:[-1.95,0,0],spine:[.14,0,0],head:[.28,0,0]},
+ facepalm:{rSh:[-1.05,.55,-.18],rEl:[-2.15,0,0],head:[.3,0,-.08],spine:[.08,0,0],lSh:[.15,0,.2],lEl:[-.6,0,0]},
+ shrug:{lSh:[-.2,-.9,.45],rSh:[-.2,.9,-.45],lEl:[-1.5,0,0],rEl:[-1.5,0,0],head:[0,0,.18],neck:[0,0,.05]},
+ clap:{lSh:[-1.0,-.55,.12],rSh:[-1.0,.55,-.12],lEl:[-.85,0,0],rEl:[-.85,0,0]},
+ think:{rSh:[-.55,.5,-.1],rEl:[-2.3,0,0],lSh:[-.42,-1.3,.12],lEl:[-1.6,0,0],head:[.05,0,.16]},
+ drink:{rSh:[-.75,.35,-.2],rEl:[-2.05,0,0],head:[-.3,0,0],lSh:[.2,0,.15],lEl:[-.45,0,0]},
+ fan:{rSh:[-.6,.6,-.25],rEl:[-1.9,0,0],lSh:[.15,0,.2],lEl:[-.45,0,0]},
+ aim:{spine:[.98,0,0],neck:[-.45,0,0],head:[-.55,0,0],lSh:[-1.45,-.15,.2],lEl:[-.12,0,0],rSh:[.55,0,-.1],rEl:[-1.55,0,0],lHip:[-.22,0,.06],rHip:[.18,0,-.08],lKn:[.22,0,0],rKn:[.12,0,0]},
+ shoot:{spine:[.98,0,0],neck:[-.45,0,0],head:[-.55,0,0],lSh:[-1.45,-.15,.2],lEl:[-.12,0,0],rSh:[.15,0,-.1],rEl:[-.45,0,0],lHip:[-.22,0,.06],rHip:[.18,0,-.08],lKn:[.22,0,0],rKn:[.12,0,0]},
+ sitcards:{lSh:[-.75,-.2,.12],rSh:[-.75,.2,-.12],lEl:[-1.0,0,0],rEl:[-1.0,0,0],spine:[.12,0,0],head:[.12,0,0]},
+};
+const ALLCH=new Map();
+function charAct(id,act,ms=1800){const now=performance.now();for(const ch of ALLCH.values())if(ch.id===id){if(act==='talk'){ch.talkUntil=now+ms;if(!ch.act||ch.act.name==='talk'||ch.act.until<now)ch.act={name:Math.random()<.5?'talk':'talk2',until:now+Math.min(ms,1800),t0:now}}else{ch.act={name:act,until:now+ms,t0:now};if(act==='celebrate')ch.jump=1}}}
+function charReact(id,kind,ms){const c=CH[id];if(!c)return;const pick2=a=>a[rnd(a.length)];
+  const map={good:['fist','thumbs',c.fav,'celebrate'],bad:['facepalm','lament','shrug'],win:['celebrate','fist'],lose:['lament','facepalm'],clap:['clap'],think:['think']};
+  let a=pick2(map[kind]||[kind]);if(a==='drink'&&c.prop!=='wine')a='thumbs';charAct(id,a,ms||2200)}
+function charUpdate(ch,dt,now){const J=ch.J;ch.t+=dt;
+  let pose=POSE[ch.forced||ch.base]||{};if(ch.act&&ch.act.until>now)pose=POSE[ch.act.name]||pose;else ch.act=null;
+  const k=1-Math.exp(-dt*(ch.act?7:4));
+  for(const j in P0){const tg=pose[j]||P0[j],cu=ch.cur[j]||(ch.cur[j]=[...P0[j]]);for(let i=0;i<3;i++)cu[i]+=(tg[i]-cu[i])*k}
+  const cu=ch.cur,an=ch.act&&ch.act.name,t=ch.t;
+  const set=(j,ex=[0,0,0])=>{const o=J[j];if(!o)return;o.rotation.x=cu[j][0]+ex[0];o.rotation.y=cu[j][1]+ex[1];o.rotation.z=cu[j][2]+ex[2]};
+  // capas procedurales: respiración, balanceo, mirada
+  if(now>ch.lookT){ch.lookT=now+1500+Math.random()*3000;ch.lookTo=[(Math.random()-.5)*.25,(Math.random()-.5)*.9]}
+  ch.look[0]+=(ch.lookTo[0]-ch.look[0])*dt*2.5;ch.look[1]+=(ch.lookTo[1]-ch.look[1])*dt*2.5;
+  const br=Math.sin(t*1.7)*.018,sway=Math.sin(t*.55)*.035;
+  const busy=ch.forced==='aim'||ch.forced==='shoot';
+  set('hips',[0,busy?0:Math.sin(t*.4)*.05,busy?0:sway]);set('spine',[br,0,busy?0:-sway*.6]);
+  const talking=ch.talkUntil>now,lv=voxLevel(ch.id);
+  set('neck',[talking?Math.sin(t*7)*.04:0,busy?0:ch.look[1]*.4,0]);set('head',[ch.look[0]*.6+(talking?Math.sin(t*5.3)*.05:0),busy?0:ch.look[1]*.6,0]);
+  let ex=[0,0,0];
+  if(an==='clap'){const s=Math.abs(Math.sin(t*14))*.35;set('lSh',[0,s,0]);set('rSh',[0,-s,0])}else{set('lSh');set('rSh')}
+  if(an==='fist'){set('rEl',[Math.sin(t*12)*.25,0,0])}else set('rEl');
+  if(an==='lament'){set('head',[cu.head[0],Math.sin(t*6)*.25,0])}
+  if(an==='talk'||an==='talk2'){set('rEl',[Math.sin(t*4.2)*.25,0,0]);set('lEl',[Math.sin(t*3.6+1)*.2,0,0])}else set('lEl');
+  if(an==='fan'){set('rSh',[0,Math.sin(t*16)*.35,0])}
+  ['lHip','rHip','lKn','rKn'].forEach(j=>set(j));
+  J.jaw.rotation.x=talking?Math.max(lv*.2,Math.abs(Math.sin(t*16))*.05*(lv>0?1:.6)):0;
+  // salto al celebrar
+  if(ch.jump>0){ch.jump=Math.max(0,ch.jump-dt*.7);ch.root.position.y=ch.baseY+Math.abs(Math.sin(ch.jump*Math.PI*4))*.16*ch.jump*ch.sc}else ch.root.position.y=ch.baseY+(busy?-.05*ch.sc:0)}
+function addChar(scene,id,x,y,z,rotY,sc=1){const ch=buildChar(id);ch.sc=sc;ch.root.scale.multiplyScalar(sc);ch.root.position.set(x,y,z);ch.baseY=y;ch.root.rotation.y=rotY;scene.add(ch.root);ALLCH.set(ch.root.uuid,ch);return ch}
+function dropChars(){ALLCH.clear()}
+
+/* --- Palco: escena 3D con los compañeros o rivales encima de cada mesa --- */
+const STG={};
+function stageHTML(game,title){const list=Array.isArray(S.mates[game])?matesOf(game):[];
+  return `<div class="stage3d" id="stg"><canvas id="stgC"></canvas><div class="stg-labels" id="stgL"></div>
+   <button class="btn stg-edit" data-pick="${game}">${list.length?'Cambiar':'Elegir'} ${title}</button></div>`}
+function stageMount(game,extra=[],withMe=true){stageStop();const cv=$('#stgC');if(!cv||!window.THREE)return;const ids=[...(withMe?[S.me]:[]),...matesOf(game),...extra].slice(0,6);
+  try{const T=THREE,ren=new T.WebGLRenderer({canvas:cv,antialias:true});ren.setPixelRatio(Math.min(devicePixelRatio||1,2));ren.outputEncoding=T.sRGBEncoding;ren.toneMapping=T.ACESFilmicToneMapping;ren.shadowMap.enabled=true;
+    const sc=new T.Scene();sc.background=new T.Color('#0b0a0c');const cam=new T.PerspectiveCamera(28,2,.1,40);
+    ren.toneMappingExposure=.9;sc.add(new T.HemisphereLight('#d7e2ff','#2a1a10',.38));const key=new T.DirectionalLight('#ffe2b8',.85);key.position.set(2,4,5);key.castShadow=true;key.shadow.mapSize.set(1024,1024);key.shadow.camera.left=-4;key.shadow.camera.right=4;key.shadow.camera.top=3;key.shadow.camera.bottom=-1;sc.add(key);
+    const rim=new T.DirectionalLight('#9ab8ff',.5);rim.position.set(-3,3,-3);sc.add(rim);
+    const wall=new T.Mesh(new T.PlaneGeometry(30,8),new T.MeshStandardMaterial({color:'#2a1710',roughness:.9}));wall.position.set(0,2,-1.4);wall.receiveShadow=true;sc.add(wall);
+    for(let i=-6;i<=6;i++){const p=new T.Mesh(new T.BoxGeometry(.06,4,.04),new T.MeshStandardMaterial({color:'#3d2416'}));p.position.set(i*.9,1.6,-1.36);sc.add(p)}
+    const fl=new T.Mesh(new T.PlaneGeometry(30,10),new T.MeshStandardMaterial({color:'#3a0d14',roughness:1}));fl.rotation.x=-Math.PI/2;fl.receiveShadow=true;sc.add(fl);
+    const bar=new T.Mesh(new T.BoxGeometry(12,.9,.5),new T.MeshPhysicalMaterial({color:'#4a2a12',roughness:.35,clearcoat:.6}));bar.position.set(0,.45,.75);bar.receiveShadow=true;bar.castShadow=true;sc.add(bar);
+    const felt=new T.Mesh(new T.BoxGeometry(12,.04,.5),new T.MeshStandardMaterial({color:'#17654a',roughness:.95}));felt.position.set(0,.92,.75);sc.add(felt);
+    const n=ids.length,sp=n>4?.62:.72,chars=ids.map((id,i)=>{const x=(i-(n-1)/2)*sp;return addChar(sc,id,x,0,i%2?-.12:0,-x*.25,1)});
+    Object.assign(STG,{ren,sc,cam,chars,ids,cv,game});stageSize();
+    const loop=now=>{if(!document.body.contains(cv)){stageStop();return}const dt=Math.min(.05,(now-(STG.last||now))/1000);STG.last=now;chars.forEach(ch=>charUpdate(ch,dt,now));ren.render(sc,cam);stageLabels();STG.raf=requestAnimationFrame(loop)};
+    STG.raf=requestAnimationFrame(loop);voxPreload([...ids,S.me]);
+    setTimeout(()=>ids.filter(id=>id!==S.me).forEach((id,i)=>i<2&&say(id,'hola',i*2200)),700)}catch(e){}}
+function stageSize(){if(!STG.ren)return;const w=STG.cv.parentElement.clientWidth,h=innerWidth<700?200:240;STG.ren.setSize(w,h,false);STG.cv.style.width='100%';STG.cv.style.height=h+'px';STG.cam.aspect=w/h;
+  const n=Math.max(1,STG.chars.length),half=(n-1)*(n>4?.62:.72)/2+.42,fov=STG.cam.fov*Math.PI/180,dz=Math.max(2.1,half/(Math.tan(fov/2)*STG.cam.aspect)+.35);STG.cam.position.set(0,1.55,dz);STG.cam.lookAt(0,1.42,0);STG.cam.updateProjectionMatrix()}
+addEventListener('resize',()=>{stageSize()});
+function stageStop(){cancelAnimationFrame(STG.raf);if(STG.ren){try{STG.ren.dispose()}catch(e){}}for(const k in STG)delete STG[k];ALLCH.clear()}
+function stageLabels(){const L=$('#stgL');if(!L||!STG.chars)return;const v=new THREE.Vector3(),w=STG.cv.clientWidth,h=STG.cv.clientHeight;
+  if(L.children.length!==STG.chars.length)L.innerHTML=STG.chars.map(ch=>`<div class="stl${ch.id===S.me?' me':''}" data-id="${ch.id}"><b>${ch.id===S.me?'Tú':CH[ch.id].name}</b><span class="stx"></span></div>`).join('');
+  STG.chars.forEach((ch,i)=>{v.set(0,.95,.32);ch.root.localToWorld(v);v.project(STG.cam);const el=L.children[i];el.style.left=((v.x+1)/2*w)+'px';el.style.top=((1-v.y)/2*h)+'px';el.classList.toggle('talk',ch.talkUntil>performance.now())})}
+function stageStatus(id,html){const el=$(`#stgL .stl[data-id="${id}"] .stx`);if(el)el.innerHTML=html}
+/* Reacción de los acompañantes al resultado del jugador */
+function matesReact(game,res){const ids=(STG.ids||[]).filter(i=>i!==S.me);if(!ids.length)return;const id=ids[rnd(ids.length)];
+  if(res==='win'){ids.forEach(i=>charReact(i,rnd(2)?'clap':'good'));say(id,Math.random()<.5?'pique':'animo',400)}
+  else if(res==='big'){ids.forEach(i=>charAct(i,'celebrate',2600));say(id,'pique',500)}
+  else if(res==='lose'){ids.forEach(i=>charReact(i,rnd(3)?'think':'bad'));say(id,Math.random()<.6?'burla':'animo',400)}}
+/* --- Retratos renderizados de cada personaje 3D --- */
+const THUMB={};
+const thumbOf=id=>THUMB[id]||'f_'+id+'.jpg';
+function makeThumbs(){if(!window.THREE||THUMB._go)return;THUMB._go=1;let n=0;
+  CHARS.forEach(c=>{const i=new Image();i.onload=i.onerror=()=>{if(++n===CHARS.length)build()};i.src='f_'+c.id+'.jpg'});
+  function build(){try{const T=THREE,cv=document.createElement('canvas');cv.width=cv.height=200;const ren=new T.WebGLRenderer({canvas:cv,antialias:true,preserveDrawingBuffer:true});ren.outputEncoding=T.sRGBEncoding;
+    const sc=new T.Scene();sc.background=new T.Color('#1d2c26');sc.add(new T.HemisphereLight('#ffffff','#443322',.85));const dl=new T.DirectionalLight('#fff3e0',.9);dl.position.set(1.2,2.5,3);sc.add(dl);
+    const cam=new T.PerspectiveCamera(30,1,.1,20);const list=CHARS.map(c=>{const ch=buildChar(c.id);ch.baseY=0;ch.sc=1;ch.root.visible=false;sc.add(ch.root);ch.base='crossed';for(let k=0;k<40;k++)charUpdate(ch,.05,0);return ch});
+    setTimeout(()=>{list.forEach(ch=>{const h=CH[ch.id].h;list.forEach(o=>o.root.visible=o===ch);ch.J.head.rotation.set(0,0,0);ch.J.neck.rotation.set(0,0,0);cam.position.set(.25,1.58*h,1.15);cam.lookAt(0,1.5*h,0);ren.render(sc,cam);THUMB[ch.id]=cv.toDataURL('image/jpeg',.85)});
+      ren.dispose();$$('[data-tid]').forEach(e=>{const u=THUMB[e.dataset.tid];if(u)e.style.backgroundImage=`url(${u})`})},400)}catch(e){}}}
+/* --- Selector de personajes --- */
+function charChip(id,on,extra=''){return `<button class="chc ${on?'on':''}" data-ch="${id}" ${extra}><span class="chf" data-tid="${id}" style="background-image:url(${thumbOf(id)})"></span><b>${CH[id].name}</b><small>«${CH[id].mote}»</small></button>`}
+function pickMe(after){modal(`<h3>¿Quién eres tú?</h3><p>Elige tu personaje. Hablará con su voz cuando juegues.</p><div class="chgrid">${CHARS.map(c=>charChip(c.id,c.id===S.me)).join('')}</div><div class="row-c" style="margin-top:14px"><button class="btn primary" data-close>Listo</button></div>`,ov=>{
+  ov.querySelector('.chgrid').onclick=e=>{const b=e.target.closest('[data-ch]');if(!b)return;S.me=b.dataset.ch;for(const k in S.mates){const m=S.mates[k];if(Array.isArray(m))S.mates[k]=m.filter(x=>x!==S.me)}save();
+    $$('.chgrid [data-ch]',ov).forEach(x=>x.classList.toggle('on',x.dataset.ch===S.me));voxBuf(S.me).then(()=>say(S.me,'hola'));after&&after()}})}
+const PICKCFG={holdem:[1,5,'rivales'],blackjack:[0,3,'compañeros de mesa'],ruleta:[0,4,'compañeros de mesa'],baccarat:[0,4,'compañeros de mesa'],dados:[0,4,'compañeros de mesa'],slots:[0,2,'acompañantes'],poker:[0,2,'acompañantes'],keno:[0,2,'acompañantes']};
+function pickMates(game,after){const [mn,mx,lbl]=PICKCFG[game];let sel=[...matesOf(game)];
+  const draw=ov=>{$$('.chgrid [data-ch]',ov).forEach(x=>x.classList.toggle('on',sel.includes(x.dataset.ch)));$('#pmN',ov).textContent=`${sel.length} de ${mx}`};
+  modal(`<h3>Elige ${lbl}</h3><p>Puedes elegir ${mn?'de '+mn+' a '+mx:'hasta '+mx}. Tú juegas como <b>${chFull(S.me)}</b>.</p><div class="chgrid">${others().map(id=>charChip(id,sel.includes(id))).join('')}</div>
+    <div class="row-c" style="margin-top:14px"><span class="total" id="pmN"></span><button class="btn primary" id="pmOk">Sentarse a jugar</button></div>`,ov=>{draw(ov);
+    $('.chgrid',ov).onclick=e=>{const b=e.target.closest('[data-ch]');if(!b)return;const id=b.dataset.ch;if(sel.includes(id))sel=sel.filter(x=>x!==id);else if(sel.length<mx)sel.push(id);else{toast(`Máximo ${mx}`);return}draw(ov);sfx('click')};
+    $('#pmOk',ov).onclick=()=>{if(sel.length<mn){toast(`Elige al menos ${mn}`);return}S.mates[game]=sel;save();closeModal();after&&after()}})}
+document.addEventListener('click',e=>{const b=e.target.closest('[data-pick]');if(!b)return;const g=b.dataset.pick;if(g==='billar')pickBillar(()=>go('billar'));else pickMates(g,()=>go(g))});
+
+/* ---------- Texas Hold'em contra los personajes ---------- */
+const HE={on:false,ps:[],btn:0,board:[],deck:[],cur:-1,stage:'',busy:false,buy:0,bb:20,log:''};
+const HE_TABLES=[{buy:2000,sb:10,bb:20},{buy:10000,sb:50,bb:100},{buy:50000,sb:250,bb:500}];
+const HSTAGE={pre:'Antes del flop',flop:'Flop',turn:'Turn',river:'River',show:'Enfrentamiento'};
+const rv=c=>c.i===0?14:c.i+1;
+function score5(cs){const v=cs.map(rv).sort((a,b)=>b-a),fl=cs.every(c=>c.s===cs[0].s);const cnt={};v.forEach(x=>cnt[x]=(cnt[x]||0)+1);
+  const g=Object.entries(cnt).map(([r,n])=>[+n,+r]).sort((a,b)=>b[0]-a[0]||b[1]-a[1]);let st=0;const u=[...new Set(v)];
+  if(u.length===5){if(u[0]-u[4]===4)st=u[0];else if(u.join()==='14,5,4,3,2')st=5}
+  const kick=a=>a.reduce((s,x)=>s*15+x,0);
+  if(st&&fl)return 8e6+st;if(g[0][0]===4)return 7e6+kick([g[0][1],g[1][1]]);if(g[0][0]===3&&g[1][0]===2)return 6e6+kick([g[0][1],g[1][1]]);
+  if(fl)return 5e6+kick(v);if(st)return 4e6+st;if(g[0][0]===3)return 3e6+kick(g.map(x=>x[1]));if(g[0][0]===2&&g[1][0]===2)return 2e6+kick(g.map(x=>x[1]));
+  if(g[0][0]===2)return 1e6+kick(g.map(x=>x[1]));return kick(v)}
+function best7(cs){let b=0;for(let a=0;a<cs.length;a++)for(let c=a+1;c<cs.length;c++){const h=cs.filter((_,i)=>i!==a&&i!==c);const s=score5(h);if(s>b)b=s}return b}
+const HNAME=['Carta alta','Pareja','Doble pareja','Trío','Escalera','Color','Full','Póker','Escalera de color'];
+const handName=s=>{const k=Math.floor(s/1e6);return k===8&&s%1e6===14?'Escalera real':HNAME[k]};
+function equity(hole,board,nOpp,sims=160){const known=new Set([...hole,...board].map(c=>c.r+c.s));const pool=[];for(const s of SUITS)RANKS.forEach((r,i)=>{if(!known.has(r+s))pool.push({r,s,i})});
+  let win=0;for(let k=0;k<sims;k++){const d=pool.slice();for(let i=d.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[d[i],d[j]]=[d[j],d[i]]}let p=0;
+    const bd=board.concat(d.slice(p,p+5-board.length));p+=5-board.length;const me=best7(hole.concat(bd));let best=true,tie=0;
+    for(let o=0;o<nOpp;o++){const s=best7([d[p],d[p+1]].concat(bd));p+=2;if(s>me){best=false;break}if(s===me)tie++}
+    if(best)win+=tie?1/(tie+1):1}return win/sims}
+function holdem(el){
+  el.innerHTML=head("Texas Hold'em",'Póker de verdad contra tus amigos · Dos cartas tuyas y cinco comunes · Gana la mejor mano de cinco cartas')+`
+  <div class="table he-table">${stageHTML('holdem','rivales')}
+    <div class="he-felt"><div class="he-pot" id="hePot"></div><div class="cards he-board" id="heB"></div><div class="he-stage" id="heS"></div></div>
+    <div class="he-me"><div class="cards" id="heMe"></div><div class="he-mi"><b>${chFull(S.me)} (tú)</b><span id="heMc" class="num"></span><span id="heMh"></span></div></div>
+    <div class="msg" id="heMsg"></div>
+    <div class="actions" id="heAct"></div>
+  </div>`;
+  stageMount('holdem',[],false);heRender();
+  if(!HE.on)heLobby();else if(!HE.busy)heLoop()}
+function heLobby(){const a=$('#heAct');if(!a)return;setMsg('#heMsg',`Siéntate a la mesa contra ${matesOf('holdem').map(id=>CH[id].name).join(', ')}. Todos empezáis con las mismas fichas.`);
+  a.innerHTML=HE_TABLES.map((t,i)=>`<button class="btn ${i?'':'primary'}" data-ht="${i}">Mesa ${fmt(t.buy)} · ciegas ${t.sb}/${t.bb}</button>`).join('');
+  a.onclick=e=>{const b=e.target.closest('[data-ht]');if(!b)return;const t=HE_TABLES[+b.dataset.ht];if(!take(t.buy))return;
+    HE.on=true;HE.buy=t.buy;HE.sb=t.sb;HE.bb=t.bb;HE.ps=[{id:S.me,me:true,chips:t.buy},...matesOf('holdem').map(id=>({id,chips:t.buy}))];HE.btn=rnd(HE.ps.length);sfx('chip');a.onclick=null;heHand()}}
+function heAlive(){return HE.ps.filter(p=>p.chips>0||p.inHand)}
+async function heHand(){if(!$('#heAct'))return;HE.ps=HE.ps.filter(p=>p.chips>0||p.me);const me=HE.ps.find(p=>p.me);
+  if(me.chips<=0){heLeave('Te has quedado sin fichas en la mesa.');return}if(HE.ps.length<2){heLeave('¡Has dejado a todos sin fichas! Ganas la mesa.',true);return}
+  HE.deck=makeShoe(1);HE.board=[];HE.stage='pre';HE.ps.forEach(p=>{p.cards=[];p.bet=0;p.tot=0;p.folded=false;p.allin=false;p.acted=false;p.inHand=true;p.st=''});
+  HE.btn=(HE.btn+1)%HE.ps.length;const n=HE.ps.length,sb=n===2?HE.btn:(HE.btn+1)%n,bbI=(sb+1)%n;heBlind(sb,HE.sb);heBlind(bbI,HE.bb);HE.curBet=HE.bb;HE.minR=HE.bb;HE.nr=0;
+  for(let r=0;r<2;r++)for(let k=1;k<=n;k++){const p=HE.ps[(HE.btn+k)%n];p.cards.push(HE.deck.pop());sfx('card');heRender();await sleep(140)}
+  HE.cur=(bbI+1)%n;heLoop()}
+function heBlind(i,a){const p=HE.ps[i],x=Math.min(a,p.chips);p.chips-=x;p.bet+=x;p.tot+=x;if(!p.chips)p.allin=true;p.st=a===HE.sb?'Ciega pequeña':'Ciega grande'}
+const hePot=()=>HE.ps.reduce((s,p)=>s+p.tot,0);
+function heActive(){return HE.ps.filter(p=>p.inHand&&!p.folded)}
+async function heLoop(){if(!$('#heAct'))return;HE.busy=true;
+  while(true){if(!$('#heAct')){HE.busy=false;return}
+    const live=heActive();if(live.length===1)return heWin();
+    const canAct=live.filter(p=>!p.allin);
+    if(canAct.every(p=>p.acted&&p.bet===HE.curBet)){if(HE.stage==='river'){HE.busy=false;return heShow()}if(canAct.length<=1){await heRunout();HE.busy=false;return heShow()}await heNext();continue}
+    const p=HE.ps[HE.cur];if(!p.inHand||p.folded||p.allin){HE.cur=(HE.cur+1)%HE.ps.length;continue}
+    heRender();
+    if(p.me){HE.busy=false;return heMyTurn()}
+    charAct(p.id,'think',1600);stageStatus(p.id,heLabel(p,'pensando…'));await sleep(800+rnd(900));if(!$('#heAct')){HE.busy=false;return}
+    heAI(p);HE.cur=(HE.cur+1)%HE.ps.length}}
+function heLabel(p,extra){return `<span class="num">${fmt(p.chips)}</span>${HE.ps[HE.btn]===p?' <i class="dbtn">D</i>':''}<em>${extra!=null?extra:p.st||''}</em>${p.cards&&p.cards.length?`<span class="mc">${p.cards.map(c=>HE.stage==='show'&&!p.folded?`<i class="${c.s==='♥'||c.s==='♦'?'r':''}">${c.r}${c.s}</i>`:'<i class="b"></i>').join('')}</span>`:''}`}
+function heAI(p){const toCall=HE.curBet-p.bet,pot=hePot(),opp=heActive().length-1;const eq=equity(p.cards,HE.board,Math.max(1,opp),HE.board.length?140:110);
+  const odds=toCall/(pot+toCall||1),r=Math.random(),bluff=r<.07;let act;
+  if(eq>.72||(eq>.55&&r<.35)||bluff)act='raise';else if(toCall===0)act='check';else if(eq>odds+.06||(toCall<=HE.bb&&eq>.25))act='call';else act='fold';
+  if(act==='raise'&&(HE.nr>=3||p.chips<=toCall))act=toCall?(eq>odds?'call':'fold'):'check';
+  if(act==='raise'){const amt=Math.max(HE.minR,Math.round((pot*(eq>.8?.9:.55))/HE.bb)*HE.bb);heRaise(p,HE.curBet+amt);if(Math.random()<.55)say(p.id,'apuesta');charReact(p.id,'good',1600)}
+  else if(act==='call'){heCall(p);if(Math.random()<.2)say(p.id,'pienso')}
+  else if(act==='check'){p.acted=true;p.st='Pasa'}
+  else{p.folded=true;p.st='Se retira';if(Math.random()<.5)say(p.id,'retiro');charReact(p.id,'bad',1500)}
+  sfx(act==='fold'?'click':'chip');heRender()}
+function heCall(p){const x=Math.min(HE.curBet-p.bet,p.chips);p.chips-=x;p.bet+=x;p.tot+=x;p.acted=true;if(!p.chips)p.allin=true;p.st=p.allin?'¡Todo!':x?'Iguala':'Pasa'}
+function heRaise(p,to){HE.nr=(HE.nr||0)+1;to=Math.min(to,p.bet+p.chips);const x=to-p.bet;if(to-HE.curBet>=HE.minR)HE.minR=to-HE.curBet;if(to>HE.curBet){HE.curBet=to;HE.ps.forEach(o=>{if(o!==p&&!o.folded&&!o.allin)o.acted=false})}
+  p.chips-=x;p.bet+=x;p.tot+=x;p.acted=true;if(!p.chips)p.allin=true;p.st=p.allin?'¡Todo!':'Sube a '+fmt(to)}
+function heMyTurn(){const me=HE.ps.find(p=>p.me),toCall=HE.curBet-me.bet,pot=hePot(),a=$('#heAct');heRender();
+  setMsg('#heMsg',toCall?`Te toca. Para seguir tienes que poner ${fmt(Math.min(toCall,me.chips))}.`:'Te toca. Puedes pasar sin poner fichas o apostar.');
+  const mr=HE.curBet+HE.minR,pr=HE.curBet+Math.max(HE.minR,Math.round(pot/HE.bb)*HE.bb);
+  a.innerHTML=`<button class="btn" data-h="fold">Retirarse</button><button class="btn primary" data-h="call">${toCall?'Igualar '+fmt(Math.min(toCall,me.chips)):'Pasar'}</button>
+    ${me.chips>toCall?`<button class="btn" data-h="min">Subir a ${fmt(Math.min(mr,me.bet+me.chips))}</button><button class="btn" data-h="pot">Subir bote (${fmt(Math.min(pr,me.bet+me.chips))})</button><button class="btn wine" data-h="all">Todo (${fmt(me.chips+me.bet)})</button>`:''}`;
+  a.onclick=e=>{const b=e.target.closest('[data-h]');if(!b)return;a.onclick=null;a.innerHTML='';const h=b.dataset.h;
+    if(h==='fold'){me.folded=true;me.st='Te retiras';say(S.me,'retiro')}else if(h==='call')heCall(me);else{heRaise(me,h==='min'?mr:h==='pot'?pr:me.bet+me.chips);say(S.me,'apuesta');
+      const rv2=heActive().filter(p=>!p.me);if(rv2.length)charAct(rv2[rnd(rv2.length)].id,'think',1500)}
+    sfx('chip');HE.cur=(HE.cur+1)%HE.ps.length;heLoop()}}
+async function heNext(){HE.ps.forEach(p=>{p.bet=0;p.acted=false;if(!p.folded&&!p.allin)p.st=''});HE.curBet=0;HE.minR=HE.bb;HE.nr=0;
+  const n={pre:3,flop:1,turn:1}[HE.stage];HE.stage={pre:'flop',flop:'turn',turn:'river'}[HE.stage];HE.deck.pop();
+  for(let i=0;i<n;i++){HE.board.push(HE.deck.pop());sfx('card');heRender();await sleep(260)}
+  HE.cur=(HE.btn+1)%HE.ps.length;await sleep(400)}
+async function heRunout(){HE.stage='show';heRender();while(HE.board.length<5){await sleep(700);HE.board.push(HE.deck.pop());sfx('card');heRender()}}
+function hePay(winners,amount){const each=Math.floor(amount/winners.length);winners.forEach(p=>p.chips+=each)}
+async function heWin(){const w=heActive()[0];const pot=hePot();w.chips+=pot;HE.ps.forEach(p=>p.tot=0);HE.busy=false;
+  setMsg('#heMsg',`${w.me?'Te llevas':CH[w.id].name+' se lleva'} el bote de ${fmt(pot)} porque los demás se han retirado.`,w.me?'win':'');
+  if(w.me){say(S.me,'bien');sfx('win')}else{say(w.id,'bien');charReact(w.id,'good')}HE.busy=false;heEndHand()}
+async function heShow(){HE.stage='show';HE.busy=false;const live=heActive();live.forEach(p=>p.sc=best7(p.cards.concat(HE.board)));heRender();
+  // botes con todo apostado: reparto por niveles
+  const levels=[...new Set(HE.ps.filter(p=>p.tot>0).map(p=>p.tot))].sort((a,b)=>a-b);let prev=0;const won=new Map();
+  for(const L of levels){const part=HE.ps.reduce((s,p)=>s+Math.max(0,Math.min(p.tot,L)-prev),0);const el=live.filter(p=>p.tot>=L);if(!el.length){prev=L;continue}
+    const top=Math.max(...el.map(p=>p.sc)),ws=el.filter(p=>p.sc===top);hePay(ws,part);ws.forEach(p=>won.set(p,(won.get(p)||0)+Math.floor(part/ws.length)));prev=L}
+  HE.ps.forEach(p=>p.tot=0);heRender();
+  const best=[...won.entries()].sort((a,b)=>b[1]-a[1])[0][0];
+  setMsg('#heMsg',[...won.entries()].map(([p,v])=>`${p.me?'Ganas':CH[p.id].name+' gana'} ${fmt(v)} con ${handName(p.sc).toLowerCase()}`).join(' · '),won.has(HE.ps.find(p=>p.me))?'win':'lose');
+  live.forEach(p=>{if(p.me)return;if(won.has(p)){charReact(p.id,'good',2400)}else charReact(p.id,'bad',2400)});
+  if(best.me){say(S.me,'bien');sfx('win');const l=live.find(p=>!p.me);if(l)say(l.id,'pique',1800)}else{say(best.id,'bien');if(won.has(HE.ps.find(p=>p.me))===false)say(S.me,'mal',1800)}
+  heEndHand()}
+function heEndHand(){heRender();HE.ps.filter(p=>!p.me&&p.chips<=0).forEach(p=>{charReact(p.id,'lose',3000);say(p.id,'derrota',1200)});
+  const a=$('#heAct');if(!a)return;a.innerHTML=`<button class="btn" id="heLv">Levantarse con ${fmt(HE.ps.find(p=>p.me).chips)}</button><button class="btn primary" id="heNx">Siguiente mano</button>`;
+  $('#heNx').onclick=()=>{a.innerHTML='';heHand()};$('#heLv').onclick=()=>heLeave('Te levantas de la mesa.')}
+function heLeave(why,champ){const me=HE.ps.find(p=>p.me),ret=me?me.chips:0;HE.on=false;settle('holdem',HE.buy,ret,HE.buy);
+  if(champ){matesOf('holdem').forEach(id=>charReact(id,'lose',3000));say(S.me,'victoria');}
+  setMsg('#heMsg',`${why} Recuperas ${fmt(ret)} fichas (entraste con ${fmt(HE.buy)}).`,ret>HE.buy?'win':ret<HE.buy?'lose':'');HE.ps=[];heRender();setTimeout(heLobby,2600)}
+function heRender(){if(!$('#heB'))return;const me=HE.ps.find(p=>p.me);
+  $('#heB').innerHTML=HE.board.map(c=>cardHTML(c)).join('')+Array(Math.max(0,5-HE.board.length)).fill('<div class="card slot"></div>').join('');HE.board.forEach(seenOne);
+  $('#hePot').textContent=HE.on?'Bote: '+fmt(hePot()):'';$('#heS').textContent=HE.on?HSTAGE[HE.stage]||'':'';
+  $('#heMe').innerHTML=me&&me.cards?me.cards.map(c=>cardHTML(c)).join(''):'';if(me&&me.cards)me.cards.forEach(seenOne);
+  $('#heMc').textContent=me?'Fichas: '+fmt(me.chips)+(me.bet?' · en juego '+fmt(me.bet):''):'';
+  $('#heMh').textContent=me&&me.cards&&me.cards.length&&HE.board.length>=3?'Tienes: '+handName(best7(me.cards.concat(HE.board))).toLowerCase():'';
+  HE.ps.filter(p=>!p.me).forEach(p=>stageStatus(p.id,heLabel(p)))}
 
 /* ---------- Ruleta ---------- */
 const RO={order:[0,32,15,19,4,21,2,25,17,34,6,27,13,36,11,30,8,23,10,5,24,16,33,1,20,14,31,9,22,18,29,7,28,12,35,3,26],
@@ -709,7 +1092,7 @@ function roulette(el){
   [['d1','1ª docena',2],['d2','2ª docena',6],['d3','3ª docena',10]].forEach(([k,l,c])=>b+=`<div class="rc out" data-k="${k}" style="grid-row:4;grid-column:${c}/${c+4}">${l}<i class="mk" hidden></i></div>`);
   [['low','1-18'],['even','PAR'],['red','<span class="diam" style="background:#b8232f"></span>'],['black','<span class="diam" style="background:#111;border:1px solid #fff5"></span>'],['odd','IMPAR'],['high','19-36']].forEach(([k,l],i)=>b+=`<div class="rc out" data-k="${k}" style="grid-row:5;grid-column:${2+i*2}/${4+i*2}">${l}<i class="mk" hidden></i></div>`);
   el.innerHTML=head('Ruleta Europea','Un solo cero · Pleno 35:1 · Docena y columna 2:1 · Sencillas 1:1')+`
-  <div class="table">
+  <div class="table">${stageHTML('ruleta','compañeros')}
     <div class="ro-top">
       <div class="ro-wheel"><canvas id="roC" width="600" height="600"></canvas></div>
       <div class="ro-side">
@@ -728,10 +1111,13 @@ function roulette(el){
   $('#roRe').onclick=()=>{if(RO.spin||!RO.last)return;const t=Object.values(RO.last).reduce((a,b)=>a+b,0);if(take(t)){for(const k in RO.last)RO.bets[k]=(RO.bets[k]||0)+RO.last[k];sfx('chip');roMarks()}};
   $('#roX2').onclick=()=>{if(RO.spin)return;const t=roTotal();if(t&&take(t)){for(const k in RO.bets)RO.bets[k]*=2;sfx('chip');roMarks()}};
   $('#roSpin').onclick=roSpin;
-  roMarks();roHist();drawWheel(RO.rot,RO.ball);
+  roMarks();roHist();drawWheel(RO.rot,RO.ball);stageMount('ruleta');say('crupier','hagan',1300);
 }
 const roTotal=()=>Object.values(RO.bets).reduce((a,b)=>a+b,0);
 function roMarks(){$$('#roBoard [data-k]').forEach(c=>{const v=RO.bets[c.dataset.k],m=c.querySelector('.mk');m.hidden=!v;if(v)m.textContent=short(v)});const t=$('#roTot');if(t)t.textContent=fmt(roTotal())}
+const MCOL=['#2a5db0','#1f8a4c','#7d3cc4','#d06a14','#0f8a8a','#b8232f'];
+function roMates(){$$('#roBoard .mm').forEach(x=>x.parentNode.removeChild(x));(RO.mb||[]).forEach((b,i)=>{const c=$(`#roBoard [data-k="${b.k}"]`);if(c)c.insertAdjacentHTML('beforeend',`<i class="mm" style="--mc:${MCOL[i%6]};left:${12+i*14}%">${CH[b.id].name[0]}</i>`);stageStatus(b.id,'Apuesta a '+roName(b.k))})}
+function roName(k){return k[0]==='n'?'el '+k.slice(1):{red:'rojo',black:'negro',even:'par',odd:'impar',low:'1-18',high:'19-36',d1:'1ª docena',d2:'2ª docena',d3:'3ª docena',c1:'columna 1',c2:'columna 2',c3:'columna 3'}[k]}
 function roHist(){const h=$('#roHist');if(h)h.innerHTML=RO.hist.slice(0,14).map(n=>`<span class="${roColor(n)}">${n}</span>`).join('')}
 function roPay(k,n){if(k[0]==='n')return +k.slice(1)===n?36:0;if(n===0)return 0;
   switch(k){case'red':return RO.red.has(n)?2:0;case'black':return RO.red.has(n)?0:2;case'even':return n%2===0?2:0;case'odd':return n%2?2:0;
@@ -767,7 +1153,7 @@ function roAnimate(idx){return new Promise(res=>{
   requestAnimationFrame(f)})}
 async function roSpin(){
   if(RO.spin)return;const tot=roTotal();if(!tot){setMsg('#roMsg','Coloca al menos una ficha en el tapete');sfx('err');return}
-  RO.spin=true;RO.last={...RO.bets};setMsg('#roMsg','No va más…');$('#roSpin').disabled=true;
+  RO.spin=true;RO.last={...RO.bets};say('crupier','novamas');RO.mb=(STG.ids||[]).filter(id=>id!==S.me).map(id=>({id,k:Math.random()<.3?'n'+rnd(37):['red','black','even','odd','low','high','d1','d2','d3','c1','c2','c3'][rnd(12)]}));roMates();setMsg('#roMsg','No va más…');$('#roSpin').disabled=true;
   const n=RO.order[rnd(37)];await roAnimate(RO.order.indexOf(n));
   let ret=0;for(const k in RO.bets)ret+=RO.bets[k]*roPay(k,n);
   if(RO.bets['n'+n])ach('pleno');
@@ -775,7 +1161,7 @@ async function roSpin(){
   const cell=$(`#roBoard [data-k="n${n}"]`);if(cell){cell.classList.remove('hit');void cell.offsetWidth;cell.classList.add('hit')}
   const nm=n===0?'cero':RO.red.has(n)?'rojo':'negro',par=n===0?'':n%2?', impar':', par';
   setMsg('#roMsg',ret>0?`${n} ${nm}${par}. Cobras ${fmt(ret)} fichas`:`${n} ${nm}${par}. La banca gana esta vez`,ret>tot?'win':ret?'':'lose');
-  RO.bets={};roMarks();settle('ruleta',tot,ret);RO.spin=false;const sb=$('#roSpin');if(sb)sb.disabled=false;
+  RO.bets={};roMarks();settle('ruleta',tot,ret);say('crupier','n'+n);setTimeout(()=>{(RO.mb||[]).forEach((b,i)=>{const w=roPay(b.k,n)>0;charReact(b.id,w?'good':'bad',2400);stageStatus(b.id,w?'¡Gana!':'Pierde');if(i<2)say(b.id,w?'bien':'mal',300+i*1900)});if(ret!==tot&&Math.random()<.5)say(S.me,ret>tot?'bien':'mal',2000)},1700);RO.spin=false;const sb=$('#roSpin');if(sb)sb.disabled=false;
 }
 
 /* ---------- Blackjack ---------- */
@@ -786,8 +1172,8 @@ function bjDraw(){if(BJ.shoe.length<60){BJ.shoe=makeShoe(6);toast('El crupier ba
 function blackjack(el){
   if(!BJ.shoe.length)BJ.shoe=makeShoe(6);
   el.innerHTML=head('Blackjack','6 barajas · Banca se planta en 17 · Blackjack paga 3:2 · Dobla y divide')+`
-  <div class="table" style="text-align:center">
-    <div class="lbl">Crupier</div><div class="cards" id="bjD"></div><div id="bjDT"></div>
+  <div class="table" style="text-align:center">${stageHTML('blackjack','compañeros')}
+    <div class="lbl">Crupier</div><div class="cards" id="bjD"></div><div id="bjDT"></div><div id="bjM" class="bj-mates"></div>
     <div style="height:18px"></div>
     <div id="bjH" style="display:flex;gap:22px;justify-content:center;flex-wrap:wrap"></div>
     <div id="bjBet" style="margin:14px auto 0;width:96px;height:96px;border-radius:50%;border:2px dashed #f4ecd899;display:grid;place-items:center;cursor:pointer;position:relative;font-size:11px;letter-spacing:.15em;color:#f4ecd8aa">APUESTA</div>
@@ -796,7 +1182,7 @@ function blackjack(el){
     <div class="actions" id="bjAct"></div>
   </div>`;
   $('#bjBet').onclick=()=>{if(BJ.phase!=='bet')return;if(take(S.chip)){BJ.bet+=S.chip;sfx('chip');bjRender()}};
-  bjRender();
+  bjRender();stageMount('blackjack');
 }
 function bjRender(){
   if(!$('#bjD'))return;
@@ -807,6 +1193,7 @@ function bjRender(){
     return `<div style="${act?'outline:2px solid var(--gold-2);outline-offset:8px;border-radius:10px':''}"><div class="cards">${h.cards.map(c=>cardHTML(c)).join('')}</div>
     <span class="total num">${v.soft&&v.t<21&&h.cards.length?(v.t-10)+'/'+v.t:v.t}</span> <span class="total num" style="color:var(--gold-2)">${fmt(h.bet)}</span>${h.res?`<div style="margin-top:4px;font-weight:800;color:${h.res[1]}">${h.res[0]}</div>`:''}</div>`}).join('');
   BJ.dealer.forEach(seenOne);BJ.hands.forEach(h=>h.cards.forEach(seenOne));
+  const M=$('#bjM');if(M)M.innerHTML=(BJ.mates||[]).map(m=>{const v=bjVal(m.cards).t;return `<div class="bjm"><b>${CH[m.id].name}</b><div class="cards">${m.cards.map(c=>cardHTML(c)).join('')}</div><span class="total num">${m.cards.length?v:''}</span>${m.res?`<em style="color:${m.res[1]}">${m.res[0]}</em>`:''}</div>`}).join('');(BJ.mates||[]).forEach(m=>m.cards.forEach(seenOne));
   const bb=$('#bjBet');bb.hidden=BJ.phase!=='bet';bb.innerHTML=BJ.bet?`<i class="mk" style="min-width:56px;height:56px;font-size:14px">${fmt(BJ.bet)}</i>`:'APUESTA';
   $('#bjChips').hidden=BJ.phase!=='bet';
   const a=$('#bjAct');
@@ -823,14 +1210,14 @@ function seenOne(c){if(!c.n){c.n=1}}
 let bjBusy=false;
 async function bjDeal(){
   if(!BJ.bet){setMsg('#bjMsg','Primero pulsa el círculo para apostar');sfx('err');return}
-  BJ.phase='deal';BJ.last=BJ.bet;BJ.hands=[{cards:[],bet:BJ.bet}];BJ.dealer=[];BJ.hide=true;BJ.act=0;setMsg('#bjMsg','');bjRender();
-  for(let k=0;k<4;k++){await sleep(330);(k%2?BJ.dealer:BJ.hands[0].cards).push(bjDraw());sfx('card');bjRender()}
+  BJ.phase='deal';BJ.last=BJ.bet;BJ.hands=[{cards:[],bet:BJ.bet}];BJ.mates=(STG.ids||[]).filter(id=>id!==S.me).map(id=>({id,cards:[],res:null}));BJ.mates.forEach(m=>stageStatus(m.id,''));BJ.dealer=[];BJ.hide=true;BJ.act=0;setMsg('#bjMsg','');bjRender();
+  for(let r=0;r<2;r++){for(const m of BJ.mates){await sleep(220);m.cards.push(bjDraw());sfx('card');bjRender()}await sleep(280);BJ.hands[0].cards.push(bjDraw());sfx('card');bjRender();await sleep(280);BJ.dealer.push(bjDraw());sfx('card');bjRender()}
   const p=bjVal(BJ.hands[0].cards).t===21,d=bjVal(BJ.dealer).t===21;
   if(p||d){await sleep(500);BJ.hide=false;BJ.dealer[1].f=1;BJ.dealer[1].n=1;bjRender();const h=BJ.hands[0];let ret=0;
     if(p&&d){ret=h.bet;h.res=['Empate','#f2d78c'];setMsg('#bjMsg','Los dos tenéis blackjack. Empate')}
     else if(p){ret=h.bet*2.5;h.res=['¡Blackjack!','#9ef0b5'];ach('bj');setMsg('#bjMsg',`¡Blackjack! Cobras ${fmt(ret)}`,'win')}
     else{h.res=['La banca tiene blackjack','#ffb3b3'];setMsg('#bjMsg','La banca tiene blackjack','lose')}
-    bjEnd(h.bet,ret);return}
+    bjMatesResolve(bjVal(BJ.dealer).t);bjEnd(h.bet,ret);return}
   BJ.phase='play';bjRender();
 }
 async function bjHit(){if(bjBusy)return;bjBusy=true;const h=BJ.hands[BJ.act];h.cards.push(bjDraw());sfx('card');bjRender();const v=bjVal(h.cards).t;
@@ -843,8 +1230,9 @@ async function bjSplit(){if(bjBusy)return;const h=BJ.hands[BJ.act];if(!take(h.be
   h.cards.push(bjDraw());bjRender();await sleep(300);nh.cards.push(bjDraw());sfx('card');
   if(aces){h.done=1;nh.done=1;bjRender();await sleep(400);await bjNext()}else{if(bjVal(h.cards).t===21){h.done=1;await bjNext()}else bjRender()}bjBusy=false}
 async function bjNext(){const i=BJ.hands.findIndex(h=>!h.done);if(i>=0){BJ.act=i;const h=BJ.hands[i];if(h.cards.length<2){h.cards.push(bjDraw());sfx('card')}if(bjVal(h.cards).t===21){h.done=1;bjRender();await sleep(300);return bjNext()}bjRender();return}
+  await bjMatesPlay();
   BJ.phase='dealer';bjRender();await sleep(400);BJ.hide=false;BJ.dealer[1].f=1;BJ.dealer[1].n=0;sfx('card');bjRender();
-  const live=BJ.hands.some(h=>bjVal(h.cards).t<=21);
+  const live=BJ.hands.some(h=>bjVal(h.cards).t<=21)||(BJ.mates||[]).some(m=>bjVal(m.cards).t<=21);
   while(live&&bjVal(BJ.dealer).t<17){await sleep(650);BJ.dealer.push(bjDraw());sfx('card');bjRender()}
   const d=bjVal(BJ.dealer).t;let ret=0,bet=0;
   for(const h of BJ.hands){const v=bjVal(h.cards).t;bet+=h.bet;
@@ -852,10 +1240,18 @@ async function bjNext(){const i=BJ.hands.findIndex(h=>!h.done);if(i>=0){BJ.act=i
     else if(d>21||v>d){ret+=h.bet*2;h.res=['Ganas','#9ef0b5']}
     else if(v===d){ret+=h.bet;h.res=['Empate','#f2d78c']}
     else h.res=['Pierdes','#ffb3b3']}
+  bjMatesResolve(d);
   setMsg('#bjMsg',(d>21?'La banca se pasa. ':`La banca tiene ${d}. `)+(ret>bet?`Cobras ${fmt(ret)}`:ret===bet?'Recuperas tu apuesta':ret?`Recuperas ${fmt(ret)}`:'Pierdes esta mano'),ret>bet?'win':ret<bet?'lose':'');
   bjEnd(bet,ret);
 }
-function bjEnd(bet,ret){BJ.phase='done';bjRender();settle('blackjack',bet,ret);setTimeout(()=>{if(BJ.phase!=='done')return;BJ.phase='bet';BJ.bet=0;bjRender()},1600)}
+async function bjMatesPlay(){const up=BJ.dealer[0];for(const m of BJ.mates||[]){if(!$('#bjM'))return;stageStatus(m.id,'Le toca');charAct(m.id,'think',1300);await sleep(600);
+    while(bjBasic(m.cards,up)){m.cards.push(bjDraw());sfx('card');bjRender();await sleep(550)}
+    const v=bjVal(m.cards).t;if(v>21){m.res=['Se pasa','#ffb3b3'];charReact(m.id,'bad');say(m.id,'mal');stageStatus(m.id,'Se pasa')}else stageStatus(m.id,'Se planta con '+v);bjRender();await sleep(350)}}
+function bjBasic(cs,up){const v=bjVal(cs),u=bjV(up);if(v.t>=21)return false;if(v.soft)return v.t<=17||(v.t===18&&u>=9);if(v.t<=11)return true;if(v.t===12)return !(u>=4&&u<=6);if(v.t<=16)return u>=7;return false}
+function bjMatesResolve(d){let k=0;for(const m of BJ.mates||[]){if(m.res)continue;const v=bjVal(m.cards).t;let r;
+  if(v===21&&m.cards.length===2&&!(d===21&&BJ.dealer.length===2))r=['¡Blackjack!','#9ef0b5'];else if(d>21||v>d)r=['Gana','#9ef0b5'];else if(v===d)r=['Empate','#f2d78c'];else r=['Pierde','#ffb3b3'];
+  m.res=r;const good=r[1]==='#9ef0b5';charReact(m.id,good?'good':r[0]==='Pierde'?'bad':'think',2400);stageStatus(m.id,r[0]);if(k<2&&r[0]!=='Empate'){say(m.id,good?'bien':'mal',1500+k*1900);k++}}bjRender()}
+function bjEnd(bet,ret){if(ret!==bet&&Math.random()<.55)say(S.me,ret>bet?'bien':'mal',300);BJ.phase='done';bjRender();settle('blackjack',bet,ret);setTimeout(()=>{if(BJ.phase!=='done')return;BJ.phase='bet';BJ.bet=0;bjRender()},1600)}
 
 /* ---------- Tragaperras ---------- */
 const SY=[
@@ -880,7 +1276,7 @@ function slEval(g,lb){let total=0,cells=[],jack=false;
   return{total,cells,jack,sc}}
 function slots(el){
   el.innerHTML=head('Tragaperras Fortuna 7','5 rodillos · 10 líneas · 💎 comodín · 3 ⭐ dan 10 giros gratis con premios dobles')+`
-  <div class="sl-cab">
+  ${stageHTML('slots','acompañantes')}<div class="sl-cab">
     <div class="sl-jp"><div class="k">Bote progresivo · 5 💎 en línea</div><div class="v num" id="slJp">${fmt(S.jackpot)}</div></div>
     <div class="reels" id="reels">${[0,1,2,3,4].map(r=>`<div class="reel"><div class="strip"></div></div>`).join('')}</div>
     <div class="free-b" id="slFree" hidden></div>
@@ -904,7 +1300,7 @@ function slots(el){
    <table class="pay">${SY.filter(s=>s.k!=='star').map(s=>`<tr><td style="font-size:22px">${s.h} ${s.h} ${s.h}</td><td>3: ×${s.p[3]} · 4: ×${s.p[4]} · 5: ${s.k==='wild'?'BOTE':'×'+s.p[5]}</td></tr>`).join('')}
    <tr><td style="font-size:22px">⭐ ⭐ ⭐</td><td>En cualquier posición: 10 giros gratis + ×2/×10/×50 la apuesta total</td></tr></table>
    <div class="row-c"><button class="btn primary" data-close>Entendido</button></div>`);
-  slUI();
+  slUI();stageMount('slots');
 }
 function slUI(){if(!$('#slL'))return;const lb=LBETS[SL.li];$('#slL').textContent=fmt(lb);$('#slT').textContent=fmt(lb*10);
   $('#slAuto').textContent=SL.auto?`Parar (${SL.auto})`:'Auto ×10';const f=$('#slFree');f.hidden=!SL.free;f.textContent=`Giros gratis restantes: ${SL.free} · premios ×2`;
@@ -947,7 +1343,7 @@ function vpEval(h){const v=h.map(c=>c.i===0?14:c.i+1).sort((a,b)=>a-b),fl=h.ever
   if(cs[0]===2){const p=+Object.keys(cnt).find(k=>cnt[k]===2);if(p>=11)return 8}return -1}
 function poker(el){
   el.innerHTML=head('Video Póker','Jotas o Mejor · Paga desde pareja de jotas · Pulsa una carta para guardarla')+`
-  <div class="table">
+  <div class="table">${stageHTML('poker','acompañantes')}
     <table class="pay" id="vpPay">${VPP.map(([n,m])=>`<tr><td>${n}</td><td class="num">${m}×</td></tr>`).join('')}</table>
     <div class="vp-cards" id="vpC"></div>
     <div class="msg" id="vpMsg">Elige tu apuesta y pulsa Repartir</div>
@@ -955,7 +1351,7 @@ function poker(el){
     <div class="actions"><button class="btn primary" id="vpGo">Repartir</button></div>
   </div>`;
   $('#vpGo').onclick=vpGo;$('#vpC').onclick=e=>{const s=e.target.closest('.vp-slot');if(!s||VP.phase!=='hold')return;const i=+s.dataset.i;VP.held[i]=!VP.held[i];sfx('click');vpRender()};
-  vpRender();
+  vpRender();stageMount('poker');
 }
 function vpRender(hl){
   const c=$('#vpC');if(!c)return;
@@ -988,7 +1384,7 @@ const bcV=c=>c.i>=9?0:c.i+1;const bcT=cs=>cs.reduce((a,c)=>a+bcV(c),0)%10;
 function bcDraw(){if(BC.shoe.length<20)BC.shoe=makeShoe(8);return BC.shoe.pop()}
 function baccarat(el){
   el.innerHTML=head('Baccarat Punto Banco','Jugador 1:1 · Banca 0,95:1 (5% comisión) · Empate 8:1 · Las reglas de tercera carta son automáticas')+`
-  <div class="table">
+  <div class="table">${stageHTML('baccarat','compañeros')}
     <div class="bc-hands">
       <div><div class="lbl" style="color:#9cc0ff">Jugador</div><div class="cards" id="bcP"></div><span class="total num" id="bcPT"></span></div>
       <div><div class="lbl" style="color:#ff9aa4">Banca</div><div class="cards" id="bcB"></div><span class="total num" id="bcBT"></span></div>
@@ -1005,7 +1401,7 @@ function baccarat(el){
   </div>`;
   $$('.area[data-b]').forEach(a=>a.onclick=()=>{if(BC.busy)return;if(take(S.chip)){BC.bets[a.dataset.b]+=S.chip;sfx('chip');bcRender()}});
   $('#bcClr').onclick=()=>{if(BC.busy)return;give(BC.bets.P+BC.bets.B+BC.bets.T);BC.bets={P:0,B:0,T:0};bcRender()};
-  $('#bcGo').onclick=bcGo;bcRender();
+  $('#bcGo').onclick=bcGo;bcRender();stageMount('baccarat');
 }
 function bcRender(){if(!$('#bcP'))return;
   $('#bcP').innerHTML=BC.pc.map(c=>cardHTML(c)).join('');$('#bcB').innerHTML=BC.bc.map(c=>cardHTML(c)).join('');BC.pc.forEach(seenOne);BC.bc.forEach(seenOne);
@@ -1014,7 +1410,7 @@ function bcRender(){if(!$('#bcP'))return;
   $('#bcRoad').innerHTML=BC.road.slice(-90).map(r=>`<i class="${r}">${r==='P'?'J':r==='B'?'B':'E'}</i>`).join('');const rd=$('#bcRoad');rd.scrollLeft=rd.scrollWidth}
 async function bcGo(){
   if(BC.busy)return;const tot=BC.bets.P+BC.bets.B+BC.bets.T;if(!tot){setMsg('#bcMsg','Coloca una ficha en Jugador, Banca o Empate');sfx('err');return}
-  BC.busy=true;BC.pc=[];BC.bc=[];$$('.area').forEach(a=>a.classList.remove('won'));setMsg('#bcMsg','');bcRender();
+  BC.busy=true;BC.mb=(STG.ids||[]).filter(id=>id!==S.me).map(id=>({id,s:['P','B','B','P','T','B'][rnd(6)]}));BC.mb.forEach(m=>stageStatus(m.id,'Apuesta a '+{P:'Jugador',B:'Banca',T:'Empate'}[m.s]));BC.pc=[];BC.bc=[];$$('.area').forEach(a=>a.classList.remove('won'));setMsg('#bcMsg','');bcRender();
   const deal=async(arr)=>{arr.push(bcDraw());sfx('card');bcRender();await sleep(480)};
   await deal(BC.pc);await deal(BC.bc);await deal(BC.pc);await deal(BC.bc);
   let p=bcT(BC.pc),b=bcT(BC.bc);
@@ -1022,7 +1418,7 @@ async function bcGo(){
     if(p<=5){await deal(BC.pc);p3=bcV(BC.pc[2]);p=bcT(BC.pc)}
     let draw=false;if(p3===null)draw=b<=5;else draw=b<=2||(b===3&&p3!==8)||(b===4&&p3>=2&&p3<=7)||(b===5&&p3>=4&&p3<=7)||(b===6&&(p3===6||p3===7));
     if(draw){await deal(BC.bc);b=bcT(BC.bc)}}
-  const res=p>b?'P':b>p?'B':'T';let ret=0;
+  const res=p>b?'P':b>p?'B':'T';say('crupier',res==='P'?'jugador':res==='B'?'banca':'empate');{let k=0;(BC.mb||[]).forEach(m=>{const w=m.s===res;charReact(m.id,w?'good':'bad',2400);stageStatus(m.id,w?'¡Gana!':'Pierde');if(k<2){say(m.id,w?'bien':'mal',1400+k*1900);k++}})}let ret=0;
   if(res==='P')ret=BC.bets.P*2;else if(res==='B')ret=BC.bets.B*1.95;else ret=BC.bets.T*9+BC.bets.P+BC.bets.B;
   ret=Math.floor(ret);
   if(res==='P'&&BC.bets.P&&BC.pc.length===2&&p===9)ach('natural');if(res==='B'&&BC.bets.B&&BC.bc.length===2&&b===9)ach('natural');
@@ -1037,7 +1433,7 @@ const PIPS={1:[4],2:[0,8],3:[0,4,8],4:[0,2,6,8],5:[0,2,4,6,8],6:[0,2,3,5,6,8]};
 const dieHTML=n=>`<div class="die">${Array.from({length:9},(_,i)=>`<i style="${PIPS[n].includes(i)?'visibility:visible':''}"></i>`).join('')}</div>`;
 function dados(el){
   el.innerHTML=head('Mesa de Dados','Pase 1:1 · Campo 1:1 (2 paga doble, 12 triple) · Cualquier 7 4:1 · Craps 7:1 · Probabilidades a pago real')+`
-  <div class="table">
+  <div class="table">${stageHTML('dados','compañeros')}
     <div class="points" id="crPts">${[4,5,6,8,9,10].map(n=>`<div>${n}</div>`).join('')}</div>
     <div class="dice" id="crDice"></div>
     <div class="msg" id="crMsg">Tirada de salida: apuesta a Pase o No pase</div>
@@ -1054,7 +1450,7 @@ function dados(el){
   </div>`;
   $$('.area[data-b]').forEach(a=>a.onclick=()=>crBet(a.dataset.b));
   $('#crClr').onclick=()=>{if(CR.busy)return;let r=0;for(const k in CR.bets){if(CR.point&&k==='pass')continue;r+=CR.bets[k];CR.bets[k]=0}give(r);crRender()};
-  $('#crRoll').onclick=crRoll;crRender();
+  $('#crRoll').onclick=crRoll;crRender();stageMount('dados');
 }
 function crBet(k){if(CR.busy)return;
   if((k==='pass'||k==='dont')&&CR.point){toast('Pase y No pase solo se apuestan en la tirada de salida');sfx('err');return}
@@ -1095,7 +1491,7 @@ const KP={1:{1:3},2:{2:12},3:{2:1,3:42},4:{2:1,3:4,4:100},5:{3:2,4:15,5:500},6:{
 const KN={pick:new Set(),drawn:new Set(),busy:false};
 function keno(el){
   el.innerHTML=head('Keno','Elige de 1 a 10 números · Salen 20 bolas de 80 · Cuantos más aciertos, mayor el premio')+`
-  <div class="table"><div class="kn-side">
+  <div class="table">${stageHTML('keno','acompañantes')}<div class="kn-side">
     <div><div class="kn" id="knG">${Array.from({length:80},(_,i)=>`<button data-n="${i+1}">${i+1}</button>`).join('')}</div></div>
     <div><div class="lbl">Tabla de premios</div><div class="kp" id="knP"></div><div class="msg" id="knMsg">Marca tus números</div></div>
   </div>
@@ -1105,7 +1501,7 @@ function keno(el){
     if(KN.pick.has(n))KN.pick.delete(n);else if(KN.pick.size<10)KN.pick.add(n);else{toast('Máximo 10 números');return}sfx('click');knRender()};
   $('#knClr').onclick=()=>{if(KN.busy)return;KN.pick.clear();KN.drawn.clear();knRender()};
   $('#knQ').onclick=()=>{if(KN.busy)return;const c=KN.pick.size||8;KN.pick=new Set(shuffle(Array.from({length:80},(_,i)=>i+1)).slice(0,c));KN.drawn.clear();sfx('chip');knRender()};
-  $('#knGo').onclick=knGo;knRender();
+  $('#knGo').onclick=knGo;knRender();stageMount('keno');
 }
 function knRender(){if(!$('#knG'))return;$$('#knG button').forEach(b=>{const n=+b.dataset.n,p=KN.pick.has(n),d=KN.drawn.has(n);b.className=p&&d?'h':d?'d':p?'p':''});
   const t=KP[KN.pick.size],hits=[...KN.pick].filter(n=>KN.drawn.has(n)).length;
@@ -1143,29 +1539,35 @@ function drawBW(rot){const cv=$('#bwC');if(!cv)return;const x=cv.getContext('2d'
   for(let i=0;i<24;i++){const a=i*TAU/24;x.beginPath();x.arc(Math.cos(a)*(R-14),Math.sin(a)*(R-14),6,0,TAU);x.fillStyle=i%2?'#fff2c4':'#d9b45b';x.fill()}
   x.beginPath();x.arc(0,0,46,0,TAU);x.fillStyle='#d9b45b';x.fill();x.restore()}
 
-/* ---------- Billar: bola 8 contra Paco ---------- */
+/* ---------- Billar: bola 8 con personajes ---------- */
 const PL={W:1000,H:500,L:44,T:44,R:956,B:456,r:12,pr:28,balls:[],bet:0,active:false,moving:false,raf:0,ang:0,pull:.4,strike:null,ai:null,vert:false,
-  turn:'p',groups:{p:null,c:null},brk:true,firstHit:null,shotPots:[],scratch:false,tp:null,diff:1,
+  turn:'p',groups:{p:null,c:null},brk:true,firstHit:null,shotPots:[],scratch:false,tp:null,diff:1,team:{p:[],c:[]},idx:{p:0,c:0},bih:false,spin:{x:0,y:0},
   cols:['#f4ecd8','#f2c200','#1d4fc4','#c4141f','#5b2a90','#ee7a12','#14804a','#7a1424','#111','#f2c200']};
 PL.pockets=[[PL.L,PL.T],[500,PL.T-6],[PL.R,PL.T],[PL.L,PL.B],[500,PL.B+6],[PL.R,PL.B]];
-const PL_DIFF=[{n:'Fácil',err:.08,mult:1.5,think:1700},{n:'Normal',err:.035,mult:2,think:1500},{n:'Difícil',err:.012,mult:3,think:1300}];
-const NPC='Paco «El Taco»';
+const PL_DIFF=[{n:'Fácil',err:.08,mult:1.5,think:1900},{n:'Normal',err:.035,mult:2,think:1700},{n:'Difícil',err:.012,mult:3,think:1500}];
 const isSolid=n=>n>0&&n<8,isStripe=n=>n>8;
 const inGroup=(n,g)=>g==='solid'?isSolid(n):g==='stripe'?isStripe(n):false;
 const grpName=g=>g==='solid'?'Lisas (1 al 7)':g==='stripe'?'Rayadas (9 al 15)':'Mesa abierta';
 const plCount=g=>PL.balls.filter(b=>!b.gone&&inGroup(b.n,g)).length;
 const ballCol=n=>PL.cols[n>8?n-8:n];
+const plShooter=()=>PL.team[PL.turn][PL.idx[PL.turn]%PL.team[PL.turn].length];
+const plHuman=()=>PL.turn==='p'&&plShooter()===S.me;
+const plName=id=>id===S.me?'Tú':CH[id].name;
+function plTeams(){const m=S.mates.billar;const r=(m.rivals||[]).filter(id=>CH[id]&&id!==S.me);if(!r.length)r.push(others()[0]);
+  if(m.mode==='2v2'){let pa=m.partner&&m.partner!==S.me&&!r.includes(m.partner)?m.partner:others().find(id=>!r.includes(id));const r2=r.slice(0,2);if(r2.length<2)r2.push(others().find(id=>id!==pa&&!r2.includes(id)));PL.team={p:[S.me,pa],c:r2}}
+  else PL.team={p:[S.me],c:[r[0]]};PL.idx={p:0,c:0}}
 function plSpot(b,x0,y0){const offs=[[0,0]];for(let k=1;k<12;k++){offs.push([0,k*26],[0,-k*26],[-k*26,0],[k*26,0])}
   for(const[dx,dy]of offs){const x=x0+dx,y=y0+dy;if(x<PL.L+PL.r||x>PL.R-PL.r||y<PL.T+PL.r||y>PL.B-PL.r)continue;
     if(!PL.balls.some(o=>o!==b&&!o.gone&&Math.hypot(o.x-x,o.y-y)<PL.r*2.2)){b.x=x;b.y=y;b.vx=b.vy=0;return}}}
+function plFree(x,y){return x>PL.L+PL.r&&x<PL.R-PL.r&&y>PL.T+PL.r&&y<PL.B-PL.r&&!PL.balls.some(o=>o.n!==0&&!o.gone&&Math.hypot(o.x-x,o.y-y)<PL.r*2.1)}
 function plRack(){
   const d=PL.r*2+.6,pos=[];for(let ri=0;ri<5;ri++)for(let j=0;j<=ri;j++)pos.push({x:700+ri*d*.87,y:250+(j-ri/2)*d});
   const nums=shuffle([1,2,3,4,5,6,7,9,10,11,12,13,14,15]);let k=0;
   const balls=[{n:0,x:250,y:250,vx:0,vy:0}];pos.forEach((p,i)=>balls.push({n:i===4?8:nums[k++],x:p.x,y:p.y,vx:0,vy:0}));
   const c1=balls[11],c2=balls[15];if(isSolid(c1.n)===isSolid(c2.n)){const sw=balls.find((b,i)=>i>0&&b.n!==8&&b!==c1&&b!==c2&&isSolid(b.n)!==isSolid(c1.n));[sw.n,c2.n]=[c2.n,sw.n]}
-  PL.balls=balls;PL.rackId=(PL.rackId||0)+1;PL.ang=0;PL.groups={p:null,c:null};PL.brk=true;PL.turn='p';PL.tp=null;PL.ai=null;PL.strike=null;PL.moving=false}
+  PL.balls=balls;PL.rackId=(PL.rackId||0)+1;PL.ang=0;PL.groups={p:null,c:null};PL.brk=true;PL.turn='p';PL.tp=null;PL.ai=null;PL.strike=null;PL.moving=false;PL.bih=false;PL.spin={x:0,y:0};plTeams()}
 const plReady=()=>!PL.moving&&!PL.strike&&!PL.ai&&PL.balls[0]&&!PL.balls[0].gone;
-const plMyTurn=()=>PL.active&&PL.turn==='p'&&plReady();
+const plMyTurn=()=>PL.active&&plHuman()&&plReady();
 function plSize(){const cv=$('#plC');if(!cv)return;const ww=cv.parentElement.clientWidth;
   if(P3.ok){PL.vert=false;const portrait=innerWidth<700;const hd=$('.top'),pp=$('.pl-players');const avail=innerHeight-(hd?hd.offsetHeight:0)-(pp?pp.offsetHeight:60)-34;const h=Math.round(portrait?Math.max(300,Math.min(avail,760)):Math.max(300,Math.min(ww*.56,avail-((($('#plCtl')||{}).offsetHeight)||130)-12)));
     cv.style.width='100%';cv.style.height=h+'px';P3.ren.setSize(ww,h,false);P3.cam.aspect=ww/h;P3.cam.updateProjectionMatrix();return}
@@ -1179,51 +1581,59 @@ function plBestShot(o,c){const r=PL.r;let best=null;
     const cos=(ax*dx+ay*dy)/(ad*d);if(cos<.28)continue;const clear=plClear(c.x,c.y,gx,gy,[c,o])&&plClear(o.x,o.y,px,py,[o]);
     const sc=cos*2-(ad+d)/1500+(clear?1:0);if(!best||sc>best.s)best={s:sc,clear,ang:Math.atan2(ay,ax),tp:[px,py],pw:Math.max(.15,Math.min(.95,((ad+d/Math.max(cos,.4))*1.6/267-1)/9))}}
   return best}
-function plAimTap(p){const c=PL.balls[0],r=PL.r;PL.tp=null;
+function plAimTap(p){const c=PL.balls[0],r=PL.r;
   const o=PL.balls.find(o=>o!==c&&!o.gone&&Math.hypot(p.x-o.x,p.y-o.y)<r*2.6);
-  if(!o){if(Math.hypot(p.x-c.x,p.y-c.y)>r)PL.ang=Math.atan2(p.y-c.y,p.x-c.x);return}
-  const best=plBestShot(o,c);
+  if(!o){if(PL.bih&&plFree(p.x,p.y)){c.x=p.x;c.y=p.y;sfx('click');setMsg('#plMsg','Blanca colocada. Toca una bola para apuntar o vuelve a tocar la mesa para moverla.');return}
+    PL.tp=null;if(Math.hypot(p.x-c.x,p.y-c.y)>r)PL.ang=Math.atan2(p.y-c.y,p.x-c.x);return}
+  if(PL.bih){PL.bih=false;if(P3.view==='top'&&P3.autoTop){P3.view='aim';P3.autoTop=false}}
+  PL.tp=null;const best=plBestShot(o,c);
   if(best){PL.ang=best.ang;PL.tp=best.tp;const rg=$('#plRange');if(rg){rg.value=Math.round(best.pw*100);rg.dispatchEvent(new Event('input'))}}
   else PL.ang=Math.atan2(o.y-c.y,o.x-c.x)}
-function aiPlan(){const c=PL.balls[0],g=PL.groups.c;
+function aiTargets(){const g=PL.groups[PL.turn];let tg=PL.balls.filter(b=>b.n&&!b.gone&&(g?inGroup(b.n,g):b.n!==8));if(!tg.length)tg=PL.balls.filter(b=>b.n===8);return tg}
+function aiPlan(){const c=PL.balls[0];
   if(PL.brk){const apex=PL.balls.filter(b=>b.n).sort((a,b)=>a.x-b.x)[0];return{ang:Math.atan2(apex.y-c.y,apex.x-c.x),pw:.92,tp:null}}
-  let tg=PL.balls.filter(b=>b.n&&!b.gone&&(g?inGroup(b.n,g):b.n!==8));if(!tg.length)tg=PL.balls.filter(b=>b.n===8);
-  let best=null;for(const o of tg){const s=plBestShot(o,c);if(s){s.o=o;if(!best||s.s>best.s)best=s}}
+  const tg=aiTargets();let best=null;for(const o of tg){const s=plBestShot(o,c);if(s){s.o=o;if(!best||s.s>best.s)best=s}}
   if(best&&best.clear)return best;
   const o=tg.filter(o=>plClear(c.x,c.y,o.x,o.y,[c,o])).sort((a,b)=>Math.hypot(a.x-c.x,a.y-c.y)-Math.hypot(b.x-c.x,b.y-c.y))[0]||tg[0];
   return{ang:Math.atan2(o.y-c.y,o.x-c.x),pw:.35,tp:null,o}}
-function aiTurn(){if(!PL.active||PL.turn!=='c'||!$('#plC')||!plReady())return;const D=PL_DIFF[PL.diff],plan=aiPlan();
-  const err=(Math.random()+Math.random()+Math.random()-1.5)*D.err*(PL.brk?.3:1.3);
-  PL.ai={from:PL.ang,to:plan.ang+err,pw:plan.pw,t0:performance.now(),dur:D.think};PL.tp=plan.tp;PL.pull=.05;
-  setMsg('#plMsg',`${NPC} está estudiando la jugada…`);
-  if(PL.brk)talk('c',pick(DLG.c_break));else if(plan.tp&&plan.o){const pi=PL.pockets.indexOf(plan.tp);talk('c',pick(DLG.c_think).replace('{n}',plan.o.n===8?'negra':plan.o.n).replace('{p}',pi===1||pi===4?'tronera del centro':'esquina'))}else talk('c',pick(DLG.c_safe))}
+function aiPlaceCue(){const c=PL.balls[0],tg=aiTargets();let best=null;
+  for(let x=PL.L+40;x<PL.R-30;x+=45)for(let y=PL.T+40;y<PL.B-30;y+=45){if(!plFree(x,y))continue;const ox=c.x,oy=c.y;c.x=x;c.y=y;
+    for(const o of tg){const s=plBestShot(o,c);if(s&&s.clear&&(!best||s.s>best.s))best={s:s.s,x,y}}c.x=ox;c.y=oy}
+  if(best){c.x=best.x;c.y=best.y}PL.bih=false}
+function aiTurn(){if(!PL.active||plHuman()||!$('#plC')||!plReady())return;const who=plShooter(),D=PL_DIFF[PL.diff];
+  if(PL.bih)aiPlaceCue();
+  const plan=aiPlan(),err=(Math.random()+Math.random()+Math.random()-1.5)*D.err*(PL.brk?.3:1.3);
+  PL.ai={from:PL.ang,to:plan.ang+err,pw:plan.pw,t0:performance.now(),dur:D.think+600,who};PL.tp=plan.tp;PL.pull=.05;
+  setMsg('#plMsg',`${CH[who].name} está estudiando la jugada…`);if(Math.random()<.55)say(who,'pienso')}
 function billar(el){
-  el.innerHTML=head('Billar: Bola 8','Tú contra '+NPC+' · Mete tu grupo (lisas o rayadas) y después la bola 8 · Toca una bola para apuntar, arrastra para afinar y pulsa TIRAR')+`
+  plTeams();const t=PL.team;
+  el.innerHTML=head('Billar: Bola 8','Mete tu grupo (lisas o rayadas) y después la bola 8 · Toca una bola para apuntar, arrastra para afinar y pulsa TIRAR')+`
   <div class="table pl-table">
     <div class="pl-players">
-      <div class="pp" id="ppP"><div class="av">TÚ</div><div class="pp-i"><b>Tú</b><small id="gP"></small><div class="mb" id="mbP"></div></div></div>
+      <div class="pp" id="ppP"><div class="avs">${t.p.map(id=>`<span class="chf sm" data-tid="${id}" style="background-image:url(${thumbOf(id)})"></span>`).join('')}</div><div class="pp-i"><b>${t.p.map(plName).join(' y ')}</b><small id="gP"></small><div class="mb" id="mbP"></div></div></div>
       <div class="vs">VS</div>
-      <div class="pp" id="ppC"><div class="av npc">P</div><div class="pp-i"><b>${NPC}</b><small id="gC"></small><div class="mb" id="mbC"></div></div></div>
+      <div class="pp" id="ppC"><div class="avs">${t.c.map(id=>`<span class="chf sm" data-tid="${id}" style="background-image:url(${thumbOf(id)})"></span>`).join('')}</div><div class="pp-i"><b>${t.c.map(id=>CH[id].name).join(' y ')}</b><small id="gC"></small><div class="mb" id="mbC"></div></div></div>
     </div>
     <div class="pl-wrap"><canvas id="plC" width="1000" height="500" style="touch-action:none;display:block;margin:auto;border-radius:12px;cursor:crosshair"></canvas>
-      <div class="bub p" id="bubP"><b>Tú</b><span></span></div><div class="bub c" id="bubC"><b>${NPC}</b><span></span></div>
     <div class="pl-ctl2" id="plCtl">
       <button class="btn" id="plLeft" aria-label="Girar el taco a la izquierda">◀</button>
       <label class="pl-range" for="plRange"><span>Fuerza: <b id="plPv">40%</b></span><input type="range" id="plRange" min="5" max="100" value="40"></label>
       <button class="btn" id="plRight" aria-label="Girar el taco a la derecha">▶</button>
+      <button class="spinb" id="plSpin" aria-label="Efecto de la bola blanca"><i id="plSpinDot"></i></button>
       <button class="btn primary pl-shoot" id="plShoot">TIRAR</button>
     </div>
-      <div class="pl-start" id="plStart"><b>Bola 8</b><span id="plStartT">Juegas contra ${NPC}. Mete todas tus bolas, lisas o rayadas, y después la negra. Elige la dificultad y tu apuesta.</span>
-        <div class="row-c" id="plDiff">${PL_DIFF.map((d,i)=>`<button class="btn ${i===PL.diff?'primary':''}" data-diff="${i}">${d.n} · cobras ×${String(d.mult).replace('.',',')}</button>`).join('')}</div>
+      <div class="pl-start" id="plStart"><b>Bola 8</b><span id="plStartT">${t.p.length>1?'Partida por parejas: ':''}${t.p.map(plName).join(' y ')} contra ${t.c.map(chFull).join(' y ')}. Mete todas tus bolas, lisas o rayadas, y después la negra.</span>
+        <button class="btn" data-pick="billar">Cambiar rivales o jugar por parejas</button>
+        <div class="row-c" id="plDiff">${PL_DIFF.map((d,i)=>`<button class="btn ${i===PL.diff?'primary':''}" data-diff="${i}">${d.n} · ×${String(d.mult).replace('.',',')}</button>`).join('')}</div>
         ${chipBar()}<button class="btn primary big" id="plGo">EMPEZAR PARTIDA</button></div>
     </div>
     <div class="row-c" style="margin-top:8px"><button class="btn" id="plView">Vista aérea</button><button class="btn" id="plVoice">Voces: ${S.voices===false?'no':'sí'}</button></div>
     <div class="msg" id="plMsg">Toca una bola: el taco apuntará solo a la mejor tronera. Arrastra el dedo a los lados para afinar.</div>
   </div>`;
   if(!PL.active)plRack();
-  const cv=$('#plC');p3Init(cv);plSize();
-  $('#plView').onclick=()=>{P3.view=P3.view==='top'?'aim':'top';$('#plView').textContent=P3.view==='top'?'Vista del taco':'Vista aérea';sfx('click')};
-  $('#plVoice').onclick=()=>{S.voices=S.voices===false;save();$('#plVoice').textContent='Voces: '+(S.voices===false?'no':'sí');try{if(S.voices===false)speechSynthesis.cancel()}catch(e){}};
+  const cv=$('#plC');p3Init(cv);plSize();voxPreload([...t.p,...t.c]);
+  $('#plView').onclick=()=>{P3.view=P3.view==='top'?'aim':'top';P3.autoTop=false;$('#plView').textContent=P3.view==='top'?'Vista del taco':'Vista aérea';sfx('click')};
+  $('#plVoice').onclick=()=>{S.voices=S.voices===false;save();$('#plVoice').textContent='Voces: '+(S.voices===false?'no':'sí')};
   if(!P3.ok)$('#plView').hidden=true;
   const pos=e=>{const r=cv.getBoundingClientRect(),sx=(e.clientX-r.left)*cv.width/r.width,sy=(e.clientY-r.top)*cv.height/r.height;return PL.vert?{x:sy,y:500-sx}:{x:sx,y:sy}};
   let aiming=false,d0=null,dragged=false,lastX=0;
@@ -1238,33 +1648,52 @@ function billar(el){
   [['#plLeft',-1],['#plRight',1]].forEach(([id,dir])=>{const b=$(id);
     b.addEventListener('pointerdown',e=>{e.preventDefault();nudge(dir*.004);let sp=.004;clearInterval(hold);hold=setInterval(()=>{sp=Math.min(.03,sp*1.15);nudge(dir*sp)},50)});
     ['pointerup','pointerleave','pointercancel'].forEach(ev=>b.addEventListener(ev,()=>clearInterval(hold)))});
-  const rg=$('#plRange');const upd=()=>{if(PL.turn==='p')PL.pull=rg.value/100;$('#plPv').textContent=rg.value+'%'};rg.addEventListener('input',upd);upd();
-  $('#plShoot').onclick=()=>{if(!plMyTurn())return;PL.strike={t0:performance.now(),pw:rg.value/100};PL.tp=null};
+  const rg=$('#plRange');const upd=()=>{if(plHuman())PL.pull=rg.value/100;$('#plPv').textContent=rg.value+'%'};rg.addEventListener('input',upd);upd();
+  const spinUI=()=>{const d=$('#plSpinDot');if(d){d.style.left=(50+PL.spin.x*32)+'%';d.style.top=(50-PL.spin.y*32)+'%'}};spinUI();
+  $('#plSpin').onclick=e=>{const r=e.currentTarget.getBoundingClientRect();let x=((e.clientX-r.left)/r.width-.5)*2,y=-((e.clientY-r.top)/r.height-.5)*2;const m=Math.hypot(x,y);if(m>1){x/=m;y/=m}if(m<.25){x=0;y=0}PL.spin={x,y};spinUI();sfx('click');
+    toast(y>.3?'Efecto de seguimiento: la blanca sigue hacia delante':y<-.3?'Efecto de retroceso: la blanca vuelve hacia atrás':Math.abs(x)>.3?'Efecto lateral: cambia el rebote en la banda':'Sin efecto: golpe al centro')};
+  $('#plShoot').onclick=()=>{if(!plMyTurn())return;PL.bih=false;PL.strike={t0:performance.now(),pw:rg.value/100};PL.tp=null};
   $('#plDiff').onclick=e=>{const b=e.target.closest('[data-diff]');if(!b)return;PL.diff=+b.dataset.diff;$$('#plDiff [data-diff]').forEach(x=>x.classList.toggle('primary',+x.dataset.diff===PL.diff));sfx('click')};
-  $('#plGo').onclick=()=>{if(PL.active)return;if(!take(S.chip))return;PL.bet=S.chip;plRack();PL.active=true;sfx('chip');rg.value=90;upd();plUI();
-    setMsg('#plMsg','Sacas tú: apunta al triángulo y pulsa TIRAR con fuerza');talk('c',pick(DLG.start));plFocus()};
+  $('#plGo').onclick=()=>{if(PL.active)return;if(!take(S.chip))return;PL.bet=S.chip;plRack();PL.active=true;sfx('chip');rg.value=90;upd();plUI();p3Cast();
+    setMsg('#plMsg','Sacas tú: apunta al triángulo y pulsa TIRAR con fuerza');say(PL.team.c[0],'hola');if(PL.team.p[1])say(PL.team.p[1],'animo',2800);plFocus()};
   plUI();cancelAnimationFrame(PL.raf);PL.raf=requestAnimationFrame(plLoop);
-  if(PL.active&&PL.turn==='c'&&!PL.moving&&!PL.strike){PL.ai=null;setTimeout(aiTurn,700)}
+  if(PL.active&&!plHuman()&&!PL.moving&&!PL.strike){PL.ai=null;setTimeout(aiTurn,700)}
   setTimeout(plSize,60);setTimeout(()=>{plSize();plFocus()},350);try{document.fonts.ready.then(()=>plSize())}catch(e){}
 }
+function pickBillar(after){const m=S.mates.billar;let mode=m.mode,riv=[...(m.rivals||[])].filter(id=>id!==S.me),pa=m.partner!==S.me?m.partner:null;
+  const draw=ov=>{$$('[data-mode]',ov).forEach(b=>b.classList.toggle('primary',b.dataset.mode===mode));$('#pbPa',ov).hidden=mode!=='2v2';
+    $$('#pbR [data-ch]',ov).forEach(x=>x.classList.toggle('on',riv.includes(x.dataset.ch)));$$('#pbP [data-ch]',ov).forEach(x=>x.classList.toggle('on',x.dataset.ch===pa));
+    $('#pbN',ov).textContent=mode==='2v2'?`Rivales: ${riv.length} de 2 · Compañero: ${pa?CH[pa].name:'ninguno'}`:`Rival: ${riv.length?CH[riv[0]].name:'ninguno'}`};
+  modal(`<h3>Partida de billar</h3><div class="row-c"><button class="btn" data-mode="1v1">1 contra 1</button><button class="btn" data-mode="2v2">Parejas 2 contra 2</button></div>
+   <p style="margin-top:12px">Rivales:</p><div class="chgrid" id="pbR">${others().map(id=>charChip(id,riv.includes(id))).join('')}</div>
+   <div id="pbPa"><p style="margin-top:12px">Tu compañero:</p><div class="chgrid" id="pbP">${others().map(id=>charChip(id,id===pa)).join('')}</div></div>
+   <div class="row-c" style="margin-top:14px"><span class="total" id="pbN"></span><button class="btn primary" id="pbOk">Listo</button></div>`,ov=>{draw(ov);
+    ov.addEventListener('click',e=>{const md=e.target.closest('[data-mode]');if(md){mode=md.dataset.mode;if(mode==='1v1')riv=riv.slice(0,1);draw(ov);return}
+      const b=e.target.closest('[data-ch]');if(!b)return;const id=b.dataset.ch;
+      if(b.closest('#pbR')){if(riv.includes(id))riv=riv.filter(x=>x!==id);else{if(id===pa)pa=null;riv.push(id);riv=riv.slice(mode==='2v2'?-2:-1)}}
+      else{if(riv.includes(id))riv=riv.filter(x=>x!==id);pa=pa===id?null:id}draw(ov);sfx('click')});
+    $('#pbOk',ov).onclick=()=>{const need=mode==='2v2'?2:1;if(riv.length<need){toast(`Elige ${need} rival${need>1?'es':''}`);return}if(mode==='2v2'&&!pa){toast('Elige tu compañero');return}
+      S.mates.billar={mode,rivals:riv,partner:pa};save();closeModal();PL.active=false;after&&after()}})}
 function plFocus(){const t=$('.pl-players'),hd=$('.top');if(t)window.scrollTo({top:t.getBoundingClientRect().top+scrollY-(hd?hd.offsetHeight:0)-8,behavior:'smooth'})}
 function plUI(){if(!$('#ppP'))return;
   const side=(k,g)=>{$('#g'+k).textContent=grpName(g);$('#mb'+k).innerHTML=g?PL.balls.filter(b=>!b.gone&&inGroup(b.n,g)).sort((a,b)=>a.n-b.n).map(b=>`<i class="${isStripe(b.n)?'st':''}" style="--b:${ballCol(b.n)}">${b.n}</i>`).join('')||'<i style="--b:#111">8</i>':''};
   side('P',PL.groups.p);side('C',PL.groups.c);
   $('#ppP').classList.toggle('on',PL.active&&PL.turn==='p');$('#ppC').classList.toggle('on',PL.active&&PL.turn==='c');
-  $('#plStart').hidden=PL.active;$('#plCtl').classList.toggle('off',!PL.active||PL.turn!=='p')}
+  $('#plStart').hidden=PL.active;$('#plCtl').classList.toggle('off',!PL.active||!plHuman())}
 function plStep(){
   const B=PL.balls,r=PL.r;
   for(const b of B){if(b.gone)continue;b.x+=b.vx;b.y+=b.vy;b.roll=(b.roll||0)+Math.hypot(b.vx,b.vy)/r;
     const nearP=PL.pockets.some(([px,py])=>Math.hypot(b.x-px,b.y-py)<PL.pr+14);
-    if(!nearP){let hc=0;if(b.x<PL.L+r){b.x=PL.L+r;b.vx=-b.vx*.82;hc=Math.abs(b.vx)}if(b.x>PL.R-r){b.x=PL.R-r;b.vx=-b.vx*.82;hc=Math.abs(b.vx)}
-      if(b.y<PL.T+r){b.y=PL.T+r;b.vy=-b.vy*.82;hc=Math.abs(b.vy)}if(b.y>PL.B-r){b.y=PL.B-r;b.vy=-b.vy*.82;hc=Math.abs(b.vy)}
+    if(!nearP){let hc=0,side=0;if(b.x<PL.L+r){b.x=PL.L+r;b.vx=-b.vx*.82;hc=Math.abs(b.vx);side=1}if(b.x>PL.R-r){b.x=PL.R-r;b.vx=-b.vx*.82;hc=Math.abs(b.vx);side=1}
+      if(b.y<PL.T+r){b.y=PL.T+r;b.vy=-b.vy*.82;hc=Math.abs(b.vy);side=2}if(b.y>PL.B-r){b.y=PL.B-r;b.vy=-b.vy*.82;hc=Math.abs(b.vy);side=2}
+      if(side&&b.n===0&&PL.english){const e=PL.english;PL.english=0;const sp=Math.hypot(b.vx,b.vy);if(side===1)b.vy+=e*sp*.35;else b.vx+=e*sp*.35}
       if(hc>.6)tone(110,.06,'sine',Math.min(.1,hc/80))}
     for(const[px,py]of PL.pockets)if(Math.hypot(b.x-px,b.y-py)<PL.pr-3)b.in=true}
   for(let i=0;i<B.length;i++)for(let j=i+1;j<B.length;j++){const a=B[i],c=B[j];if(a.gone||c.gone)continue;const dx=c.x-a.x,dy=c.y-a.y,d=Math.hypot(dx,dy);
     if(d>0&&d<r*2){const nx=dx/d,ny=dy/d,ov=(r*2-d)/2;a.x-=nx*ov;a.y-=ny*ov;c.x+=nx*ov;c.y+=ny*ov;
-      if(PL.firstHit===null){if(a.n===0)PL.firstHit=c.n;else if(c.n===0)PL.firstHit=a.n}
-      const p=(a.vx-c.vx)*nx+(a.vy-c.vy)*ny;if(p>0){a.vx-=p*nx;a.vy-=p*ny;c.vx+=p*nx;c.vy+=p*ny;if(p>.5)tone(2600,.03,'sine',Math.min(.12,p/60))}}}
+      const first=PL.firstHit===null&&(a.n===0||c.n===0);if(first)PL.firstHit=a.n===0?c.n:a.n;
+      const p=(a.vx-c.vx)*nx+(a.vy-c.vy)*ny;if(p>0){a.vx-=p*nx;a.vy-=p*ny;c.vx+=p*nx;c.vy+=p*ny;if(p>.5)tone(2600,.03,'sine',Math.min(.12,p/60));
+        if(first&&PL.follow){const cue=a.n===0?a:c,k=PL.follow*PL.shotSp*.45;cue.vx+=PL.shotDir[0]*k;cue.vy+=PL.shotDir[1]*k;PL.follow=0}}}}
   for(let i=B.length-1;i>=0;i--){const b=B[i];if(!b.in)continue;b.in=false;tone(140,.15,'sine',.12);noise(.12,.03,300,.2);
     if(b.n===0){b.gone=true;b.vx=b.vy=0;b.x=b.y=-500;PL.scratch=true}else{B.splice(i,1);PL.shotPots.push(b.n);plUI()}}
 }
@@ -1274,43 +1703,51 @@ function plLoop(now){
     PL.ang=PL.ai.from+d*(e*e*(3-2*e))+(t<.6?Math.sin(t*20)*.03*(1-t/.6):0);PL.pull=t>.6?PL.ai.pw*((t-.6)/.4):.05;
     if(t>=1){PL.ang=PL.ai.to;PL.strike={t0:now,pw:PL.ai.pw};PL.ai=null}}
   if(PL.strike){const t=(now-PL.strike.t0)/110;
-    if(t>=1){const c=PL.balls[0],pw=PL.strike.pw,sp=1+pw*9;c.vx=Math.cos(PL.ang)*sp;c.vy=Math.sin(PL.ang)*sp;
-      PL.strike=null;PL.moving=true;PL.shotPots=[];PL.firstHit=null;PL.scratch=false;PL.tp=null;
+    if(t>=1){const c=PL.balls[0],pw=PL.strike.pw,sp=1+pw*9,human=plHuman(),spin=human?PL.spin:{x:0,y:0};c.vx=Math.cos(PL.ang)*sp;c.vy=Math.sin(PL.ang)*sp;
+      PL.shotDir=[Math.cos(PL.ang),Math.sin(PL.ang)];PL.shotSp=sp;PL.follow=spin.y;PL.english=spin.x;
+      PL.strike=null;PL.moving=true;PL.shotPots=[];PL.firstHit=null;PL.scratch=false;PL.tp=null;PL.shotAt=now;
       const rgv=$('#plRange');PL.pull=rgv?rgv.value/100:.4;noise(.04,0,2200,.35);tone(900,.05,'triangle',.08+pw*.06)}}
-  if(PL.moving){for(let k=0;k<4;k++)plStep();let any=false;
+  const frames=Math.min(5,Math.max(1,Math.round((now-(PL.lastT||now))/16.7)));PL.lastT=now;
+  for(let f=0;f<frames&&PL.moving;f++){for(let k=0;k<4;k++)plStep();let any=false;
     for(const b of PL.balls){if(b.gone)continue;b.vx*=.985;b.vy*=.985;if(Math.hypot(b.vx,b.vy)<.06){b.vx=b.vy=0}else any=true}
     if(!any){PL.moving=false;plShotEnd()}}
   if(P3.ok)p3Render(now);else plDraw(cv,now);PL.raf=requestAnimationFrame(plLoop)}
 function plShotEnd(){if(!PL.active)return;
-  const sh=PL.turn,op=sh==='p'?'c':'p',yo=sh==='p',pots=PL.shotPots,cue=PL.balls[0],scratch=PL.scratch,first=PL.firstHit,notes=[];
+  const sh=PL.turn,op=sh==='p'?'c':'p',who=plShooter(),yo=who===S.me,pots=PL.shotPots,cue=PL.balls[0],scratch=PL.scratch,first=PL.firstHit,notes=[],nm=yo?'Tú':CH[who].name;
   if(cue.gone){cue.gone=false;plSpot(cue,250,250)}
   if(pots.includes(8)){
     if(PL.brk){const e={n:8,vx:0,vy:0};PL.balls.push(e);plSpot(e,700,250);notes.push('La bola 8 entró en el saque y vuelve a su sitio.')}
     else{const g=PL.groups[sh],cleared=g&&plCount(g)===0,ok=cleared&&!scratch;
-      return plEnd(ok?sh:op,ok?(yo?'¡Has metido la bola 8!':`${NPC} mete la bola 8.`):(yo?'Has metido la bola 8 ':`${NPC} mete la bola 8 `)+(cleared?'pero la blanca también entró.':'antes de tiempo.'))}}
+      return plEnd(ok?sh:op,ok?(yo?'¡Has metido la bola 8!':`${nm} mete la bola 8.`):(yo?'Has metido la bola 8 ':`${nm} mete la bola 8 `)+(cleared?'pero la blanca también entró.':'antes de tiempo.'))}}
   const g=PL.groups[sh];
   const legal=n=>n!=null&&(!g?(n!==8||PL.brk):plCount(g)===0?n===8:inGroup(n,g));
-  const foul=scratch||!legal(first),others=pots.filter(n=>n!==8);
-  if(!foul&&!g&&others.length){const ng=isSolid(others[0])?'solid':'stripe';PL.groups[sh]=ng;PL.groups[op]=ng==='solid'?'stripe':'solid';
-    notes.push(yo?`Juegas con ${grpName(ng).toLowerCase()}.`:`${NPC} juega con ${grpName(ng).toLowerCase()}; tú con ${grpName(PL.groups.p).toLowerCase()}.`)}
-  const g2=PL.groups[sh],good=others.some(n=>!g2||inGroup(n,g2));
+  const foul=scratch||!legal(first),others2=pots.filter(n=>n!==8);
+  if(!foul&&!g&&others2.length){const ng=isSolid(others2[0])?'solid':'stripe';PL.groups[sh]=ng;PL.groups[op]=ng==='solid'?'stripe':'solid';
+    notes.push(sh==='p'?`Tu equipo juega con ${grpName(ng).toLowerCase()}.`:`${PL.team.c.map(id=>CH[id].name).join(' y ')} juega${PL.team.c.length>1?'n':''} con ${grpName(ng).toLowerCase()}.`)}
+  const g2=PL.groups[sh],good=others2.some(n=>!g2||inGroup(n,g2));
   PL.brk=false;let next=sh;
-  const quien=yo?'Falta tuya':`Falta de ${NPC}`;
-  if(foul){next=op;notes.unshift(scratch?`${quien}: la blanca ha entrado en la tronera.`:first==null?(yo?'Falta tuya: no has tocado ninguna bola.':`${quien}: no ha tocado ninguna bola.`):(yo?'Falta tuya: has tocado primero una bola que no era tuya.':`${quien}: ha tocado primero una bola que no era suya.`))}
-  else if(good)notes.unshift(yo?(others.length>1?`¡Metes ${others.length} bolas!`:'¡Metes una bola!'):(others.length>1?`${NPC} mete ${others.length} bolas.`:`${NPC} mete una bola.`));
-  else{next=op;notes.unshift(yo?'No entra ninguna.':`${NPC} falla.`)}
-  {const me=yo?'p':'c',ot=yo?'c':'p';
-   if(foul){talk(me,pick(DLG[me+'_foul']));later(ot,DLG[ot+'_on_'+me+'_foul'],1500,.8)}
-   else if(good){const g3=PL.groups[sh],last=g3&&plCount(g3)===0;talk(me,pick(last?DLG[me+'_last']:others.length>1?DLG[me+'_multi']:DLG[me+'_pot']));later(ot,last?DLG[ot+'_react_'+me+'_last']:DLG[ot+'_react_'+me+'_pot'],1600,last?.9:.55)}
-   else{talk(me,pick(DLG[me+'_miss']));later(ot,DLG[ot+'_react_'+me+'_miss'],1600,.6)}}
-  PL.turn=next;notes.push(next==='p'?'Te toca a ti.':`Le toca a ${NPC}.`);
-  setMsg('#plMsg',notes.join(' '),next==='p'?'win':'');plUI();
-  if(next==='c')setTimeout(aiTurn,1100)}
-function plEnd(winner,why){PL.active=false;PL.ai=null;const D=PL_DIFF[PL.diff],ret=winner==='p'?Math.floor(PL.bet*D.mult):0;
-  if(winner==='p'){ach('pool');talk('p',pick(DLG.p_win));later('c',DLG.c_lose,1700,1)}else{talk('c',pick(DLG.c_win));later('p',DLG.p_lose,1700,1)}
-  setMsg('#plMsg',why+(winner==='p'?` Ganas la partida y cobras ${fmt(ret)} fichas.`:` Gana ${NPC}.`),winner==='p'?'win':'lose');
+  if(foul){next=op;notes.unshift((yo?'Falta tuya':`Falta de ${nm}`)+': '+(scratch?'la blanca ha entrado en la tronera.':first==null?'no ha tocado ninguna bola.':'ha tocado primero una bola que no le tocaba.'));PL.bih=true}
+  else if(good)notes.unshift(yo?(others2.length>1?`¡Metes ${others2.length} bolas!`:'¡Metes una bola!'):(others2.length>1?`${nm} mete ${others2.length} bolas.`:`${nm} mete una bola.`));
+  else{next=op;notes.unshift(yo?'No entra ninguna.':`${nm} falla.`)}
+  // voces y gestos
+  const rivals=PL.team[op],mate=PL.team[sh].find(id=>id!==who),rv=rivals[rnd(rivals.length)];
+  if(foul){say(who,'falta');charReact(who,'bad');say(rv,'burla',1700);charReact(rv,'good')}
+  else if(good){say(who,'bien');charReact(who,'good');if(Math.random()<.6){say(rv,'pique',1800);charReact(rv,'think')}else if(mate){say(mate,'animo',1800);charAct(mate,'clap',1800)}}
+  else{say(who,'mal');charReact(who,'bad');if(Math.random()<.65){say(rv,'burla',1700);charReact(rv,'good')}else if(mate)say(mate,'animo',1700)}
+  if(next!==sh)PL.idx[next]++;
+  PL.turn=next;const nx=plShooter();
+  if(PL.bih)notes.push(nx===S.me?'Tienes bola en mano: toca la mesa donde quieras colocar la blanca.':`${CH[nx].name} tiene bola en mano.`);
+  notes.push(nx===S.me?'Te toca a ti.':`Le toca a ${CH[nx].name}.`);
+  setMsg('#plMsg',notes.join(' '),nx===S.me?'win':'');plUI();
+  if(nx===S.me&&PL.bih&&P3.ok){P3.view='top';P3.autoTop=true}
+  if(nx!==S.me)setTimeout(aiTurn,2200)}
+function plEnd(winner,why){PL.active=false;PL.ai=null;const D=PL_DIFF[PL.diff],ret=winner==='p'?Math.floor(PL.bet*D.mult):0,W=PL.team[winner],Lo=PL.team[winner==='p'?'c':'p'];
+  W.forEach((id,i)=>{charAct(id,'celebrate',3200);say(id,'victoria',i*2600)});Lo.forEach((id,i)=>{charReact(id,'lose',3200);if(i===0)say(id,'derrota',2400)});
+  if(winner==='p')ach('pool');
+  setMsg('#plMsg',why+(winner==='p'?` Ganáis la partida y cobras ${fmt(ret)} fichas.`:` Gana${W.length>1?'n':''} ${W.map(id=>CH[id].name).join(' y ')}.`),winner==='p'?'win':'lose');
   settle('billar',PL.bet,ret);plUI();const b=$('#plGo');if(b)b.textContent='JUGAR OTRA VEZ';
-  const st=$('#plStartT');if(st)st.textContent=why+(winner==='p'?` Has ganado ${fmt(ret)} fichas. ¿La revancha?`:` ${NPC} gana esta vez. ¿La revancha?`)}
+  const st=$('#plStartT');if(st)st.textContent=why+(winner==='p'?` Has ganado ${fmt(ret)} fichas. ¿La revancha?`:` Esta vez ganan ellos. ¿La revancha?`)}
+
 function plCue(x,c,ang,gap){
   const ux=Math.cos(ang),uy=Math.sin(ang),px=-uy,py=ux,len=470,tip0=PL.r+3+gap;
   const at=(f,w)=>{const d=tip0+f*len;return[c.x-ux*d+px*w,c.y-uy*d+py*w,c.x-ux*d-px*w,c.y-uy*d-py*w]};
@@ -1353,46 +1790,7 @@ function plDraw(cv,now){const x=cv.getContext('2d'),{W,H,L,T,R,B,r}=PL;x.setTran
 }
 
 
-/* ---------- Billar 3D y diálogos ---------- */
-const DLG={
- start:['¿Una partidita? Saca tú, chaval.','Bienvenido a mi mesa. Saca tú, que yo soy un caballero.','A ver qué sabes hacer. Tuyo el saque.','Llevo cuarenta años en esta mesa. Tú primero.','Rompe tú el triángulo, que a mí me da pena.','Venga, sorpréndeme con ese saque.','Aquí se viene a jugar, no a mirar. Saca.','Que gane el mejor… o sea, yo. Saca tú.','Tranquilo, respira hondo y saca.','Te dejo el saque, que luego no quiero excusas.','Mi mesa, mis reglas: saca el invitado.','Hoy me siento generoso. Saque para ti.'],
- c_break:['Vamos a romper este triángulo.','¡Allá va el cañonazo!','Mira y aprende cómo se saca.','Fuerza y elegancia, como siempre.','Este saque lo practico desde 1985.','Agárrate, que esto suena fuerte.'],
- c_think:['Mmm… la {n} a la {p}.','Vamos a ver… la {n} a la {p}.','Esta es fácil: la {n} a la {p}.','La {n}. Mírala bien, que va para dentro.','La {n} a la {p}, con un toque suave.','Ángulo perfecto para la {n}.','La {n} me está llamando desde la {p}.','Sin prisa… la {n} a la {p}.','La {n}, como quien no quiere la cosa.','Apunta y verás: la {n} a la {p}.','Esa {n} tiene nombre y apellidos.','Calculando… la {n} entra seguro.','A la {p} con la {n}. Fácil, fácil.','Cuidado, que voy a por la {n}.'],
- c_safe:['Esto está complicado… jugaré seguro.','Mmm… no hay nada claro.','Me lo has puesto difícil, ¿eh?','Vamos a dejarte un regalito envenenado.','Jugada defensiva, la de los maestros.','Aquí toca pensar más que tirar.'],
- p_pot:['¡Toma ya!','¡Dentro! Como la seda.','¿Has visto eso, Paco?','¡Para casa!','Esto se me da bien.','¡Limpia!','¡Ni ha tocado los bordes!','¡Qué bonita ha entrado!','Así, sin despeinarme.','Apúntala en la pizarra, Paco.','¡Directa al bolsillo!','¡Esa la hacía con los ojos cerrados!','Uno menos, Paco.','¿Te gusta cómo juego?','¡Clac! Qué gusto da ese sonido.','Pura geometría.','Ni lo he pensado.','¡Y sigo tirando!','Hoy estoy inspirado.','¡Al fondo de la red! Bueno, de la tronera.','Esto es talento natural.','Suave, suave… ¡y dentro!'],
- p_multi:['¡Dos de golpe! ¿Has visto eso?','¡Doblete! Esto es nivel profesional.','¡Combinación de lujo!','¡Dos por el precio de una!','¡Toma carambola!','¡Eso no te lo enseñan en ningún sitio, Paco!','¡Fiesta en las troneras!'],
- p_last:['¡Solo me queda la negra!','La 8 y es mía, Paco.','Ve preparando la cartera.','Mesa limpia. Ahora a por la negra.','Ya huele a victoria.','Cuidado, Paco, que voy a por la 8.'],
- c_react_p_pot:['Suerte de principiante…','Vale, vale, no está mal.','No te emociones, chaval.','Hasta un reloj parado acierta dos veces al día.','Hmm… ¿quién te ha enseñado eso?','Bah, esa la mete mi abuela.','Ya fallarás, ya.','Disfrútalo mientras dure.','Mira tú el niño…','No está mal… para ser tú.','¿Has estado practicando a escondidas?','Vale, una. Ahora mete otra si eres tan bueno.','Eso ha sido más suerte que otra cosa.','Interesante… muy interesante.','Ni me inmuto.','Sigue, sigue, que me estoy aburriendo.'],
- c_react_p_last:['¿Solo te queda la negra? No cantes victoria.','La 8 es la más difícil, ya verás.','Uy… se me está poniendo cara de perder.','Que no te tiemble el pulso, chaval.','Mucha mesa para tan poca bola.'],
- c_pot:['¡Para dentro!','Así se juega, chaval.','Esto lo hago con los ojos cerrados.','Toma nota, que esto no se enseña.','Limpia y elegante, como siempre.','Cuarenta años de experiencia, chaval.','Ni la he mirado y ha entrado.','¿Ves? Así de fácil.','Otra para la colección.','La mesa me conoce.','¡Clac! Música para mis oídos.','Apunta esa jugada en tu libreta.','Esto no es suerte, es oficio.','Sigo yo, ponte cómodo.','Despacito y con buena letra.','Si quieres te doy clases, eh.','Esta mesa es mi casa.','Ni sudo, chaval.','Cuando yo apunto, la bola obedece.','Directa, sin rodeos.'],
- c_multi:['¡Dos de una tacada! Y sin despeinarme.','¡Doblete! Eso es arte.','¿Has visto, chaval? Dos de golpe.','Así se juega en las grandes ligas.','Para eso hace falta clase.'],
- c_last:['Solo me queda la negra. Ve despidiéndote.','La 8 y nos vamos a casa.','Esto ya está, chaval.','Mesa casi limpia. Te va a doler.','Prepárate para la revancha.'],
- p_react_c_pot:['Bah, ha tenido suerte.','Vaya, este hombre sabe…','Aún no has ganado, Paco.','Tranquilo, que me toca pronto.','No me impresionas, Paco.','Bueno, hasta ahí bien…','¿Seguro que no hay trampa?','Ya fallarás, ya.','Uf… este Paco es un hueso.','Vale, vale. Tú sigue.','Eso lo hago yo también.','Te estás luciendo, ¿eh?','¿Cuántos años dices que llevas jugando?','Disfruta, que dura poco.','¡Venga ya!'],
- p_react_c_last:['¡No, no, no! Que no meta la negra…','Aún falta la más difícil, Paco.','Que falle, que falle…','Esto no ha terminado.','La negra es traicionera, ya verás.'],
- p_miss:['¡Uf! Por poco.','Mala suerte…','Esa tenía que entrar.','La mesa está torcida, seguro.','¡Ay! Casi.','¿Pero cómo no ha entrado eso?','Le he dado demasiado flojo.','Me ha temblado el pulso.','La próxima no se escapa.','¡Por un pelo!','Esa la tenía hecha…','Ha sido el taco, que está torcido.','Me he despistado un segundo.','¡Qué rabia!','Bueno, le dejo una a Paco para que no se aburra.','¿Quién ha movido la tronera?','Ni yo me lo creo.','Necesito un café.'],
- c_react_p_miss:['Te has quedado corto, ¿eh?','Mi turno. Mira y aprende.','Le pasa a todo el mundo… menos a mí.','Gracias por dejármela a tiro.','¿Necesitas que te explique cómo va esto?','Tranquilo, esto es cuestión de práctica. De mucha práctica.','Je, je… ahora me toca a mí.','¿Has visto? La bola tiene miedo.','Ese tiro lo enmarcaría… como ejemplo de lo que no hay que hacer.','Ánimo, que se te ve con ganas.','Uy, uy, uy… por ahí no era.','Me has hecho un favor, gracias.','Las troneras son esos agujeros de las esquinas, por si acaso.','Paciencia, chaval, paciencia.'],
- c_miss:['¡Vaya hombre!','¿Quién ha movido la mesa?','Te la he dejado a propósito.','Se me ha resbalado el taco.','Esa la tenía hecha…','Esto no estaba en mis planes.','Hoy la tiza no agarra.','La bola tenía vida propia.','Eso ha sido para que te confíes.','Me ha deslumbrado la lámpara.','Ni una palabra de esto a nadie.','La edad no perdona…','Pues nada, todo tuyo.','¡Mecachis!','Era una jugada de estrategia, aunque no lo parezca.','Esto me pasa por hablar tanto.'],
- p_react_c_miss:['¡Ja! ¿Y eso, Paco?','Mi turno. Atento.','¿Necesitas gafas, Paco?','El maestro también falla, ¿eh?','¿Cuarenta años para esto?','Gracias por el regalo, Paco.','Esa la metía hasta mi abuela.','¿Te ayudo a apuntar la próxima?','Ahora verás lo que es jugar.','Uy, Paco, que se te nota nervioso.','¡Toma ya! Me toca.','Así me gusta, Paco: generoso.','¿La mesa está torcida, Paco?','Tranquilo, le pasa a todo el mundo… ¿no era eso?'],
- p_foul:['¡No! La blanca no…','Eso no ha pasado.','Ups…','¡Pero qué he hecho!','Esto no se lo cuentes a nadie, Paco.','La blanca tenía vida propia.','Me he venido arriba…','Error de novato.','¡Ay, la blanca!','No volverá a pasar. Creo.'],
- c_on_p_foul:['¡Falta! Gracias por el regalo.','Esa blanca tenía prisa.','Falta, falta. Me toca.','Eso no se hace, chaval.','Te has emocionado demasiado.','Bola en mano para mí, ¡qué detalle!','¿Seguro que sabes jugar a esto?','Ese tipo de regalos me encantan.','Ja, ja… la blanca se quería ir a casa.','Primera lección: la blanca no se mete.'],
- c_foul:['Ups… eso no contaba.','Lo he hecho para darte ventaja, de verdad.','Ni una palabra de esto a nadie.','Eso ha sido… un error de cálculo.','¿Has visto algo? Yo no.','La edad, que no perdona.','Hasta los maestros tienen días malos.','Era para comprobar si estabas atento.'],
- p_on_c_foul:['¡Falta, Paco! ¡Falta!','Ja, la blanca para dentro.','¿Esa era la estrategia, Paco?','¡Te he visto, Paco!','Cuarenta años y todavía metes la blanca…','Gracias por el regalo, Paco.','¿Lo anotamos en la pizarra?','Eso es falta y lo sabes.'],
- p_win:['¡Gané! ¡La negra dentro!','¡Partida! ¿Otra, Paco?','¡Campeón! ¡Campeón!','¿Quién es ahora el maestro, Paco?','¡Mesa limpia y a cobrar!','¡Esto hay que celebrarlo!','Apúntalo en la pizarra: gané yo.'],
- c_lose:['Bien jugado… La próxima no tendrás tanta suerte.','Me has ganado. Te invito a algo en la barra.','Hoy no era mi día…','Has tenido suerte, pero te lo reconozco.','Quiero la revancha. Ahora mismo.','Vaya… el alumno supera al maestro.','No se lo digas a nadie, ¿vale?'],
- c_win:['¡Y la negra! Otra vez será, chaval.','Partida. Vuelve cuando practiques un poco.','Cuarenta años no se improvisan.','Así se termina una partida, chaval.','Gracias por las fichas. ¿Otra?','La mesa siempre gana… y yo con ella.','No te desanimes, que contra mí pierde todo el mundo.'],
- p_lose:['Me la has jugado, Paco…','Quiero la revancha.','Esto no se queda así.','La próxima es mía, Paco.','Me has pillado en un mal día.','¡La revancha! ¡Ya!','Vale, hoy has ganado tú…']};
-const DLG_RECENT=[];
-const pick=a=>{let c=a.filter(x=>!DLG_RECENT.includes(x));if(!c.length)c=a;const v=c[rnd(c.length)];DLG_RECENT.push(v);if(DLG_RECENT.length>60)DLG_RECENT.shift();return v};
-const talkT={};
-function talk(who,text){const b=$(who==='p'?'#bubP':'#bubC');if(!b||!text)return;b.querySelector('span').textContent=text;b.classList.remove('show');void b.offsetWidth;b.classList.add('show');
-  const pp=$(who==='p'?'#ppP':'#ppC');if(pp)pp.classList.add('talk');
-  clearTimeout(talkT[who]);talkT[who]=setTimeout(()=>{b.classList.remove('show');if(pp)pp.classList.remove('talk')},3200);speak(who,text)}
-function later(who,arr,ms,prob){if(arr&&Math.random()<prob)setTimeout(()=>{if($('#plC'))talk(who,pick(arr))},ms)}
-function speak(who,text){try{if(!S.sound||S.voices===false||!window.speechSynthesis)return;const vs=speechSynthesis.getVoices().filter(v=>/^es/i.test(v.lang));
-  const u=new SpeechSynthesisUtterance(text.replace('«El Taco»',''));u.lang='es-ES';const es=vs.filter(v=>/ES/.test(v.lang));const pool=es.length?es:vs;
-  if(pool.length)u.voice=who==='c'?(pool[1]||pool[0]):pool[0];u.pitch=who==='c'?.7:1.2;u.rate=who==='c'?.95:1.08;u.volume=.9;
-  if(speechSynthesis.pending)speechSynthesis.cancel();speechSynthesis.speak(u)}catch(e){}}
-
+/* ---------- Billar 3D ---------- */
 const P3={ok:false,view:'aim',meshes:new Map()};
 function texCanvas(w,h,draw){const c=document.createElement('canvas');c.width=w;c.height=h;draw(c.getContext('2d'),w,h);const t=new THREE.CanvasTexture(c);t.encoding=THREE.sRGBEncoding;t.anisotropy=8;return t}
 const BALLTEX={};
@@ -1406,7 +1804,7 @@ function p3Init(cv){P3.ok=false;if(P3.ren){try{P3.ren.dispose()}catch(e){}P3.ren
   try{
     const T=THREE,ren=new T.WebGLRenderer({canvas:cv,antialias:true,powerPreference:'high-performance'});
     ren.setPixelRatio(Math.min(devicePixelRatio||1,2));ren.shadowMap.enabled=true;ren.shadowMap.type=T.PCFSoftShadowMap;ren.outputEncoding=T.sRGBEncoding;ren.toneMapping=T.ACESFilmicToneMapping;ren.toneMappingExposure=1.15;
-    const sc=new T.Scene();sc.background=new T.Color('#060708');sc.fog=new T.Fog('#060708',16,34);
+    const sc=new T.Scene();sc.background=new T.Color('#060708');sc.fog=new T.Fog('#060708',22,48);
     const cam=new T.PerspectiveCamera(46,1.6,.05,80);
     sc.add(new T.HemisphereLight('#bcd0ff','#2a1a10',.32));
     [-3,0,3].forEach(xx=>{const sp=new T.SpotLight('#ffe6bf',1.25,16,Math.PI/4.6,.6,1.4);sp.position.set(xx,4.3,0);sp.target.position.set(xx,0,0);
@@ -1424,17 +1822,17 @@ function p3Init(cv){P3.ok=false;if(P3.ren){try{P3.ren.dispose()}catch(e){}P3.ren
     // suelo y sala
     const carpet=texCanvas(256,256,(x,w,h)=>{x.fillStyle='#3a0d14';x.fillRect(0,0,w,h);x.strokeStyle='#6b4a1a';x.lineWidth=3;x.beginPath();x.moveTo(w/2,0);x.lineTo(w,h/2);x.lineTo(w/2,h);x.lineTo(0,h/2);x.closePath();x.stroke();
       x.fillStyle='#8a6420';x.beginPath();x.arc(w/2,h/2,10,0,TAU);x.fill()});carpet.wrapS=carpet.wrapT=T.RepeatWrapping;carpet.repeat.set(14,14);
-    const floor=new T.Mesh(new T.PlaneGeometry(60,60),new T.MeshStandardMaterial({map:carpet,roughness:1}));floor.rotation.x=-Math.PI/2;floor.position.y=-1.7;floor.receiveShadow=true;sc.add(floor);
+    const floor=new T.Mesh(new T.PlaneGeometry(60,60),new T.MeshStandardMaterial({map:carpet,roughness:1}));floor.rotation.x=-Math.PI/2;floor.position.y=-3.3;floor.receiveShadow=true;sc.add(floor);
     const wall=texCanvas(2048,256,(x,w,h)=>{x.fillStyle='#1c0f08';x.fillRect(0,0,w,h);for(let i=0;i<32;i++){x.strokeStyle='#2e190c';x.lineWidth=6;x.strokeRect(i*w/32+8,h*.45,w/32-16,h*.5)}
       for(let i=0;i<8;i++){const gx=(i+.5)*w/8,g=x.createRadialGradient(gx,h*.28,2,gx,h*.28,70);g.addColorStop(0,'rgba(255,214,140,.95)');g.addColorStop(1,'rgba(255,214,140,0)');x.fillStyle=g;x.fillRect(gx-70,h*.28-70,140,140)}});
-    const room=new T.Mesh(new T.CylinderGeometry(20,20,12,48,1,true),new T.MeshBasicMaterial({map:wall,side:T.BackSide,color:'#9a8a7a'}));room.position.y=3.5;sc.add(room);
+    const room=new T.Mesh(new T.CylinderGeometry(20,20,12,48,1,true),new T.MeshBasicMaterial({map:wall,side:T.BackSide,color:'#9a8a7a'}));room.position.y=2.6;sc.add(room);
     // mesa
     const fl=new T.Mesh(new T.BoxGeometry(9.12+.5,.1,4.12+.5),feltM);fl.position.y=-.05;fl.receiveShadow=true;sc.add(fl);
     const addBox=(w,h,d,x,y,z,m,cs=true)=>{const b=new T.Mesh(new T.BoxGeometry(w,h,d),m);b.position.set(x,y,z);b.castShadow=cs;b.receiveShadow=true;sc.add(b);return b};
     const RW=.44,cz=2.06+.12+RW/2,cx=4.56+.12+RW/2;
     addBox(10.24,.2,RW,0,0,-cz,woodM);addBox(10.24,.2,RW,0,0,cz,woodM);addBox(RW,.2,4.36,-cx,0,0,woodM);addBox(RW,.2,4.36,cx,0,0,woodM);
     addBox(10.3,.9,5.3,0,-.55,0,woodM);addBox(10.5,.12,5.5,0,-1.02,0,woodM);
-    [[-4.4,-2],[4.4,-2],[-4.4,2],[4.4,2],[0,-2],[0,2]].forEach(([x,z])=>{const l=new T.Mesh(new T.CylinderGeometry(.22,.16,.7,16),woodM);l.position.set(x,-1.38,z);l.castShadow=true;sc.add(l)});
+    [[-4.4,-2],[4.4,-2],[-4.4,2],[4.4,2],[0,-2],[0,2]].forEach(([x,z])=>{const l=new T.Mesh(new T.CylinderGeometry(.26,.18,2.25,16),woodM);l.position.set(x,-2.17,z);l.castShadow=true;sc.add(l)});
     const ch=.085,cd=.13;
     [[-4.56+.3,-.3],[.3,4.56-.3]].forEach(([a,b])=>{const w=b-a,m=(a+b)/2;addBox(w,ch,cd,m,.0425,-2.06-cd/2,cushM);addBox(w,ch,cd,m,.0425,2.06+cd/2,cushM)});
     addBox(cd,ch,4.12-.6,-4.56-cd/2,.0425,0,cushM);addBox(cd,ch,4.12-.6,4.56+cd/2,.0425,0,cushM);
@@ -1468,17 +1866,40 @@ function p3Init(cv){P3.ok=false;if(P3.ren){try{P3.ren.dispose()}catch(e){}P3.ren
     const guide=mkLine(gm),oguide=mkLine(new T.LineBasicMaterial({color:'#f2d78c',transparent:true,opacity:.85}));
     const ghost=new T.Mesh(new T.RingGeometry(.105,.125,40),new T.MeshBasicMaterial({color:'#ffffff',transparent:true,opacity:.8,side:T.DoubleSide}));ghost.rotation.x=-Math.PI/2;sc.add(ghost);
     const target=new T.Mesh(new T.RingGeometry(.31,.38,48),new T.MeshBasicMaterial({color:'#f2d78c',transparent:true,opacity:.8,side:T.DoubleSide}));target.rotation.x=-Math.PI/2;sc.add(target);
-    Object.assign(P3,{ok:true,ren,sc,cam,lamp,cue,guide,oguide,ghost,target,bg,meshes:new Map(),rackId:-1,cp:new T.Vector3(0,7,7),cl:new T.Vector3(0,0,0),last:performance.now(),plane:new T.Plane(new T.Vector3(0,1,0),-.12),ray:new T.Raycaster()});
-    p3Camera(1,true);return true}catch(e){P3.ok=false;return false}}
+    Object.assign(P3,{ok:true,chars:new Map(),ren,sc,cam,lamp,cue,guide,oguide,ghost,target,bg,meshes:new Map(),rackId:-1,cp:new T.Vector3(0,7,7),cl:new T.Vector3(0,0,0),last:performance.now(),plane:new T.Plane(new T.Vector3(0,1,0),-.12),ray:new T.Raycaster()});
+    p3Cast();p3Camera(1,true);return true}catch(e){P3.ok=false;return false}}
 const W3=(x,y)=>[(x-500)/100,(y-250)/100];
 function p3Pick(e){const cv=$('#plC'),r=cv.getBoundingClientRect();const v=new THREE.Vector2((e.clientX-r.left)/r.width*2-1,-((e.clientY-r.top)/r.height)*2+1);
   P3.ray.setFromCamera(v,P3.cam);const pt=new THREE.Vector3();if(!P3.ray.ray.intersectPlane(P3.plane,pt))return null;return{x:pt.x*100+500,y:pt.z*100+250}}
 function p3Camera(dt,snap){const c=PL.balls[0],portrait=P3.cam.aspect<1;let pos,look;
-  const over=PL.moving||P3.view==='top'||!c||c.gone||(!PL.active&&PL.turn==='p'&&false);
-  if(over){if(portrait){pos=[9.2,9.6,0];look=[0,-.4,0]}else{pos=[0,8.2,6.4];look=[0,-.6,.3]}}
+  const over=PL.moving||P3.view==='top'||!c||c.gone;
+  const aiView=!over&&PL.active&&!plHuman();
+  if(over){if(portrait){pos=[9.2,10.5,0];look=[0,-.4,0]}else{pos=[0,9,7.2];look=[0,-.6,.3]}}
+  else if(aiView){const [X,Z]=W3(c.x,c.y),dx=Math.cos(PL.ang),dz=Math.sin(PL.ang),lx=dz,lz=-dx,b=portrait?10.5:6,sd=portrait?6.5:5;pos=[X-dx*b+lx*sd,portrait?6.2:3.6,Z-dz*b+lz*sd];look=[X-dx*(portrait?1.6:2),.2,Z-dz*(portrait?1.6:2)]}
   else{const [X,Z]=W3(c.x,c.y),dx=Math.cos(PL.ang),dz=Math.sin(PL.ang),D=portrait?3.1:2.7;pos=[X-dx*D,1.05,Z-dz*D];look=[X+dx*2.2,0,Z+dz*2.2]}
-  const k=snap?1:1-Math.exp(-dt*(PL.moving?2.2:4));P3.cp.lerp(new THREE.Vector3(...pos),k);P3.cl.lerp(new THREE.Vector3(...look),k);
+  P3.camT=pos;P3.camMode=(over?'o':aiView?'a':'h')+(portrait?'p':'l');
+  const k=snap?1:1-Math.exp(-dt*(PL.moving?2.2:aiView?2.6:4));P3.cp.lerp(new THREE.Vector3(...pos),k);P3.cl.lerp(new THREE.Vector3(...look),k);
   P3.cam.position.copy(P3.cp);P3.cam.lookAt(P3.cl);if(P3.lamp)P3.lamp.visible=P3.cam.position.y<3.9}
+const CSC=4.08,FLOOR=-3.3;
+function p3Cast(){if(!P3.sc)return;P3.chars.forEach(ch=>P3.sc.remove(ch.root));P3.chars=new Map();ALLCH.clear();
+  [...PL.team.p,...PL.team.c].forEach((id,i)=>{const ch=addChar(P3.sc,id,-6+i*3,FLOOR,-5,0,CSC);P3.chars.set(id,ch)})}
+function p3Chars(now,dt){const c=PL.balls[0],sh=PL.active?plShooter():null,portrait=P3.cam.aspect<1;
+  const key=PL.turn+'|'+sh+'|'+P3.camMode;
+  if(P3.spotKey!==key&&P3.camT){P3.spotKey=key;const cand=[[-7.6,-1.7],[-7.6,1.7],[7.6,-1.7],[7.6,1.7],[-3.2,-5.1],[3.2,-5.1],[-3.2,5.1],[3.2,5.1]];
+    const [cx,,cz]=P3.camT,shp=P3.chars.get(sh);const sx=shp?shp.root.position.x:0,sz=shp?shp.root.position.z:0;
+    P3.spotList=cand.map(q=>({q,d:Math.hypot(q[0]-cx,q[1]-cz)+Math.min(4,Math.hypot(q[0]-sx,q[1]-sz))*.3})).sort((a,b)=>b.d-a.d).map(o=>o.q)}
+  const spots=P3.spotList||[[-3.3,-5.1],[3.3,-5.1],[-7.6,-1.5],[7.6,-1.5]];let si=0;
+  for(const [id,ch] of P3.chars){let atTable=PL.active&&id===sh&&c&&!c.gone&&(!PL.moving||now-(PL.shotAt||0)<900);
+    if(atTable&&id===S.me&&!PL.moving){ch.root.visible=false;charUpdate(ch,dt,now);continue}
+    ch.root.visible=true;
+    if(atTable){const [X,Z]=W3(c.x,c.y),dx=Math.cos(PL.ang),dz=Math.sin(PL.ang);
+      const tx=dx<0?(5.1-X)/-dx:dx>0?(X+5.1)/dx:99,tz=dz<0?(2.6-Z)/-dz:dz>0?(Z+2.6)/dz:99,te=Math.min(tx,tz),d=Math.min(4.4,Math.max(2.9,te+.5));
+      ch.root.position.x=X-dx*d+dz*.5;ch.root.position.z=Z-dz*d-dx*.5;ch.root.rotation.y=Math.atan2(dx,dz);
+      ch.forced=(PL.strike||PL.moving)?'shoot':'aim'}
+    else{const [x,z]=spots[si++%spots.length];ch.root.position.x=x;ch.root.position.z=z;ch.root.rotation.y=Math.atan2(-x,-z*1.4);ch.forced=null;
+      if(Math.hypot(P3.cam.position.x-x,P3.cam.position.z-z)<4.2&&P3.cam.position.y<6)ch.root.visible=false}
+    charUpdate(ch,dt,now)}}
+
 function p3Render(now){const T=THREE,dt=Math.min(.05,(now-P3.last)/1000);P3.last=now;
   if(P3.rackId!==PL.rackId){P3.meshes.forEach(m=>P3.sc.remove(m));P3.meshes=new Map();P3.rackId=PL.rackId}
   const alive=new Set(PL.balls);
@@ -1503,7 +1924,7 @@ function p3Render(now){const T=THREE,dt=Math.min(.05,(now-P3.last)/1000);P3.last
     P3.ghost.position.set(GX,.01,GZ);if(gd.hit){const [HX,HZ]=W3(gd.hit.x,gd.hit.y),o=P3.oguide.geometry.attributes.position;o.setXYZ(0,HX,.125,HZ);o.setXYZ(1,HX+gd.nx*.9,.125,HZ+gd.ny*.9);o.needsUpdate=true;P3.oguide.visible=true}}
   P3.target.visible=!!(PL.tp&&PL.active&&!PL.strike&&!PL.moving);
   if(P3.target.visible){const [X,Z]=W3(PL.tp[0],PL.tp[1]);P3.target.position.set(X,.115,Z);P3.target.material.color.set(PL.turn==='p'?'#f2d78c':'#ff6e78');P3.target.material.opacity=.45+.45*Math.sin(now/170)}
-  p3Camera(dt,false);P3.ren.render(P3.sc,P3.cam)}
+  p3Chars(now,dt);p3Camera(dt,false);P3.ren.render(P3.sc,P3.cam)}
 function p3Near(m){let best=PL.pockets[0],bd=1e9;for(const p of PL.pockets){const [X,Z]=W3(p[0],p[1]),d=Math.hypot(X-m.position.x,Z-m.position.z);if(d<bd){bd=d;best=p}}const [px,pz]=W3(best[0],best[1]);return{x0:m.position.x,z0:m.position.z,px,pz}}
 function plGuide(){const c=PL.balls[0],r=PL.r,{L,T,R,B}=PL,ux=Math.cos(PL.ang),uy=Math.sin(PL.ang);let best=1400,hit=null;
   for(const o of PL.balls){if(o===c||o.gone)continue;const fx=o.x-c.x,fy=o.y-c.y,t=fx*ux+fy*uy;if(t<=0)continue;const q=fx*fx+fy*fy-t*t,rr=4*r*r;if(q>rr)continue;const tt=t-Math.sqrt(rr-q);if(tt<best){best=tt;hit=o}}
@@ -1511,13 +1932,13 @@ function plGuide(){const c=PL.balls[0],r=PL.r,{L,T,R,B}=PL,ux=Math.cos(PL.ang),u
   const gx=c.x+ux*best,gy=c.y+uy*best;let nx=0,ny=0;if(hit){const ax=hit.x-gx,ay=hit.y-gy,d=Math.hypot(ax,ay)||1;nx=ax/d;ny=ay/d}return{gx,gy,hit,nx,ny}}
 
 /* ---------- Navegación ---------- */
-const VIEWS={lobby,salon,ruleta:roulette,blackjack,slots,poker,baccarat,dados,keno,billar};
-function go(v){if(!VIEWS[v])v='lobby';SL.auto=0;closeModal();document.body.classList.remove('facade-mode');const st=$('#stage');VIEWS[v](st);window.scrollTo({top:0});try{history.replaceState(null,'',v==='lobby'?location.pathname:'#'+v)}catch(e){}}
+const VIEWS={lobby,salon,holdem,ruleta:roulette,blackjack,slots,poker,baccarat,dados,keno,billar};
+function go(v){if(!VIEWS[v])v='lobby';SL.auto=0;closeModal();stageStop();VOX.q=[];document.body.classList.remove('facade-mode');const st=$('#stage');VIEWS[v](st);window.scrollTo({top:0});try{history.replaceState(null,'',v==='lobby'?location.pathname:'#'+v)}catch(e){}}
 document.addEventListener('click',e=>{const g=e.target.closest('[data-go]');if(g){sfx('click');go(g.dataset.go)}});
 $('#home').onclick=()=>go('lobby');$('#home').onkeydown=e=>{if(e.key==='Enter')go('lobby')};
 $('#lvlBox').onclick=profile;$('#profBtn').onclick=profile;$('#bonusBtn').onclick=bonusWheel;
 $('#sndBtn').onclick=()=>{S.sound=!S.sound;save();hud();sfx('click')};
 addEventListener('hashchange',()=>go(location.hash.slice(1)||'lobby'));
-hud();go(location.hash.slice(1)||'lobby');
-if(!S.ach.welcome&&S.stats.rounds===0){S.ach.welcome=1;save();setTimeout(()=>modal(`<h3>Bienvenido al Casino Sorríos</h3><p>Tienes 10.000 fichas de bienvenida. Juega a la ruleta, el blackjack, las tragaperras, el video póker, el baccarat, los dados y el keno y el billar. Cada ficha que apuestas te da experiencia: sube de nivel, desbloquea logros y alcanza el estatus VIP Diamante.</p><p>Las fichas son ficticias y no tienen ningún valor real.</p><div class="row-c"><button class="btn primary" data-close>Empezar</button><button class="btn wine" id="wbw">Girar la rueda de bono</button></div>`,ov=>{$('#wbw',ov).onclick=bonusWheel}),400)}
+hud();go(location.hash.slice(1)||'lobby');setTimeout(makeThumbs,300);
+if(!S.ach.welcome&&S.stats.rounds===0){S.ach.welcome=1;save();setTimeout(()=>modal(`<h3>Bienvenido al Casino Sorríos</h3><p>Tienes 10.000 fichas de bienvenida. Juega a la ruleta, el blackjack, las tragaperras, el video póker, el baccarat, los dados, el keno, el billar y el póker Texas Hold'em contra tus amigos. Cada ficha que apuestas te da experiencia: sube de nivel, desbloquea logros y alcanza el estatus VIP Diamante.</p><p>Las fichas son ficticias y no tienen ningún valor real.</p><div class="row-c"><button class="btn primary" data-close>Empezar</button><button class="btn wine" id="wbw">Girar la rueda de bono</button></div>`,ov=>{$('#wbw',ov).onclick=bonusWheel}),400)}
 </script>
