@@ -242,6 +242,18 @@ body.facade-mode .stage{margin-top:12px}
 .pl-ins{position:absolute;left:10px;top:10px;border:2px solid var(--gold);border-radius:12px;pointer-events:none;box-shadow:0 6px 18px #000a;z-index:2}
 .pl-ins b{position:absolute;left:0;right:0;bottom:-2px;background:linear-gradient(transparent,#000d 40%);color:var(--gold-2);font-size:12px;text-align:center;padding:10px 4px 2px;border-radius:0 0 10px 10px}
 .pl-ins span{position:absolute;left:0;right:0;top:4px;text-align:center;font-size:10px;font-weight:800;letter-spacing:.08em;color:#fff;text-shadow:0 1px 3px #000}
+.pl-start{overflow:auto;justify-content:flex-start!important;padding-top:14px!important;gap:9px!important}
+.pl-start b{font-size:24px!important}
+.pl-who{display:grid;grid-template-columns:1fr 1fr;gap:8px;width:100%;max-width:520px}
+.pw{display:flex;flex-direction:column;align-items:center;gap:5px;padding:8px;border-radius:12px;background:#0008;border:1px solid #d9b45b55}
+.pw small{font-size:11px;letter-spacing:.06em;color:var(--gold-2);font-weight:800}
+.pwl{display:flex;align-items:center;gap:4px;flex-wrap:wrap;justify-content:center}
+.pwl b{font-size:13px!important;font-family:var(--f-body)!important;color:var(--ivory)!important;margin-right:4px}
+.pw .btn{padding:7px 10px;font-size:12px}
+.pwh{color:var(--muted)!important;font-weight:600!important}
+#plDiff .btn{padding:7px 10px;font-size:12px}
+.pl-start .chip{width:38px;height:38px;font-size:10px}
+.pl-wrap .pl-ctl2.off{display:none}
 /* Cabecera de juego */
 .gh{display:flex;align-items:center;gap:12px;margin-bottom:14px;flex-wrap:wrap}
 .back{padding:8px 14px;border-radius:999px;border:1px solid var(--line);font-weight:700;font-size:13px}
@@ -1562,8 +1574,13 @@ function billar(el){
       <button class="spinb" id="plSpin" aria-label="Efecto de la bola blanca"><i id="plSpinDot"></i></button>
       <button class="btn primary pl-shoot" id="plShoot">TIRAR</button>
     </div>
-      <div class="pl-start" id="plStart"><b>Bola 8</b><span id="plStartT">${t.p.length>1?'Partida por parejas: ':''}${t.p.map(plName).join(' y ')} contra ${t.c.map(chFull).join(' y ')}. Mete todas tus bolas, lisas o rayadas, y después la negra.</span>
-        <button class="btn" data-pick="billar">Cambiar rivales o jugar por parejas</button>
+      <div class="pl-start" id="plStart"><b>Bola 8</b>
+        <div class="row-c" id="plMode"><button class="btn ${S.mates.billar.mode!=='2v2'?'primary':''}" data-pm="1v1">1 contra 1</button><button class="btn ${S.mates.billar.mode==='2v2'?'primary':''}" data-pm="2v2">Parejas 2 contra 2</button></div>
+        <div class="pl-who">
+          <div class="pw"><small>¿Contra quién juegas?</small><div class="pwl">${t.c.map(id=>`<span class="chf sm" style="${chfStyle(id)}"></span><b>${CH[id].name}</b>`).join('')}</div><button class="btn" data-pick2="rivals">Elegir rival${t.c.length>1?'es':''}</button></div>
+          <div class="pw"><small>¿Con quién juegas?</small><div class="pwl"><span class="chf sm" style="${chfStyle(S.me)}"></span><b>Tú</b>${t.p[1]?`<span class="chf sm" style="${chfStyle(t.p[1])}"></span><b>${CH[t.p[1]].name}</b>`:''}</div>${t.p[1]?'<button class="btn" data-pick2="partner">Elegir pareja</button>':'<small class="pwh">Solo</small>'}</div>
+        </div>
+        <span id="plStartT">Mete todas tus bolas, lisas o rayadas, y después la negra.</span>
         <div class="row-c" id="plDiff">${PL_DIFF.map((d,i)=>`<button class="btn ${i===PL.diff?'primary':''}" data-diff="${i}">${d.n} · ×${String(d.mult).replace('.',',')}</button>`).join('')}</div>
         ${chipBar()}<button class="btn primary big" id="plGo">EMPEZAR PARTIDA</button></div>
     </div>
@@ -1593,6 +1610,12 @@ function billar(el){
   $('#plSpin').onclick=e=>{const r=e.currentTarget.getBoundingClientRect();let x=((e.clientX-r.left)/r.width-.5)*2,y=-((e.clientY-r.top)/r.height-.5)*2;const m=Math.hypot(x,y);if(m>1){x/=m;y/=m}if(m<.25){x=0;y=0}PL.spin={x,y};spinUI();sfx('click');
     toast(y>.3?'Efecto de seguimiento: la blanca sigue hacia delante':y<-.3?'Efecto de retroceso: la blanca vuelve hacia atrás':Math.abs(x)>.3?'Efecto lateral: cambia el rebote en la banda':'Sin efecto: golpe al centro')};
   $('#plShoot').onclick=()=>{if(!plMyTurn())return;PL.bih=false;PL.strike={t0:performance.now(),pw:rg.value/100};PL.tp=null};
+  $('#plMode').onclick=e=>{const b=e.target.closest('[data-pm]');if(!b||PL.active)return;const m=S.mates.billar;m.mode=b.dataset.pm;let r=(m.rivals||[]).filter(id=>id!==S.me);
+    if(m.mode==='2v2'){while(r.length<2)r.push(others().find(id=>!r.includes(id)&&id!==m.partner));if(!m.partner||m.partner===S.me||r.includes(m.partner))m.partner=others().find(id=>!r.includes(id))}else r=r.slice(0,1);
+    m.rivals=r;save();sfx('click');go('billar')};
+  $$('[data-pick2]').forEach(b=>b.onclick=()=>{const m=S.mates.billar,two=m.mode==='2v2';
+    if(b.dataset.pick2==='rivals')pickList('¿Contra quién juegas?',two?'Elige a tus 2 rivales.':'Elige a tu rival.',two?2:1,[S.me,two?m.partner:null],m.rivals||[],sel=>{m.rivals=sel;save();go('billar')});
+    else pickList('¿Con quién juegas?','Elige a tu pareja de equipo.',1,[S.me,...(m.rivals||[])],[m.partner],sel=>{m.partner=sel[0];save();go('billar')})});
   $('#plDiff').onclick=e=>{const b=e.target.closest('[data-diff]');if(!b)return;PL.diff=+b.dataset.diff;$$('#plDiff [data-diff]').forEach(x=>x.classList.toggle('primary',+x.dataset.diff===PL.diff));sfx('click')};
   $('#plGo').onclick=()=>{if(PL.active)return;if(!take(S.chip))return;PL.bet=S.chip;plRack();PL.active=true;sfx('chip');rg.value=90;upd();plUI();p3Cast();
     setMsg('#plMsg','Sacas tú: apunta al triángulo y pulsa TIRAR con fuerza');say(PL.team.c[0],'hola');if(PL.team.p[1])say(PL.team.p[1],'animo',2800);plFocus()};
@@ -1614,6 +1637,12 @@ function pickBillar(after){const m=S.mates.billar;let mode=m.mode,riv=[...(m.riv
       else{if(riv.includes(id))riv=riv.filter(x=>x!==id);pa=pa===id?null:id}draw(ov);sfx('click')});
     $('#pbOk',ov).onclick=()=>{const need=mode==='2v2'?2:1;if(riv.length<need){toast(`Elige ${need} rival${need>1?'es':''}`);return}if(mode==='2v2'&&!pa){toast('Elige tu compañero');return}
       S.mates.billar={mode,rivals:riv,partner:pa};save();closeModal();PL.active=false;after&&after()}})}
+function pickList(title,sub,n,excl,cur,done){let sel=(cur||[]).filter(id=>id&&CH[id]&&!excl.includes(id)).slice(0,n);
+  const draw=ov=>{$$('.chgrid [data-ch]',ov).forEach(x=>x.classList.toggle('on',sel.includes(x.dataset.ch)));$('#plN',ov).textContent=`${sel.length} de ${n}`};
+  modal(`<h3>${title}</h3><p>${sub}</p><div class="chgrid">${CHARS.filter(c=>!excl.includes(c.id)).map(c=>charChip(c.id,sel.includes(c.id))).join('')}</div>
+    <div class="row-c" style="margin-top:14px"><span class="total" id="plN"></span><button class="btn primary" id="plOk">Listo</button></div>`,ov=>{draw(ov);
+    $('.chgrid',ov).onclick=e=>{const b=e.target.closest('[data-ch]');if(!b)return;const id=b.dataset.ch;if(sel.includes(id))sel=sel.filter(x=>x!==id);else{sel.push(id);if(sel.length>n)sel=sel.slice(-n)}draw(ov);sfx('click');voxBuf(id).then(()=>say(id,'hola'))};
+    $('#plOk',ov).onclick=()=>{if(sel.length<n){toast(n>1?`Elige ${n}`:'Elige uno');return}closeModal();PL.active=false;done(sel)}})}
 function plFocus(){const t=$('.pl-players'),hd=$('.top');if(t)window.scrollTo({top:t.getBoundingClientRect().top+scrollY-(hd?hd.offsetHeight:0)-8,behavior:'smooth'})}
 function plUI(){if(!$('#ppP'))return;
   const side=(k,g)=>{$('#g'+k).textContent=grpName(g);$('#mb'+k).innerHTML=g?PL.balls.filter(b=>!b.gone&&inGroup(b.n,g)).sort((a,b)=>a.n-b.n).map(b=>`<i class="${isStripe(b.n)?'st':''}" style="--b:${ballCol(b.n)}">${b.n}</i>`).join('')||'<i style="--b:#111">8</i>':''};
@@ -1640,7 +1669,7 @@ function plStep(){
 function plLoop(now){
   const cv=$('#plC');if(!cv)return;
   if(PL.ai){const t=Math.min(1,(now-PL.ai.t0)/PL.ai.dur),d=((PL.ai.to-PL.ai.from+Math.PI)%TAU+TAU)%TAU-Math.PI,e=Math.min(1,t/.6);
-    PL.ang=PL.ai.from+d*(e*e*(3-2*e))+(t<.6?Math.sin(t*20)*.03*(1-t/.6):0);PL.pull=t>.6?PL.ai.pw*((t-.6)/.4):.05;
+    PL.ang=PL.ai.from+d*(e*e*(3-2*e))+(t<.6?Math.sin(t*20)*.03*(1-t/.6):0);PL.pull=t<.35?.08:t<.86?PL.ai.pw*(.32+.3*Math.sin((t-.35)*TAU*2.6-Math.PI/2)+.3):PL.ai.pw*(.9+.1*((t-.86)/.14));
     if(t>=1){PL.ang=PL.ai.to;PL.strike={t0:now,pw:PL.ai.pw};PL.ai=null}}
   if(PL.strike){const t=(now-PL.strike.t0)/110;
     if(t>=1){const c=PL.balls[0],pw=PL.strike.pw,sp=1+pw*9,human=plHuman(),spin=human?PL.spin:{x:0,y:0};c.vx=Math.cos(PL.ang)*sp;c.vy=Math.sin(PL.ang)*sp;
@@ -1807,7 +1836,7 @@ function p3Init(cv){P3.ok=false;P3.gal=null;P3.ins=null;if(P3.ren){try{P3.ren.di
     const ghost=new T.Mesh(new T.RingGeometry(.105,.125,40),new T.MeshBasicMaterial({color:'#ffffff',transparent:true,opacity:.8,side:T.DoubleSide}));ghost.rotation.x=-Math.PI/2;sc.add(ghost);
     const target=new T.Mesh(new T.RingGeometry(.31,.38,48),new T.MeshBasicMaterial({color:'#f2d78c',transparent:true,opacity:.8,side:T.DoubleSide}));target.rotation.x=-Math.PI/2;sc.add(target);
     Object.assign(P3,{ok:true,chars:new Map(),ren,sc,cam,lamp,cue,guide,oguide,ghost,target,bg,meshes:new Map(),rackId:-1,cp:new T.Vector3(0,7,7),cl:new T.Vector3(0,0,0),last:performance.now(),plane:new T.Plane(new T.Vector3(0,1,0),-.12),ray:new T.Raycaster()});
-    p3Cast();p3Camera(1,true);return true}catch(e){P3.ok=false;return false}}
+    P3.arms=buildArms();p3Cast();p3Camera(1,true);return true}catch(e){P3.ok=false;return false}}
 const W3=(x,y)=>[(x-500)/100,(y-250)/100];
 function p3Pick(e){const cv=$('#plC'),r=cv.getBoundingClientRect();const v=new THREE.Vector2((e.clientX-r.left)/r.width*2-1,-((e.clientY-r.top)/r.height)*2+1);
   P3.ray.setFromCamera(v,P3.cam);const pt=new THREE.Vector3();if(!P3.ray.ray.intersectPlane(P3.plane,pt))return null;return{x:pt.x*100+500,y:pt.z*100+250}}
@@ -1815,12 +1844,50 @@ function p3Camera(dt,snap){const c=PL.balls[0],portrait=P3.cam.aspect<1;let pos,
   const over=PL.moving||P3.view==='top'||!c||c.gone;
   const aiView=!over&&PL.active&&!plHuman();
   if(over){if(portrait){pos=[9.6,10.2,0];look=[-1.4,-.3,0]}else{pos=[0,8.6,7.6];look=[0,-.3,-1.1]}}
-  else if(aiView){const [X,Z]=W3(c.x,c.y),dx=Math.cos(PL.ang),dz=Math.sin(PL.ang),lx=dz,lz=-dx,b=portrait?10.5:6,sd=portrait?6.5:5;pos=[X-dx*b+lx*sd,portrait?6.2:3.6,Z-dz*b+lz*sd];look=[X-dx*(portrait?1.6:2),.2,Z-dz*(portrait?1.6:2)]}
-  else{const [X,Z]=W3(c.x,c.y),dx=Math.cos(PL.ang),dz=Math.sin(PL.ang),D=portrait?3.1:2.7;pos=[X-dx*D,1.05,Z-dz*D];look=[X+dx*2.2,0,Z+dz*2.2]}
+  else{const [X,Z]=W3(c.x,c.y),dx=Math.cos(PL.ang),dz=Math.sin(PL.ang),D=portrait?5.6:5.5,Hh=portrait?4.1:3.0,LA=portrait?.4:1.2;pos=[X-dx*D+dz*.35,Hh,Z-dz*D-dx*.35];look=[X+dx*LA,0,Z+dz*LA]}
   P3.camT=pos;P3.camMode=(over?'o':aiView?'a':'h')+(portrait?'p':'l');
+  const fv=portrait&&!over?64:46;if(Math.abs(P3.cam.fov-fv)>.1){P3.cam.fov+=(fv-P3.cam.fov)*(snap?1:Math.min(1,dt*4));P3.cam.updateProjectionMatrix()}
   const k=snap?1:1-Math.exp(-dt*(PL.moving?2.2:aiView?2.6:4));P3.cp.lerp(new THREE.Vector3(...pos),k);P3.cl.lerp(new THREE.Vector3(...look),k);
   P3.cam.position.copy(P3.cp);P3.cam.lookAt(P3.cl);if(P3.lamp)P3.lamp.visible=P3.cam.position.y<3.9}
 const CSC=4.08,FLOOR=-3.3;
+function buildArms(){const T=THREE,g=new T.Group();P3.sc.add(g);g.visible=false;
+  const mS=new T.MeshStandardMaterial({color:'#fff',roughness:.8}),mK=new T.MeshStandardMaterial({color:'#e7b08f',roughness:.55}),mC=new T.MeshStandardMaterial({color:'#fff',roughness:.8});
+  const cyl=(r0,r1,m)=>{const me=new T.Mesh(new T.CylinderGeometry(r1,r0,1,18,1),m);me.castShadow=true;g.add(me);return me};
+  const sph=(r,m,par=g)=>{const me=new T.Mesh(new T.SphereGeometry(r,18,14),m);me.castShadow=true;par.add(me);return me};
+  const A={g,mS,mK,mC};
+  for(const k of ['r','l']){A[k+'Up']=cyl(.17,.15,mS);A[k+'Up2']=cyl(.15,.145,mK);A[k+'Fo']=cyl(.145,.11,mS);A[k+'Sh']=sph(.15,mS);A[k+'El']=sph(.15,mS);A[k+'Cf']=cyl(.155,.15,mC);A[k+'Wr']=sph(.11,mK)}
+    // mano que agarra el taco (eje X local = taco)
+  const grip=new T.Group();g.add(grip);A.grip=grip;
+  const fist=sph(1,mK,grip);fist.scale.set(.27,.21,.2);fist.position.set(0,.05,0);
+  for(let i=0;i<4;i++){const kn=sph(.075,mK,grip);kn.position.set(-.15+i*.1,-.06,.11);const f2=sph(.07,mK,grip);f2.position.set(-.15+i*.1,-.11,-.02)}
+  const th=new T.Mesh(new T.CylinderGeometry(.055,.06,.24,10),mK);th.rotation.z=Math.PI/2;th.position.set(.1,.07,-.1);th.castShadow=true;grip.add(th);
+  // mano del puente sobre el paño (eje X local = hacia la bola, Z local = derecha)
+  const br=new T.Group();g.add(br);A.bridge=br;
+  const palm=sph(1,mK,br);palm.scale.set(.27,.075,.24);palm.position.set(-.12,.07,-.17);
+  [[-.04,.22,.34],[.02,.06,.36],[.0,-.1,.33],[-.06,-.24,.28]].forEach(([dx,dz,L],i)=>{const fg=new T.Group();fg.position.set(.08+dx,.05,-.17+dz*.55);fg.rotation.y=-dz*1.1;br.add(fg);
+    const seg=new T.Mesh(new T.CylinderGeometry(.045,.05,L,10),mK);seg.rotation.z=-Math.PI/2;seg.position.x=L/2;seg.castShadow=true;fg.add(seg);const tip=sph(.045,mK,fg);tip.position.x=L});
+  const thumb=new T.Group();thumb.position.set(.02,.1,-.04);thumb.rotation.set(0,.5,.8);br.add(thumb);const tm=new T.Mesh(new T.CylinderGeometry(.05,.06,.26,10),mK);tm.position.y=.13;tm.castShadow=true;thumb.add(tm);sph(.05,mK,thumb).position.y=.26;
+  return A}
+const _Y=()=>new THREE.Vector3(0,1,0);
+function segTo(m,a,b){const d=b.clone().sub(a),L=d.length();m.position.copy(a).addScaledVector(d,.5);m.scale.set(1,Math.max(.001,L),1);m.quaternion.setFromUnitVectors(_Y(),d.normalize())}
+function ik2(S,H,L1,L2,pole){const d=H.clone().sub(S);let D=Math.min(d.length(),L1+L2-.001);const dir=d.normalize(),a=(L1*L1-L2*L2+D*D)/(2*D),h=Math.sqrt(Math.max(0,L1*L1-a*a));
+  const pp=pole.clone().sub(dir.clone().multiplyScalar(pole.dot(dir))).normalize();return S.clone().addScaledVector(dir,a).addScaledVector(pp,h)}
+function p3Arms(show,sh){const A=P3.arms;if(!A)return;A.g.visible=!!show;if(!show)return;const T=THREE,c=PL.balls[0];
+  if(A.who!==sh){A.who=sh;const ch=CH[sh];A.mS.color.set(ch.top).multiplyScalar(.85);A.mK.color.set(ch.skin).multiplyScalar(.72);A.short=ch.sleeve==='short';A.bare=A.short||sh==='nazario';
+    A.mC.color.set(A.short?ch.top:sh==='nazario'?ch.top:(ch.design==='robe'||ch.design==='torrente'?ch.top:ch.acc));
+    for(const k of ['r','l']){A[k+'Fo'].material=A.bare?A.mK:A.mS;A[k+'El'].material=A.bare&&A.short?A.mK:A.mS;A[k+'Up2'].visible=A.short}}
+  const [X,Z]=W3(c.x,c.y),ca=Math.cos(PL.ang),sa=Math.sin(PL.ang),f=new T.Vector3(ca,0,sa),rv=new T.Vector3(-sa,0,ca),ball=new T.Vector3(X,.12,Z);
+  const port=P3.cam.aspect<1;A.grip.position.copy(P3.cue.localToWorld(new T.Vector3(port?2.2:2.85,0,0)));A.grip.quaternion.copy(P3.cue.quaternion);
+  const gw=A.grip.localToWorld(new T.Vector3(-.02,.26,0));
+  const bp=ball.clone().addScaledVector(f,-.98);bp.y=0;A.bridge.position.copy(bp);A.bridge.rotation.set(0,-PL.ang,0);
+  const bw=A.bridge.localToWorld(new T.Vector3(-.4,.13,-.2));
+  const sR=ball.clone().addScaledVector(f,port?-4.3:-4.9).addScaledVector(rv,port?.95:1.25);sR.y=port?2.6:2.35;const sL=ball.clone().addScaledVector(f,-4.6).addScaledVector(rv,-1.35);sL.y=2.3;
+  const eR=ik2(sR,gw,1.6,1.55,new T.Vector3(0,.8,0).addScaledVector(rv,1.3).addScaledVector(f,-.4));
+  const eL=ik2(sL,bw,2.2,1.9,rv.clone().multiplyScalar(-1).add(new T.Vector3(0,.35,0)));
+  for(const [k,S,E,W] of [['r',sR,eR,gw],['l',sL,eL,bw]]){
+    if(A.short){const mid=S.clone().lerp(E,.5);segTo(A[k+'Up'],S,mid);segTo(A[k+'Up2'],mid,E);segTo(A[k+'Cf'],S.clone().lerp(E,.46),S.clone().lerp(E,.54))}
+    else{segTo(A[k+'Up'],S,E);if(A.bare)segTo(A[k+'Cf'],E.clone().lerp(W,-.04),E.clone().lerp(W,.12));else segTo(A[k+'Cf'],E.clone().lerp(W,.84),E.clone().lerp(W,.95))}
+    segTo(A[k+'Fo'],E,W);A[k+'Sh'].position.copy(S);A[k+'El'].position.copy(E);A[k+'Wr'].position.copy(W)}}
 function p3Cast(){if(!P3.sc)return;const T=THREE;(P3.chars||new Map()).forEach(ch=>P3.sc.remove(ch.root));P3.chars=new Map();ALLCH.clear();
   if(!P3.gal){const g=new T.Group();const wood=new T.MeshStandardMaterial({color:'#4a2a12',roughness:.45});const top=new T.MeshStandardMaterial({color:'#2b170a',roughness:.35});
     const box=new T.Mesh(new T.BoxGeometry(17,2.6,.7),wood);box.position.set(0,FLOOR+1.3,-4.9);box.receiveShadow=true;g.add(box);
@@ -1862,6 +1929,7 @@ function p3Render(now){const T=THREE,dt=Math.min(.05,(now-P3.last)/1000);P3.last
   const showG=showCue&&PL.active&&PL.turn==='p'&&!PL.strike;[P3.guide,P3.ghost].forEach(o=>o.visible=!!showG);P3.oguide.visible=false;
   if(showG){const gd=plGuide();const [X,Z]=W3(c.x,c.y),[GX,GZ]=W3(gd.gx,gd.gy);const ps=P3.guide.geometry.attributes.position;ps.setXYZ(0,X,.125,Z);ps.setXYZ(1,GX,.125,GZ);ps.needsUpdate=true;P3.guide.computeLineDistances();
     P3.ghost.position.set(GX,.01,GZ);if(gd.hit){const [HX,HZ]=W3(gd.hit.x,gd.hit.y),o=P3.oguide.geometry.attributes.position;o.setXYZ(0,HX,.125,HZ);o.setXYZ(1,HX+gd.nx*.9,.125,HZ+gd.ny*.9);o.needsUpdate=true;P3.oguide.visible=true}}
+  p3Arms(showCue&&(PL.active||plHuman()),PL.active?plShooter():S.me);
   P3.target.visible=!!(PL.tp&&PL.active&&!PL.strike&&!PL.moving);
   if(P3.target.visible){const [X,Z]=W3(PL.tp[0],PL.tp[1]);P3.target.position.set(X,.115,Z);P3.target.material.color.set(PL.turn==='p'?'#f2d78c':'#ff6e78');P3.target.material.opacity=.45+.45*Math.sin(now/170)}
   p3Chars(now,dt);p3Camera(dt,false);P3.ren.render(P3.sc,P3.cam);
